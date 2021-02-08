@@ -65,10 +65,6 @@
   padding: 10px 10px;
 }
 
-.button:hover {
-  color: white;
-}
-
 h3,
 h4 {
   text-align: left;
