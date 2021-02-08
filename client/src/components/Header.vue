@@ -31,7 +31,7 @@
             <router-link class="mx-4 text-muted" to="#">
               Контакти
             </router-link>
-            <router-link class="mx-4 text-muted" to="#">
+            <router-link class="mx-4 text-muted" to="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -56,7 +56,7 @@
 </template>
 
 
-<style lang="scss" scoped>
+<style>
 @media (max-width: 767px) {
   a {
     margin-top: 10px;

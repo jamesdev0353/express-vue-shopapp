@@ -10,8 +10,8 @@
    <div class="category-1">
       <h4 class="title"><b>Електроніка</b></h4>
       <b-container>
-        <b-row>
-          <column class="col-4 product  my-auto">
+        <b-row class="mt-4">
+          <column class="col-4 product my-auto">
             <img src="@/assets/hp.png" class="image img-prod" />
             <p>hp elitebook 840 g1</p>
           </column>
@@ -29,7 +29,7 @@
     <div class="category-1">
       <h4 class="title"><b>Одяг</b></h4>
       <b-container>
-        <b-row>
+        <b-row class="mt-4">
           <column class="col-4 product my-auto">
             <img src="@/assets/clothes-1.jpg" class="image img-prod" />
             <p>hp elitebook 840 g1</p>
@@ -48,7 +48,7 @@
     <div class="category-2">
       <h4 class="title"><b>Електроніка</b></h4>
       <b-container>
-        <b-row>
+        <b-row class="mt-4">
           <column class="col-4 product my-auto">
             <img src="@/assets/hp.png" class="image img-prod" />
             <p>hp elitebook 840 g1</p>
@@ -126,7 +126,7 @@ b-row {
 
 .button:hover {
   background-color: rgb(46, 136, 156);
-  color: white;
+  color: white !important;
   text-decoration: none;
 }
 
