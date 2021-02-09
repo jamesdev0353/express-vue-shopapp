@@ -58,10 +58,14 @@
 						type="text"
 						class="form-control"
 						id="phone"
+						maxlength="13"
 					/>
 
 					<div class="invalid-feedback" v-if="!$v.formReg.phone.required">
 						{{ reqText }}
+					</div>
+					<div class="invalid-feedback" v-if="!$v.formReg.phone.minLength">
+						Будь ласка введіть ваш телефон
 					</div>
 				</div>
 
@@ -219,6 +223,7 @@ export default {
 			},
 			phone: {
 				required,
+				minLength: minLength(13),
 			},
 			name: {
 				required,
