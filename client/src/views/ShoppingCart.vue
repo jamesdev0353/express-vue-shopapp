@@ -66,7 +66,7 @@
                 </b-form-select>
               </div>
               <div class="col-md-6">
-                <p class="section">Оплата</p>
+                <p class="section my-2">Оплата</p>
                 <b-form-select name="type" class="form-select-md">
                   <b-form-select-option selected
                     >Картою онлайн</b-form-select-option

@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 
+// const { exec } = require("child_process");
+
 app.use(express.static(__dirname + '/public'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -18,4 +20,8 @@ app.get("*", (req, res) => {
 
 app.listen(5000, () => {
 	console.log("Server running on http://localhost:5000")
+
+	// exec("start chrome", (error, stdout, stderr) => {
+		// console.log(`stdout: ${stdout}`);
+	// })
 })
