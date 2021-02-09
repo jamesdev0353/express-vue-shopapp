@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="col-sm-4 mx-auto">
 			<h2 class="reg-title">Реєстрація</h2>
-			<form @submit.prevent="userRegister" novalidate>
+			<form @submit.prevent="userRegister" novalidate style="height: ">
 				<div v-if="regMessage" class="alert alert-success" role="alert">
 					Ви успішно зареєструвались!
 				</div>
@@ -260,7 +260,6 @@ form {
 	color: #5d5d5d;
 	font-size: 24px;
 	margin-bottom: 18px;
-	padding-left: 20px;
 }
 .slide-fade-enter-active {
 	transition: all 0.3s ease;
