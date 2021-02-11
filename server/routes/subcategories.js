@@ -3,7 +3,7 @@ const router = Router();
 const mysql = require("../config/db");
 
 router.get("/", (req, res) => {
-  res.send("Categories");
+  res.send("Subcategories");
 });
 
 module.exports = router;
