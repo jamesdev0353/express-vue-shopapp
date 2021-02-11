@@ -38,7 +38,7 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get("api/categories");
+      const res = await axios.get("/api/categories");
       this.categories = res.data;
     } catch (e) {
       console.error(e);

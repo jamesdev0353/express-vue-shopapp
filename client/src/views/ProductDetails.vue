@@ -3,13 +3,12 @@
     <div class="container">
       <div class="row mt-5">
         <div class="col col-lg-8 col-12">
-          <div>
-            <h4>hp elitebook 840 g1</h4>
-            <img src="@/assets/hp.png" class="image img-prod" />
-          </div>
+          <h4>{{ product.name }}</h4>
+          <!-- <h5 class="text-left">{{ product.brand }}</h5> -->
+          <img :src="product.img" class="image" />
         </div>
         <div class="col col-lg-4 col-12">
-          <h3 class="mt-5 ml-2">200 грн</h3>
+          <h3 class="mt-5 ml-2">{{ product.price }} грн</h3>
           <router-link to="/cart" class="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +25,7 @@
             Купити
           </router-link>
           <p>
-            Ноутбук HP Laptop — повнофункціональний ноутбук, обладнаний усіма
-            необхідними функціями для розв'язання різних завдань і роз'ємами для
-            швидкого під'єднання додаткових пристроїв.
+            {{ product.description }}
           </p>
         </div>
       </div>
@@ -53,6 +50,25 @@
   </div>
 </template>
 
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      product: [],
+    };
+  },
+  async created() {
+    try {
+      const res = await axios.get("/api/products/" + this.$route.params.id);
+      this.product = res.data[0];
+    } catch (e) {
+      console.error(e);
+    }
+  },
+};
+</script>
+
 <style scoped>
 .details {
   min-height: 100vh;
@@ -68,12 +84,6 @@
 h3,
 h4 {
   text-align: left;
-}
-
-.img-prod {
-  width: 70%;
-  height: 70%;
-  margin: auto;
 }
 
 p {

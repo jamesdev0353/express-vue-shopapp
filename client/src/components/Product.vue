@@ -2,7 +2,7 @@
   <div>
     <b-row v-for="product of products" :key="product.id">
       <column class="col-lg-3 col-md-4 col-sm-6 col-6 product">
-        <router-link class="text-dark" to="/product-details">
+        <router-link class="text-dark" :to="'/product-details/' + product.id">
           <img :src="product.img" class="image img-prod" />
           <p>
             <b>{{ product.name }}</b>
@@ -24,7 +24,7 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get("api/products");
+      const res = await axios.get("/api/products");
       this.products = res.data;
     } catch (e) {
       console.error(e);
