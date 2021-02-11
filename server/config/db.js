@@ -13,7 +13,7 @@ db.connect((err) => {
 
   setInterval(function () {
     db.query("SELECT 1");
-    console.log("Ping to mysql server");
+    // console.log("Ping to mysql server");
   }, 60000);
 });
 
