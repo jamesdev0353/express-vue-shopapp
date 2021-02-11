@@ -25,12 +25,8 @@
             <router-link class="mx-4 text-muted" to="/catalog">
               Каталог
             </router-link>
-            <router-link class="mx-4 text-muted" to="#">
-              Новинки
-            </router-link>
-            <router-link class="mx-4 text-muted" to="#">
-              Контакти
-            </router-link>
+            <router-link class="mx-4 text-muted" to="#"> Новинки </router-link>
+            <router-link class="mx-4 text-muted" to="#"> Контакти </router-link>
             <router-link class="mx-4 text-muted" to="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,8 +58,7 @@
     margin-top: 10px;
   }
 
-  .auth-button
-  {
+  .auth-button {
     margin-left: 0 !important;
     align-self: center;
   }

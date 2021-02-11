@@ -41,7 +41,6 @@
 </template>
 
 <style scoped>
-
 .count {
   height: 20px;
   width: 50px;
@@ -57,7 +56,7 @@ p {
 }
 
 .card {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .parameter {

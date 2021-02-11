@@ -7,7 +7,7 @@
         <router-link to="/catalog" class="button">Каталог</router-link>
       </div>
     </div>
-   <div class="category-1">
+    <div class="category-1">
       <h4 class="title"><b>Електроніка</b></h4>
       <b-container>
         <b-row class="mt-4">
@@ -73,8 +73,7 @@
   position: relative;
 }
 
-.img-prod
-{
+.img-prod {
   margin: auto;
   object-fit: cover;
   height: 80%;
@@ -85,17 +84,17 @@
   height: 100%;
   widows: 100%;
   margin-top: 20px;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
 .product:hover {
-    background: white;
-    filter: brightness(90%);
-    transform: scale(1.05);
+  background: white;
+  filter: brightness(90%);
+  transform: scale(1.05);
 }
 
-b-row { 
-    align-items: center; 
+b-row {
+  align-items: center;
 }
 
 .main-page {
@@ -130,13 +129,13 @@ b-row {
   text-decoration: none;
 }
 
-.category-1, .category-2 {
+.category-1,
+.category-2 {
   margin: auto;
   margin-top: 20px;
   width: 80%;
   position: relative;
 }
-
 
 .title {
   text-align: center;
@@ -167,6 +166,5 @@ b-row {
   p {
     font-size: small;
   }
-
 }
 </style>

@@ -1,63 +1,62 @@
-  
 <template>
-<div class="login">
-  <div class="container mt-4">
-    <div class="col-sm-4 mx-auto">
-      <h2 class="reg-title">Вхід</h2>
-      <form @submit.prevent="userRegister" novalidate>
-        <div class="form-group">
-          <label for="email">Email</label>
+  <div class="login">
+    <div class="container mt-4">
+      <div class="col-sm-4 mx-auto">
+        <h2 class="reg-title">Вхід</h2>
+        <form @submit.prevent="userRegister" novalidate>
+          <div class="form-group">
+            <label for="email">Email</label>
 
-          <input
-            @blur="$v.formReg.email.$touch()"
-            :class="status($v.formReg.email)"
-            v-model.trim="formReg.email"
-            type="text"
-            class="form-control"
-            id="email"
-          />
+            <input
+              @blur="$v.formReg.email.$touch()"
+              :class="status($v.formReg.email)"
+              v-model.trim="formReg.email"
+              type="text"
+              class="form-control"
+              id="email"
+            />
 
-          <div class="invalid-feedback" v-if="!$v.formReg.email.required">
-            {{ reqText }}
+            <div class="invalid-feedback" v-if="!$v.formReg.email.required">
+              {{ reqText }}
+            </div>
+            <div class="invalid-feedback" v-if="!$v.formReg.email.email">
+              Будь ласка введіть Email
+            </div>
           </div>
-          <div class="invalid-feedback" v-if="!$v.formReg.email.email">
-            Будь ласка введіть Email
+
+          <div class="form-group">
+            <label for="password">Пароль</label>
+
+            <input
+              @blur="$v.formReg.password.$touch()"
+              :class="status($v.formReg.password)"
+              v-model.trim="formReg.password"
+              type="password"
+              class="form-control"
+              id="password"
+            />
+
+            <div class="invalid-feedback" v-if="!$v.formReg.password.required">
+              {{ reqText }}
+            </div>
+            <div class="invalid-feedback" v-if="!$v.formReg.password.minLength">
+              {{ minLengthText }}
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="password">Пароль</label>
-
-          <input
-            @blur="$v.formReg.password.$touch()"
-            :class="status($v.formReg.password)"
-            v-model.trim="formReg.password"
-            type="password"
-            class="form-control"
-            id="password"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.password.required">
-            {{ reqText }}
-          </div>
-          <div class="invalid-feedback" v-if="!$v.formReg.password.minLength">
-            {{ minLengthText }}
-          </div>
-        </div>
-
-        <button type="button" class="btn btn-light mr-2">Увійти</button>
-        <button
-          :disabled="disabledBtn"
-          type="submit"
-          class="btn btn-primary"
-          @click="$router.push({ name: 'Registration' })"
-        >
-          Реєстрація
-        </button>
-      </form>
+          <button type="button" class="btn btn-light mr-2">Увійти</button>
+          <button
+            :disabled="disabledBtn"
+            type="submit"
+            class="btn btn-primary"
+            @click="$router.push({ name: 'Registration' })"
+          >
+            Реєстрація
+          </button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>

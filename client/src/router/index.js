@@ -1,57 +1,56 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Main from '../views/Main.vue'
-import Catalog from '../views/Catalog.vue'
-import Products from '../views/Products.vue'
-import LoginForm from '../views/LoginForm'
-import Registration from '../views/RegistrationForm'
-import ProductDetails from '../views/ProductDetails.vue'
-import ShoppingCart from '../views/ShoppingCart'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Main from "../views/Main.vue";
+import Catalog from "../views/Catalog.vue";
+import Products from "../views/Products.vue";
+import LoginForm from "../views/LoginForm";
+import Registration from "../views/RegistrationForm";
+import ProductDetails from "../views/ProductDetails.vue";
+import ShoppingCart from "../views/ShoppingCart";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Main',
-    component: Main
+    path: "/",
+    name: "Main",
+    component: Main,
   },
   {
-    path: '/catalog',
-    name: 'Catalog',
-    component: Catalog
+    path: "/catalog",
+    name: "Catalog",
+    component: Catalog,
   },
   {
-    path: '/products',
-    name: 'Products',
-    component: Products
+    path: "/products",
+    name: "Products",
+    component: Products,
   },
   {
-    path: '/product-details',
-    name: 'ProductDetails',
-    component: ProductDetails
+    path: "/product-details",
+    name: "ProductDetails",
+    component: ProductDetails,
   },
   {
-    path: '/cart',
-    name: 'Cart',
-    component: ShoppingCart
+    path: "/cart",
+    name: "Cart",
+    component: ShoppingCart,
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: LoginForm
+    path: "/login",
+    name: "Login",
+    component: LoginForm,
   },
   {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration
+    path: "/registration",
+    name: "Registration",
+    component: Registration,
   },
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
-  routes
-})
+  mode: "history",
+  routes,
+});
 
-
-export default router
+export default router;
