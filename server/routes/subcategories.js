@@ -1,9 +1,11 @@
 const { Router } = require("express");
 const router = Router();
-const mysql = require("../config/db");
+const db = require("../config/db");
 
 router.get("/", (req, res) => {
-  res.send("Subcategories");
+  db.query("SELECT * FROM subcategories", (err, result) => {
+    res.json(result);
+  });
 });
 
 module.exports = router;

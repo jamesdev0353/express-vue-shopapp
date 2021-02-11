@@ -9,7 +9,12 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) throw err;
-  console.log("My sql connected");
+  console.log("Mysql connected");
+
+  setInterval(function () {
+    db.query("SELECT 1");
+    console.log("Ping to mysql server");
+  }, 60000);
 });
 
 module.exports = db;
