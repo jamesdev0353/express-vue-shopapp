@@ -7,8 +7,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/categories", require("./routes/categories"));
-app.use("/subcategories", require("./routes/subcategories"));
+app.use("/api/categories", require("./routes/categories"));
+app.use("/api/subcategories", require("./routes/subcategories"));
+app.use("/api/products", require("./routes/products"));
 
 // SPA
 app.get("*", (req, res) => {
