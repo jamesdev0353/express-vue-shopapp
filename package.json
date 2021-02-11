@@ -10,8 +10,5 @@
 		"build": "cd client && npm run build"
 	},
 	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"axios": "^0.21.1"
-	}
+	"license": "ISC"
 }
