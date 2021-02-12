@@ -17,6 +17,9 @@
 <script>
 import axios from "axios";
 export default {
+  props: {
+    subcategory_id: Number,
+  },
   data() {
     return {
       products: [],
@@ -24,7 +27,7 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get("/api/products");
+      const res = await axios.get("/api/products/" + this.subcategory_id);
       this.products = res.data;
     } catch (e) {
       console.error(e);

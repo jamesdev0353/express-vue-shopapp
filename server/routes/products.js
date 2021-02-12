@@ -8,9 +8,9 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:subcategory_id", (req, res) => {
   db.query(
-    `SELECT * FROM products WHERE id = ${req.params.id}`,
+    `SELECT * FROM products WHERE subcategory_id = ${req.params.subcategory_id}`,
     (err, result) => {
       res.json(result);
     }

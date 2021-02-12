@@ -7,6 +7,7 @@ import LoginForm from "../views/LoginForm";
 import Registration from "../views/RegistrationForm";
 import ProductDetails from "../views/ProductDetails.vue";
 import ShoppingCart from "../views/ShoppingCart";
+import Subcategories from "../views/Subcategories";
 
 Vue.use(VueRouter);
 
@@ -22,12 +23,17 @@ const routes = [
     component: Catalog,
   },
   {
-    path: "/products",
+    path: "/subcategories/:category_id",
+    name: "Subcategories",
+    component: Subcategories,
+  },
+  {
+    path: "/products/:subcategory_id",
     name: "Products",
     component: Products,
   },
   {
-    path: "/product-details/:id",
+    path: "/product-details/:product_id",
     name: "ProductDetails",
     component: ProductDetails,
   },

@@ -8,7 +8,7 @@
           v-for="category of categories"
           :key="category.id"
         >
-          <router-link to="/products">
+          <router-link :to="'/subcategories/' + category.id">
             <div class="category">
               <img
                 :src="category.img"
