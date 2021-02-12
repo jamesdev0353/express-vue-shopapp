@@ -61,7 +61,7 @@ export default {
   async created() {
     try {
       const res = await axios.get(
-        "/api/product-details/" + this.$route.params.product_id
+        "/api/products/" + this.$route.params.product_id
       );
       this.product = res.data[0];
     } catch (e) {

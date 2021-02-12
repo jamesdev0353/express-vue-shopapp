@@ -23,17 +23,23 @@ const routes = [
     component: Catalog,
   },
   {
-    path: "/subcategories/:category_id",
-    name: "Subcategories",
+    path: "/catalog/:category_id",
+    name: "Catalog",
     component: Subcategories,
   },
+  
   {
-    path: "/products/:subcategory_id",
+    path: "/subcategories/:subcategory_id",
+    name: "Subcategories",
+    component: Products,
+  },
+  {
+    path: "/products",
     name: "Products",
     component: Products,
   },
   {
-    path: "/product-details/:product_id",
+    path: "/products/:product_id",
     name: "ProductDetails",
     component: ProductDetails,
   },

@@ -8,7 +8,7 @@
           v-for="subcategory of subcategories"
           :key="subcategory.id"
         >
-          <router-link :to="'/products/' + subcategory.id">
+          <router-link :to="'/subcategories/' + subcategory.id">
             <div class="category">
               <img
                 src="@/assets/laptop.jpg"
@@ -39,7 +39,7 @@ export default {
   async created() {
     try {
       const res = await axios.get(
-        "/api/subcategories/" + this.$route.params.category_id
+        "/api/categories/" + this.$route.params.category_id
       );
       this.subcategories = res.data;
     } catch (e) {
