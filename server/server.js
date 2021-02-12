@@ -10,7 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/categories", require("./routes/categories"));
 app.use("/api/subcategories", require("./routes/subcategories"));
 app.use("/api/products", require("./routes/products"));
-app.use("/api/product-details", require("./routes/product-details"));
 
 // SPA
 app.get("*", (req, res) => {
