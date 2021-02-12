@@ -30,7 +30,7 @@
         </b-column>
 
         <b-column class="col-md-9 col-sm-12 products">
-          <Product v-bind:id="$route.params.subcategory_id" />
+          <Product v-bind:subcategory_id="$route.params.subcategory_id" />
         </b-column>
       </b-row>
     </b-container>
