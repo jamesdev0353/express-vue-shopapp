@@ -1,10 +1,11 @@
 const mysql = require("mysql");
+require("dotenv").config();
 
 const db = mysql.createConnection({
-  host: "remotemysql.com",
-  user: "tdMu2YTH2n",
-  password: "cnl3DmmJUy",
-  database: "tdMu2YTH2n",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 db.connect((err) => {
@@ -13,7 +14,6 @@ db.connect((err) => {
 
   setInterval(function () {
     db.query("SELECT 1");
-    // console.log("Ping to mysql server");
   }, 60000);
 });
 

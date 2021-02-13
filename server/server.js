@@ -6,12 +6,14 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// const authToken = require("./middlewares/authToken");
+
 // Routes
 app.use("/api/categories", require("./routes/categories"));
 app.use("/api/subcategories", require("./routes/subcategories"));
 app.use("/api/products", require("./routes/products"));
-app.use("/api/login",require("./routes/login"))
-app.use("/api/registration",require("./routes/registration"));
+app.use("/api/login", require("./routes/login"));
+app.use("/api/registration", require("./routes/registration"));
 
 // SPA
 app.get("*", (req, res) => {
