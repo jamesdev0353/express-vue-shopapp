@@ -4,7 +4,7 @@
       <b-row>
         <b-column class="col-md-3 col-sm-12"> </b-column>
         <b-column class="col-md-9 col-sm-12 products">
-          <h3 class="text-center">Товари</h3>
+          <h3 class="text-center mt-4">Товари</h3>
           <button @click="showOthers()" class="filters-button">
             <svg
               xmlns="http://www.w3.org/2000/svg"

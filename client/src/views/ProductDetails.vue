@@ -1,13 +1,13 @@
 <template>
   <div class="details">
     <div class="container">
-      <div class="row mt-5">
+      <div class="row">
         <div class="col col-lg-8 col-12">
-          <h4>{{ product.name }}</h4>
+          <h4 class="my-4">{{ product.name }}</h4>
           <!-- <h5 class="text-left">{{ product.brand }}</h5> -->
           <img :src="product.img" class="image" />
         </div>
-        <div class="col col-lg-4 col-12">
+        <div class="col col-lg-4 col-12 mt-5">
           <h3 class="mt-5 ml-2">{{ product.price }} грн</h3>
           <router-link to="/cart" class="button">
             <svg

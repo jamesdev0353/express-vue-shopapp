@@ -6,7 +6,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// const authToken = require("./middlewares/authToken");
+// const authToken = require("./middleware/authToken");
 
 // Routes
 app.use("/api/categories", require("./routes/categories"));
