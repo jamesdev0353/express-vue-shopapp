@@ -3,7 +3,7 @@
     <div class="container">
       <div class="col-sm-4 mx-auto">
         <h2 class="reg-title">Реєстрація</h2>
-        <form @submit.prevent="userRegister" novalidate style="height: ">
+        <form  method ="POST" action="/api/registration" novalidate style="height: ">
           <div v-if="regMessage" class="alert alert-success" role="alert">
             Ви успішно зареєструвались!
           </div>
@@ -18,6 +18,7 @@
               type="text"
               class="form-control"
               id="name"
+              name = "name"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.name.required">
@@ -38,6 +39,7 @@
               type="text"
               class="form-control"
               id="surname"
+              name="surname"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.surname.required">
@@ -58,6 +60,7 @@
               type="text"
               class="form-control"
               id="phone"
+              name = "phone"
               maxlength="13"
             />
 
@@ -79,6 +82,7 @@
               type="text"
               class="form-control"
               id="email"
+              name = "email"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.email.required">
@@ -99,6 +103,7 @@
               type="password"
               class="form-control"
               id="password"
+              name="password"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.password.required">

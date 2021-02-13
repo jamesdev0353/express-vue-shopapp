@@ -3,7 +3,7 @@
     <div class="container mt-4">
       <div class="col-sm-4 mx-auto">
         <h2 class="reg-title">Вхід</h2>
-        <form @submit.prevent="userRegister" novalidate>
+        <form method="POST" action="/api/login" novalidate>
           <div class="form-group">
             <label for="email">Email</label>
 
@@ -14,6 +14,7 @@
               type="text"
               class="form-control"
               id="email"
+              name="email"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.email.required">
@@ -34,6 +35,7 @@
               type="password"
               class="form-control"
               id="password"
+              name="password"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.password.required">
@@ -44,7 +46,7 @@
             </div>
           </div>
 
-          <button type="button" class="btn btn-light mr-2">Увійти</button>
+          <button type="submit" class="btn btn-light mr-2">Увійти</button>
           <button
             :disabled="disabledBtn"
             type="submit"
