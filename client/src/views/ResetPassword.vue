@@ -1,28 +1,11 @@
   
 <template>
   <div class="container mt-4">
-    <div class="col-sm-4 mx-auto">
-      <h2 class="reg-title">Вхід</h2>
-      <form method="POST" action="/api/login" novalidate><!--@submit.prevent="userRegister" -->
-        <div class="form-group">
-          <label for="email">Email</label>
-
-          <input
-            @blur="$v.formReg.email.$touch()"
-            :class="status($v.formReg.email)"
-            v-model.trim="formReg.email"
-            type="text"
-            class="form-control"
-            id="email"
-            name = "email"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.email.required">
-            {{ reqText }}
-          </div>
-          <div class="invalid-feedback" v-if="!$v.formReg.email.email">
-            Будь ласка введіть Email
-          </div>
+    <div class="col-sm-4 mx-auto"> 
+      <h2 class="reg-title">Скидання пароля</h2>
+      <form method ="POST" :action="'/api/resetPassword/'+$route.params.token" novalidate> <!--@submit.prevent="userRegister" -->
+        <div v-if="regMessage" class="alert alert-success" role="alert">
+          Ви успішно скинули пароль!
         </div>
 
         <div class="form-group">
@@ -46,25 +29,51 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-light mr-2">Увійти</button>
+        <div class="form-group">
+          <label for="passwordConfirm">Підтвердження пароля</label>
+
+          <input
+            @blur="$v.formReg.passwordConfirm.$touch()"
+            :class="status($v.formReg.passwordConfirm)"
+            v-model.trim="formReg.passwordConfirm"
+            type="password"
+            class="form-control"
+            id="passwordConfirm"
+          />
+
+          <div
+            class="invalid-feedback"
+            v-if="!$v.formReg.passwordConfirm.sameAs"
+          >
+            {{ passwordConfirmText }}
+          </div>
+        </div>
+
         <button
-          :disabled="disabledBtn"
-          type="submit"
-          class="btn btn-primary"
-          @click="$router.push({ name: 'Registration' })"
+          type="button"
+          class="btn btn-light mr-2"
+          @click="$router.push({ name: 'email' })"
         >
-          Реєстрація
+          Назад
         </button>
-        <router-link to="/forgetPassword" class="text-dark">
-          <h6 class="mt-4 text-left">Забули пароль?</h6>
-        </router-link>
+        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
+          Змініти пароль
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import {
+  email,
+  required,
+  minLength,
+  helpers,
+  sameAs,
+} from "vuelidate/lib/validators";
+
+const alpha = helpers.regex("alpha", /^[a-zA-Zа-яёА-А-ЯҐЄІЇ-яґєії]*$/);
 
 export default {
   data() {
@@ -72,20 +81,23 @@ export default {
       regMessage: false,
       reqText: "Поле обовязкове для заповнення",
       alphaText: "Заборонені пробіли а також інші символи",
-      minLengthText: "Мінімальна довжина 8 символів!",
+      minLengthText: "Мінімальна довжина 6 символів!",
+      passwordConfirmText: "Паролі не співпадають",
       formReg: {
         email: "",
+        name: "",
+        surname: "",
         password: "",
+        passwordConfirm: "",
       },
     };
   },
 
   computed: {
-    disabledBtn1() {
+    disabledBtn() {
       return (
-        this.$v.formReg.name.$invalid ||
-        this.$v.formReg.surname.$invalid ||
-        this.$v.formReg.email.$invalid
+        this.$v.formReg.password.$invalid ||
+        this.$v.formReg.passwordConfirm.$invalid
       );
     },
   },
@@ -99,6 +111,9 @@ export default {
     },
     userRegister() {
       console.group();
+      console.log("Ви зареєстурвались!");
+      console.log("Ваше імя: " + this.formReg.name);
+      console.log("Ваша прізвище: " + this.formReg.surname);
       console.log("Email: " + this.formReg.email);
       console.log("Пароль: " + this.formReg.password);
       console.groupEnd();
@@ -106,7 +121,6 @@ export default {
     },
 
     reset() {
-      this.step = 1;
       this.regMessage = true;
       setTimeout(() => {
         this.regMessage = false;
@@ -123,9 +137,20 @@ export default {
         email,
         required,
       },
+      name: {
+        required,
+        alpha,
+      },
+      surname: {
+        required,
+        alpha,
+      },
       password: {
         required,
-        minLength: minLength(6),
+        minLength: minLength(8),
+      },
+      passwordConfirm: {
+        sameAs: sameAs("password"),
       },
     },
   },

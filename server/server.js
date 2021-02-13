@@ -9,6 +9,8 @@ app.use(express.urlencoded({ extended: true }));
 // const authToken = require("./middlewares/authToken");
 
 // Routes
+app.use("/api/forgetPassword", require("./routes/forgetPassword"));
+app.use("/api/resetPassword", require("./routes/resetPassword"));
 app.use("/api/categories", require("./routes/categories"));
 app.use("/api/subcategories", require("./routes/subcategories"));
 app.use("/api/products", require("./routes/products"));

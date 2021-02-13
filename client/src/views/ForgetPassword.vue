@@ -2,8 +2,8 @@
 <template>
   <div class="container mt-4">
     <div class="col-sm-4 mx-auto">
-      <h2 class="reg-title">Вхід</h2>
-      <form method="POST" action="/api/login" novalidate><!--@submit.prevent="userRegister" -->
+      <h2 class="reg-title">Ваш Email</h2>
+      <form method="POST" action="/api/forgetPassword" novalidate> <!-- @submit.prevent="userRegister" -->
         <div class="form-group">
           <label for="email">Email</label>
 
@@ -25,46 +25,27 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="password">Пароль</label>
-
-          <input
-            @blur="$v.formReg.password.$touch()"
-            :class="status($v.formReg.password)"
-            v-model.trim="formReg.password"
-            type="password"
-            class="form-control"
-            id="password"
-            name = "password"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.password.required">
-            {{ reqText }}
-          </div>
-          <div class="invalid-feedback" v-if="!$v.formReg.password.minLength">
-            {{ minLengthText }}
-          </div>
-        </div>
-
-        <button type="button" class="btn btn-light mr-2">Увійти</button>
+        <button
+          type="button"
+          class="btn btn-light mr-2"
+          @click="$router.push({ name: 'Login' })"
+        >
+          Назад
+        </button>
         <button
           :disabled="disabledBtn"
           type="submit"
           class="btn btn-primary"
-          @click="$router.push({ name: 'Registration' })"
         >
-          Реєстрація
+          Далі
         </button>
-        <router-link to="/forgetPassword" class="text-dark">
-          <h6 class="mt-4 text-left">Забули пароль?</h6>
-        </router-link>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import { email, required } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -72,21 +53,15 @@ export default {
       regMessage: false,
       reqText: "Поле обовязкове для заповнення",
       alphaText: "Заборонені пробіли а також інші символи",
-      minLengthText: "Мінімальна довжина 8 символів!",
       formReg: {
         email: "",
-        password: "",
       },
     };
   },
 
   computed: {
-    disabledBtn1() {
-      return (
-        this.$v.formReg.name.$invalid ||
-        this.$v.formReg.surname.$invalid ||
-        this.$v.formReg.email.$invalid
-      );
+    disabledBtn() {
+      return this.$v.formReg.email.$invalid;
     },
   },
 
@@ -100,7 +75,6 @@ export default {
     userRegister() {
       console.group();
       console.log("Email: " + this.formReg.email);
-      console.log("Пароль: " + this.formReg.password);
       console.groupEnd();
       this.reset();
     },
@@ -122,10 +96,6 @@ export default {
       email: {
         email,
         required,
-      },
-      password: {
-        required,
-        minLength: minLength(6),
       },
     },
   },
