@@ -68,6 +68,15 @@
 </template>
 
 <style>
+body {
+  background: #f1f1f1;
+  min-height: 100vh;
+}
+
+.wrapper {
+  min-height: 100vh;
+}
+
 .back {
   width: 100%;
   position: relative;

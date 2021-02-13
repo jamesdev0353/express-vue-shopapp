@@ -1,9 +1,14 @@
   
 <template>
-  <div class="container mt-4">
-    <div class="col-sm-4 mx-auto"> 
+  <div class="container wrappper mt-5">
+    <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Скидання пароля</h2>
-      <form method ="POST" :action="'/api/resetPassword/'+$route.params.token" novalidate> <!--@submit.prevent="userRegister" -->
+      <form
+        method="POST"
+        :action="'/api/resetPassword/' + $route.params.token"
+        novalidate
+      >
+        <!--@submit.prevent="userRegister" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно скинули пароль!
         </div>
@@ -18,7 +23,7 @@
             type="password"
             class="form-control"
             id="password"
-            name = "password"
+            name="password"
           />
 
           <div class="invalid-feedback" v-if="!$v.formReg.password.required">
@@ -157,10 +162,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 body {
-  background-color: #f1f1f1;
+  background: #f1f1f1;
 }
+</style>
+
+<style>
 form {
   background-color: white;
   padding: 20px;
@@ -174,7 +182,6 @@ form {
   color: #5d5d5d;
   font-size: 24px;
   margin-bottom: 18px;
-  padding-left: 20px;
 }
 .slide-fade-enter-active {
   transition: all 0.3s ease;

@@ -11,7 +11,7 @@ router.post("/:token", async (req, res) => {
     var hashpass = await bcrypt.hash(req.body.password, 10);
     let sql = `UPDATE users SET password = '${hashpass}' WHERE id = '${user.id}'`;
     db.query(sql, (err, result) => {
-      res.json({message:"Пароль успішно змінено"});
+      res.json({ message: "Пароль успішно змінено" });
     });
   } catch (e) {
     res.send("error:", e);

@@ -10,10 +10,10 @@ router.get("/", (req, res) => {
 
 router.get("/:product_id", (req, res) => {
   db.query(
-      `SELECT * FROM products WHERE id = ${req.params.product_id}`,
-      (err, result) => {
-          res.json(result);
-      }
+    `SELECT * FROM products WHERE id = ${req.params.product_id}`,
+    (err, result) => {
+      res.json(result);
+    }
   );
 });
 

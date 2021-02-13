@@ -1,9 +1,10 @@
   
 <template>
-  <div class="container mt-4">
+  <div class="container wrapper mt-5">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Ваш Email</h2>
-      <form method="POST" action="/api/forgetPassword" novalidate> <!-- @submit.prevent="userRegister" -->
+      <form method="POST" action="/api/forgetPassword" novalidate>
+        <!-- @submit.prevent="userRegister" -->
         <div class="form-group">
           <label for="email">Email</label>
 
@@ -14,7 +15,7 @@
             type="text"
             class="form-control"
             id="email"
-            name = "email"
+            name="email"
           />
 
           <div class="invalid-feedback" v-if="!$v.formReg.email.required">
@@ -32,11 +33,7 @@
         >
           Назад
         </button>
-        <button
-          :disabled="disabledBtn"
-          type="submit"
-          class="btn btn-primary"
-        >
+        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
           Далі
         </button>
       </form>
@@ -103,9 +100,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #f1f1f1;
-}
 form {
   background-color: white;
   padding: 20px;
@@ -119,7 +113,6 @@ form {
   color: #5d5d5d;
   font-size: 24px;
   margin-bottom: 18px;
-  padding-left: 20px;
 }
 .slide-fade-enter-active {
   transition: all 0.3s ease;

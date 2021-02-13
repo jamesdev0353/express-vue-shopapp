@@ -1,9 +1,10 @@
   
 <template>
-  <div class="container mt-4">
+  <div class="container wrapper mt-5">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Вхід</h2>
-      <form method="POST" action="/api/login" novalidate><!--@submit.prevent="userRegister" -->
+      <form method="POST" action="/api/login" novalidate>
+        <!--@submit.prevent="userRegister" -->
         <div class="form-group">
           <label for="email">Email</label>
 
@@ -14,7 +15,7 @@
             type="text"
             class="form-control"
             id="email"
-            name = "email"
+            name="email"
           />
 
           <div class="invalid-feedback" v-if="!$v.formReg.email.required">
@@ -35,7 +36,7 @@
             type="password"
             class="form-control"
             id="password"
-            name = "password"
+            name="password"
           />
 
           <div class="invalid-feedback" v-if="!$v.formReg.password.required">
@@ -46,18 +47,26 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-light mr-2">Увійти</button>
-        <button
-          :disabled="disabledBtn"
-          type="submit"
-          class="btn btn-primary"
-          @click="$router.push({ name: 'Registration' })"
-        >
-          Реєстрація
-        </button>
-        <router-link to="/forgetPassword" class="text-dark">
-          <h6 class="mt-4 text-left">Забули пароль?</h6>
-        </router-link>
+        <div class="form-group">
+          <button class="btn btn-primary w-100" :disabled="disabledBtn">
+            Увійти
+          </button>
+        </div>
+        <div class="form-group row align-items-center">
+          <div class="col-6 text-left">
+            <button
+              class="btn btn-light"
+              @click="$router.push({ name: 'Registration' })"
+            >
+              Реєстрація
+            </button>
+          </div>
+          <div class="col-6 text-right">
+            <router-link to="/forgetPassword" class="text-dark">
+              Забули пароль?
+            </router-link>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -133,9 +142,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #f1f1f1;
-}
 form {
   background-color: white;
   padding: 20px;
@@ -149,7 +155,6 @@ form {
   color: #5d5d5d;
   font-size: 24px;
   margin-bottom: 18px;
-  padding-left: 20px;
 }
 .slide-fade-enter-active {
   transition: all 0.3s ease;

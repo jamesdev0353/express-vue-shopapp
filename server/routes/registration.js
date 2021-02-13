@@ -16,15 +16,16 @@ let transporter = nodemailer.createTransport({
 });
 
 router.post("/", async (req, res) => {
-   db.query(
-  `SELECT * FROM users WHERE email like '${req.body.email}' LIMIT 1`,
-  async (err, results) => {
-  let json = JSON.parse(JSON.stringify(results));
-  console.log(json);
-  if (json.length > 0) {
-    return res.json({message:"User already exists"})
-  }
-})
+  db.query(
+    `SELECT * FROM users WHERE email like '${req.body.email}' LIMIT 1`,
+    async (err, results) => {
+      let json = JSON.parse(JSON.stringify(results));
+      console.log(json);
+      if (json.length > 0) {
+        return res.json({ message: "User already exists" });
+      }
+    }
+  );
   json = JSON.parse(JSON.stringify(req.body));
   var hashpass = await bcrypt.hash(json.password, 10);
   let user = {

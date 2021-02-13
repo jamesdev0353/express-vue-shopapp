@@ -1,9 +1,14 @@
 	<template>
-  <div class="registration">
+  <div class="wrapper mt-5">
     <div class="container">
       <div class="col-sm-4 mx-auto">
         <h2 class="reg-title">Реєстрація</h2>
-        <form  method ="POST" action="/api/registration" novalidate style="height: ">
+        <form
+          method="POST"
+          action="/api/registration"
+          novalidate
+          style="height: "
+        >
           <div v-if="regMessage" class="alert alert-success" role="alert">
             Ви успішно зареєструвались!
           </div>
@@ -18,7 +23,7 @@
               type="text"
               class="form-control"
               id="name"
-              name = "name"
+              name="name"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.name.required">
@@ -60,7 +65,7 @@
               type="text"
               class="form-control"
               id="phone"
-              name = "phone"
+              name="phone"
               maxlength="13"
             />
 
@@ -82,7 +87,7 @@
               type="text"
               class="form-control"
               id="email"
-              name = "email"
+              name="email"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.email.required">
@@ -251,12 +256,10 @@ export default {
 </script>
 
 <style scoped>
-.registration {
-  min-height: 100vh;
-}
 body {
-  background-color: #f1f1f1;
+  background: #f1f1f1;
 }
+
 form {
   background-color: white;
   padding: 20px;

@@ -1,12 +1,6 @@
 <template>
-  <header>
-    <b-navbar
-      collapseOnSelect
-      expand="md"
-      toggleable="md"
-      bg="white"
-      class="m-3"
-    >
+  <header class="p-3">
+    <b-navbar collapseOnSelect expand="md" toggleable="md" bg="white">
       <b-container>
         <router-link to="/">
           <b-navbar-brand>
@@ -62,6 +56,10 @@
     margin-left: 0 !important;
     align-self: center;
   }
+}
+
+header {
+  background: #fff;
 }
 
 .auth-button {
