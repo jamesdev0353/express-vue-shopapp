@@ -10,7 +10,7 @@
         >
           <router-link
             :to="
-              '/subcategories/' +
+              '/categories/' +
               $route.params.category_id +
               '/' +
               subcategory.id

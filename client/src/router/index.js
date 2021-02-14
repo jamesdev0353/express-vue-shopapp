@@ -20,24 +20,19 @@ const routes = [
     component: Main,
   },
   {
-    path: "/catalog",
-    name: "Catalog",
+    path: "/categories",
+    name: "categories", 
     component: Catalog,
   },
   {
-    path: "/catalog/:category_id",
-    name: "Catalog",
+    path: "/categories/:category_id",
+    name: "subcategories",
     component: Subcategories,
   },
 
   {
-    path: "/subcategories/:category_id/:subcategory_id",
+    path: "/categories/:category_id/:subcategory_id",
     name: "Subcategories",
-    component: Products,
-  },
-  {
-    path: "/products",
-    name: "Products",
     component: Products,
   },
   {

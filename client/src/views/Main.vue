@@ -4,7 +4,7 @@
       <img src="@/assets/background.png" class="image back" alt="background" />
 
       <div class="main-container">
-        <router-link to="/catalog" class="button">Каталог</router-link>
+        <router-link to="/categories" class="button">Каталог</router-link>
       </div>
     </div>
     <div class="category-1">

@@ -16,7 +16,7 @@
         <b-navbar-toggle target="navbar-toggle-collapse" bg="white" />
         <b-collapse id="navbar-toggle-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
-            <router-link class="mx-4 text-muted" to="/catalog">
+            <router-link class="mx-4 text-muted" to="/categories">
               Каталог
             </router-link>
             <router-link class="mx-4 text-muted" to="#"> Новинки </router-link>
