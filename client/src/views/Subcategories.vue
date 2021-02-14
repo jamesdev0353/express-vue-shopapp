@@ -8,7 +8,14 @@
           v-for="subcategory of subcategories"
           :key="subcategory.id"
         >
-          <router-link :to="'/subcategories/' + subcategory.id">
+          <router-link
+            :to="
+              '/subcategories/' +
+              $route.params.category_id +
+              '/' +
+              subcategory.id
+            "
+          >
             <div class="category">
               <img
                 src="@/assets/laptop.jpg"

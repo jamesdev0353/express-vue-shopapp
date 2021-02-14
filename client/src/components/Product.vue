@@ -27,7 +27,12 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get("/api/subcategories/" + this.subcategory_id);
+      const res = await axios.get(
+        "/api/categories/" +
+          this.$route.params.category_id +
+          "/" +
+          this.$route.params.subcategory_id
+      );
       this.products = res.data;
     } catch (e) {
       console.error(e);

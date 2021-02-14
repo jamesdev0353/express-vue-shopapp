@@ -33,16 +33,10 @@
         <div class="col col-lg-8 col-12">
           <h4 class="text-center my-4">Характеристики</h4>
           <table class="table">
-            <tbody>
-              <tr>
-                <td class="key">Процесор</td>
-                <td class="value">Мощний</td>
-              </tr>
-              <tr>
-                <td class="key">Відеокарта</td>
-                <td class="value">Крута</td>
-              </tr>
-            </tbody>
+            <tr v-for="spec of product.specs" :key="spec.id">
+              <td class="key">{{ spec.name }}</td>
+              <td class="value">{{ spec.value }}</td>
+            </tr>
           </table>
         </div>
       </div>
@@ -63,7 +57,7 @@ export default {
       const res = await axios.get(
         "/api/products/" + this.$route.params.product_id
       );
-      this.product = res.data[0];
+      this.product = res.data;
     } catch (e) {
       console.error(e);
     }

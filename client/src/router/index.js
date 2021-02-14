@@ -8,27 +8,12 @@ import Registration from "../views/RegistrationForm";
 import ProductDetails from "../views/ProductDetails.vue";
 import ShoppingCart from "../views/ShoppingCart";
 import Subcategories from "../views/Subcategories";
-import ForgetPassword from '../views/ForgetPassword.vue'
-import ResetPassword from '../views/ResetPassword.vue'
+import ForgetPassword from "../views/ForgetPassword.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path : '/resetPassword',
-    name: 'ResetPassword',
-    component : ResetPassword
-  },
-  {
-    path : '/resetPassword/:token',
-    name: 'ResetPassword',
-    component : ResetPassword
-  },
-  {
-    path : '/forgetPassword',
-    name: 'ForgetPassword',
-    component : ForgetPassword
-  },
   {
     path: "/",
     name: "Main",
@@ -44,9 +29,9 @@ const routes = [
     name: "Catalog",
     component: Subcategories,
   },
-  
+
   {
-    path: "/subcategories/:subcategory_id",
+    path: "/subcategories/:category_id/:subcategory_id",
     name: "Subcategories",
     component: Products,
   },
@@ -74,6 +59,21 @@ const routes = [
     path: "/registration",
     name: "Registration",
     component: Registration,
+  },
+  {
+    path: "/resetPassword",
+    name: "ResetPassword",
+    component: ResetPassword,
+  },
+  {
+    path: "/resetPassword/:token",
+    name: "ResetPassword",
+    component: ResetPassword,
+  },
+  {
+    path: "/forgetPassword",
+    name: "ForgetPassword",
+    component: ForgetPassword,
   },
 ];
 
