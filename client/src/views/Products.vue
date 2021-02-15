@@ -46,7 +46,7 @@
 
 <script>
 import Product from "@/components/Product.vue";
-import axios from 'axios'
+import axios from "axios";
 export default {
   components: {
     Product,
@@ -60,12 +60,14 @@ export default {
     return {
       display: check,
       specs: [],
-      checked: []
+      checked: [],
     };
   },
   async created() {
     window.addEventListener("resize", this.myEventHandler);
-    const res = await axios.get("/api/specs/" + this.$route.params.subcategory_id);
+    const res = await axios.get(
+      "/api/specs/" + this.$route.params.subcategory_id
+    );
     this.specs = res.data;
   },
   destroyed() {
@@ -85,25 +87,26 @@ export default {
         }
       }
     },
+    sortFunction(a, b) {
+      if (a[0] === b[0]) {
+        return 0;
+      } else {
+        return a[0] < b[0] ? -1 : 1;
+      }
+    },
     newFilter(name, value, event) {
-         if (event.target.checked)
-         {
-           this.checked.push([name, value])
-           console.log(this.checked)
-         }
-         else 
-         {
-           for (let i = 0; i < this.checked.length; i++)
-           {
-             if (this.checked[i][0] == name && this.checked[i][1] == value)
-             {
-               this.checked.splice(i, 1);
-             }
-           }
-            console.log(this.checked)
-         }
-       }
-    
+      if (event.target.checked) {
+        this.checked.push([name, value]);
+      } else {
+        for (let i = 0; i < this.checked.length; i++) {
+          if (this.checked[i][0] == name && this.checked[i][1] == value) {
+            this.checked.splice(i, 1);
+          }
+        }
+      }
+      this.checked.sort(this.sortFunction);
+      console.log(this.checked);
+    },
   },
 };
 </script>
