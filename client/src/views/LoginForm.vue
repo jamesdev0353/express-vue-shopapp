@@ -3,8 +3,8 @@
   <div class="container wrapper mt-5">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Вхід</h2>
-      <form method="POST" action="/api/login" novalidate>
-        <!--@submit.prevent="userRegister" -->
+      <form
+        @submit.prevent="getToken" >
         <div class="form-group">
           <label for="email">Email</label>
 
@@ -48,7 +48,11 @@
         </div>
 
         <div class="form-group">
-          <button class="btn btn-primary w-100" :disabled="disabledBtn">
+          <button
+            class="btn btn-primary w-100"
+            
+            :disabled="disabledBtn"
+          >
             Увійти
           </button>
         </div>
@@ -74,7 +78,7 @@
 
 <script>
 import { email, required, minLength } from "vuelidate/lib/validators";
-
+import axios from "axios";
 export default {
   data() {
     return {
@@ -86,6 +90,7 @@ export default {
         email: "",
         password: "",
       },
+      res: [1, 2, 3]
     };
   },
 
@@ -105,6 +110,18 @@ export default {
         "is-invalid": validation.$error,
         error: validation.$error,
       };
+    },
+    getToken() {
+      axios
+        .post("/api/login", {
+          password: this.formReg.password,
+          email: this.formReg.email,
+        }).then((response) => {
+          console.log(response.data.token)
+          localStorage.token = response.data.token;         
+          this.$router.push({ name: 'Main' })
+          this.$router.go()
+        });    
     },
     userRegister() {
       console.group();

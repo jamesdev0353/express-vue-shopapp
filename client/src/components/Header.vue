@@ -35,9 +35,20 @@
                 />
               </svg>
             </router-link>
-            <router-link class="ml-4 auth-button" to="/login">
+            <router-link
+              v-if="displayLogin"
+              class="ml-4 auth-button"
+              to="/login"
+            >
               Вхід
             </router-link>
+            <button
+              v-if="displayLogin == false"
+              class="ml-4 auth-button"
+              @click="removeLocalStorage()"
+            >
+              Вихід
+            </button>
           </b-navbar-nav>
         </b-collapse>
       </b-container>
@@ -45,6 +56,29 @@
   </header>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      tokens: [],
+      displayLogin: true,
+    };
+  },
+  async created() {
+    if (localStorage.getItem("token") != null) {
+      this.displayLogin = false;
+    }
+  },
+  methods:
+  {
+    removeLocalStorage() {
+      localStorage.removeItem("token");
+      this.displayLogin = true;
+      this.$router.push({ name: 'Login' })
+    }
+  }
+};
+</script>
 
 <style>
 @media (max-width: 767px) {
