@@ -1,30 +1,34 @@
 <template>
   <div class="card product-card mt-3">
     <div class="row">
-      <div class="col my-auto col-3">
+      <div class="col my-auto col-10">
+        <div class="row">
+      <div class="col my-auto col-lg-4 col-7">
         <img class="image img-prod" src="@/assets/hp.png" alt="product" />
       </div>
-      <div class="col my-auto col-3">
+      <div class="col my-auto col-lg-3 col-5">
         <router-link to="#" class="text-dark">
           <p class="name">Ноутбук hp elitebook 840 g1</p>
         </router-link>
       </div>
-      <div class="col my-auto col-2">
+      <div class="col my-auto col-lg-3 col-7">
         <p class="parameter">Кількість</p>
         <b-input class="count" type="number" value="1" min="1" />
       </div>
-      <div class="col my-auto col-2">
+      <div class="col my-auto col-lg-2 col-5">
         <p class="parameter">Ціна</p>
         <p class="price">200 грн</p>
       </div>
-      <div class="col my-auto col-2">
+      </div>
+      </div>
+      <div class="col my-auto col-lg-2 col-1">
         <router-link to="#">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
             fill="text-muted"
-            class="bi bi-x-circle"
+            class="bi bi-x-circle delete"
             viewBox="0 0 16 16"
           >
             <path
@@ -49,7 +53,6 @@
 p {
   margin: 0;
 }
-
 .name {
   text-align: left;
   font-size: 14px;
@@ -65,14 +68,19 @@ p {
 
 .product-card {
   margin-inline: 10px;
+  padding: 10px 0px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .name {
-    font-size: 12px;
+    font-size: 14px;
   }
   .price {
-    font-size: 13px;
+    font-size: 15px;
   }
+
+.delete {
+  margin: 0
+}
 }
 </style>
