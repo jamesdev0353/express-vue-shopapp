@@ -5,7 +5,7 @@
         <div class="col col-lg-8 col-12">
           <h4 class="my-4">{{ product.name }}</h4>
           <!-- <h5 class="text-left">{{ product.brand }}</h5> -->
-          <img :src="product.img" class="image" />
+          <img :src="product.img" class="image img-prod" />
         </div>
         <div class="col col-lg-4 col-12 mt-5">
           <h3 class="mt-5 ml-2">{{ product.price }} грн</h3>
@@ -68,6 +68,10 @@ export default {
 <style scoped>
 .details {
   min-height: 100vh;
+}
+
+.img-prod {
+  object-fit: contain;
 }
 
 .button {
