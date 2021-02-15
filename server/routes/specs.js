@@ -6,19 +6,25 @@ router.get("/:subcat", (req, res) => {
   db.query(
     `SELECT name, GROUP_CONCAT(DISTINCT value) AS value FROM specs GROUP BY name`,
     (err, result) => {
+      for (let i = 0; i < result.length; i++) {
+        result[i].value = result[i].value.split(",");
+      }
       res.json(result);
     }
   );
 });
 
-router.get("/:subcat", (req, res) => {
-  db.query(
-    `SELECT * FROM specs WHERE subcategory_id = ${req.params.subcat} ORDER BY name`,
-    (err, result) => {
-      res.json(result);
-    }
-  );
-});
+// router.get("/:subcat", (req, res) => {
+//   db.query(
+//     `SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))`,
+//     (err, result) => {
+//       db.query(`SELECT name, value FROM specs GROUP BY name`, (err, result) => {
+//         res.json(result);
+//         console.log(err);
+//       });
+//     }
+//   );
+// });
 
 router.get("/:subcat", (req, res) => {
   db.query(
