@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-row v-for="product of products" :key="product.id">
-      <column class="col-lg-3 col-md-4 col-sm-6 col-6 product">
+    <b-row>
+      <column class="col-lg-3 col-md-4 col-sm-6 col-6 product" v-for="product of products" :key="product.id">
         <router-link class="text-dark" :to="'/products/' + product.id">
           <img :src="product.img" class="image img-prod" />
           <p>
