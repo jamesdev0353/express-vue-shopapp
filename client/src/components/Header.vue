@@ -20,7 +20,7 @@
               Каталог
             </router-link>
             <router-link class="mx-3 text-muted" to="#"> Новинки </router-link>
-            <router-link class="mx-3 text-muted" to="#"> Контакти </router-link>
+            <router-link class="mx-3 text-muted" to="/contacts"> Контакти </router-link>
             <router-link class="mx-3 text-muted" to="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
