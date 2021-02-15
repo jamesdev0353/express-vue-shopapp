@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "../views/Main.vue";
 import Catalog from "../views/Catalog.vue";
+import Contacts from "../views/Contacts.vue";
 import Products from "../views/Products.vue";
 import LoginForm from "../views/LoginForm";
 import Registration from "../views/RegistrationForm";
@@ -18,6 +19,11 @@ const routes = [
     path: "/",
     name: "Main",
     component: Main,
+  },
+  {
+    path: "/contacts",
+    name: "Contacts",
+    component: Contacts,
   },
   {
     path: "/categories",

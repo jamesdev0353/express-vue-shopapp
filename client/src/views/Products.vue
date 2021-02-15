@@ -25,14 +25,16 @@
       </b-row>
       <b-row>
         <b-column v-if="display" class="col-md-3 col-sm-12 mt-2 filters">
-          <div v-for="spec of specs"
-          :key="spec.name">
-            <h6>{{spec.name}}</h6>
-        
-        <div v-for="value of spec.value"
-          :key="value">
-            <input type="checkbox" @change="newFilter(spec.name, value, $event)"/>
-            <span>{{value}}</span>
+          <div v-for="spec of specs" :key="spec.name">
+            <h6>{{ spec.name }}</h6>
+
+            <div v-for="value of spec.value" :key="value">
+              <input
+                type="checkbox"
+                @change="newFilter(spec.name, value, $event)"
+              />
+              <span>{{ value }}</span>
+            </div>
           </div>
         </b-column>
 
