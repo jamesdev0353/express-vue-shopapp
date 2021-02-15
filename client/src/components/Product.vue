@@ -46,8 +46,20 @@ export default {
   width: 100%;
 }
 
+.img-prod {
+  width: auto;
+  height: 190px;
+  max-width: 170px;
+}
 p {
   text-align: center;
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .img-prod {
+  height: 170px;
+  max-width: 140px;
+}
 }
 </style>

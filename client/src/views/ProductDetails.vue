@@ -72,6 +72,7 @@ export default {
 
 .img-prod {
   object-fit: contain;
+  max-height: 60vh;
 }
 
 .button {
