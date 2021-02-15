@@ -25,8 +25,15 @@
       </b-row>
       <b-row>
         <b-column v-if="display" class="col-md-3 col-sm-12 mt-2 filters">
-          <FilterName />
-          <FilterValue />
+          <div v-for="spec of specs"
+          :key="spec.name">
+            <h6>{{spec.name}}</h6>
+        
+        <div v-for="value of spec.value"
+          :key="value">
+            <input type="checkbox" @change="newFilter(spec.name, value, $event)"/>
+            <span>{{value}}</span>
+          </div>
         </b-column>
 
         <b-column class="col-md-9 col-sm-12 products">
@@ -38,14 +45,10 @@
 </template>
 
 <script>
-import FilterValue from "@/components/FilterValue.vue";
-import FilterName from "@/components/FilterName.vue";
 import Product from "@/components/Product.vue";
-
+import axios from 'axios'
 export default {
   components: {
-    FilterName,
-    FilterValue,
     Product,
   },
   data() {
@@ -56,10 +59,14 @@ export default {
     }
     return {
       display: check,
+      specs: [],
+      checked: []
     };
   },
-  created() {
+  async created() {
     window.addEventListener("resize", this.myEventHandler);
+    const res = await axios.get("/api/specs/" + this.$route.params.subcategory_id);
+    this.specs = res.data;
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
@@ -78,6 +85,25 @@ export default {
         }
       }
     },
+    newFilter(name, value, event) {
+         if (event.target.checked)
+         {
+           this.checked.push([name, value])
+           console.log(this.checked)
+         }
+         else 
+         {
+           for (let i = 0; i < this.checked.length; i++)
+           {
+             if (this.checked[i][0] == name && this.checked[i][1] == value)
+             {
+               this.checked.splice(i, 1);
+             }
+           }
+            console.log(this.checked)
+         }
+       }
+    
   },
 };
 </script>
@@ -90,7 +116,10 @@ export default {
   display: inline-block;
   text-align: start;
 }
-
+input {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
 .products {
   margin: 0 auto;
   width: 80%;
