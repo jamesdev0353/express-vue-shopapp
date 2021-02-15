@@ -4,7 +4,7 @@ const db = require("../config/db");
 
 router.get("/:subcat", (req, res) => {
   db.query(
-    `SELECT name, GROUP_CONCAT(DISTINCT value) AS value FROM specs GROUP BY name`,
+    `SELECT name, GROUP_CONCAT(DISTINCT value) AS value FROM specs GROUP BY name WHERE subcategory_id = ${req.params.subcat}`,
     (err, result) => {
       for (let i = 0; i < result.length; i++) {
         result[i].value = result[i].value.split(",");
