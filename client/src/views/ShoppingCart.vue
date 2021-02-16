@@ -317,7 +317,7 @@ export default {
       .then((response) => {
         this.cartItems = response.data;
         for (var i = 0; i < this.cartItems.length; i++) {
-          this.fullPrice += this.cartItems[i].price;
+          this.fullPrice += this.cartItems[i].price * this.cartItems[i].count;
         }
         console.log(this.cartItems)
       });
