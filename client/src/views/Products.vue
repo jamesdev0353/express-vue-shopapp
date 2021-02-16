@@ -1,7 +1,15 @@
 <template>
   <div class="products-page">
     <b-container>
-      <b-row>
+      <div v-if="displayProducts == 1"></div>
+      <div class="text-center empty" v-if="displayProducts == 2">
+        <h2>В цій категорії товарів немає</h2>
+        <img class="mt-2 empty-category mr-4" src="@/assets/empty-cart.svg" />
+        <button @click="$router.go(-1)" class="mt-3 button start"> 
+        Повернутися назад 
+        </button>
+      </div>
+      <b-row v-if="displayProducts == 3">
         <b-column class="col-md-3 col-sm-12"> </b-column>
         <b-column class="col-md-9 col-sm-12 products">
           <h3 class="text-center mt-4">Товари</h3>
@@ -41,7 +49,23 @@
         </b-column>
 
         <b-column class="col-md-9 col-sm-12 products">
-          <Product v-bind:subcategory_id="$route.params.subcategory_id" />
+          <div>
+            <b-row>
+              <column
+                class="col-lg-3 col-md-4 col-sm-6 col-6 product"
+                v-for="product of products"
+                :key="product.id"
+              >
+                <router-link class="text-dark" :to="'/products/' + product.id">
+                  <img :src="product.img" class="image img-prod" />
+                  <p>
+                    <b>{{ product.name }}</b>
+                  </p>
+                  <p>{{ product.price }} грн</p>
+                </router-link>
+              </column>
+            </b-row>
+          </div>
         </b-column>
       </b-row>
     </b-container>
@@ -49,12 +73,8 @@
 </template>
 
 <script>
-import Product from "@/components/Product.vue";
 import axios from "axios";
 export default {
-  components: {
-    Product,
-  },
   data() {
     var w = window.innerWidth;
     var check = false;
@@ -65,6 +85,8 @@ export default {
       display: check,
       specs: [],
       checked: [],
+      products: [],
+      displayProducts: 1,
     };
   },
   async created() {
@@ -73,6 +95,22 @@ export default {
       "/api/specs/" + this.$route.params.subcategory_id
     );
     this.specs = res.data;
+    try {
+      const res = await axios.get(
+        "/api/categories/" +
+          this.$route.params.category_id +
+          "/" +
+          this.$route.params.subcategory_id
+      );
+      this.products = res.data;
+      if (this.products.length != 0) {
+            this.displayProducts = 3;
+          } else {
+            this.displayProducts = 2;
+          }
+    } catch (e) {
+      console.error(e);
+    }
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
@@ -119,21 +157,36 @@ export default {
 .products-page {
   min-height: 100vh;
 }
+
 .filters {
   display: inline-block;
   text-align: start;
 }
+
 input[type="checkbox"] {
   margin-right: 0.5rem;
   margin-left: 0.5rem;
   cursor: pointer;
 }
+
 label {
   cursor: pointer;
 }
+
 .products {
   margin: 0 auto;
   width: 80%;
+}
+
+.empty {
+  margin-top: 20vh;
+}
+
+.start {
+  margin: auto;
+}
+.empty-category {
+  max-height: 20vh;
 }
 
 .filters-button {

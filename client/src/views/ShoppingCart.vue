@@ -2,7 +2,7 @@
   <div class="cart">
     <div class="container">
       <div v-if="displayCart == 1"></div>
-      <div class="mt-5 text-center emptycart" v-if="displayCart == 2">
+      <div class="text-center empty" v-if="displayCart == 2">
         <h2>Ваша корзина порожня</h2>
         <img class="mt-2 empty-cart mr-4" src="@/assets/empty-cart.svg" />
         <router-link to="/catalog" class="mt-3 button start"
@@ -383,6 +383,9 @@ export default {
   min-height: 100vh;
 }
 
+.empty {
+  margin-top: 20vh;
+}
 .empty-cart {
   max-height: 20vh;
 }
