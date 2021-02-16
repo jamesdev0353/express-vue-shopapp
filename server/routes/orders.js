@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
     INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}"`,
     (err, result) => {
       res.json(result);
-      console.log(req.user_id);
+      // console.log(req.user_id);
     }
   );
 
@@ -34,7 +34,7 @@ router.post("/:product_id", (req, res) => {
 
   db.query(`INSERT INTO orders SET ?`, order, (err, result) => {
     res.send("OK");
-    console.log(req.user_id);
+    console.log(req.user_id, " - INSERT");
   });
 });
 

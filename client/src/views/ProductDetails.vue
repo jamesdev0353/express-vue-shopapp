@@ -62,17 +62,20 @@ export default {
       console.error(e);
     }
   },
-  methods:
-  {
+  methods: {
     addToCart() {
-      axios.post("/api/orders/" + this.$route.params.product_id, {
-        headers: {
-          token: localStorage.getItem("token"),
+      axios.post(
+        "/api/orders/" + this.$route.params.product_id,
+        {},
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
         }
-        })
-      this.$router.push({ name: 'Cart' })
-    }
-  }
+      );
+      this.$router.push({ name: "Cart" });
+    },
+  },
 };
 </script>
 

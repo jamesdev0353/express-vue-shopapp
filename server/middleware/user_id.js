@@ -12,7 +12,9 @@ app.use((req, res, next) => {
         req.user_id = 0;
       }
 
-      console.log(req.user_id, req.headers.token);
+      if (req.method == "POST") {
+        console.log(req.user_id, req.headers.token);
+      }
 
       next();
     }
