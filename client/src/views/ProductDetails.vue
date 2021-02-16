@@ -65,7 +65,7 @@ export default {
   methods:
   {
     addToCart() {
-      axios.post("/api/orders/" + this.$route.params.product_id, {}, {
+      axios.post("/api/orders/" + this.$route.params.product_id, {
         headers: {
           token: localStorage.getItem("token"),
         }
