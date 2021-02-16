@@ -19,6 +19,8 @@ app.use("/api/registration", require("./routes/registration"));
 app.use("/api/forgetPassword", require("./routes/forgetPassword"));
 app.use("/api/resetPassword", require("./routes/resetPassword"));
 
+app.use("/api/users", require("./routes/users"));
+
 // SPA
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");

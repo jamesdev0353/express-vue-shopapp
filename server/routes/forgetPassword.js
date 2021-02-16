@@ -15,7 +15,7 @@ let transporter = nodemailer.createTransport({
 
 router.post("/", async (req, res) => {
   db.query(
-    `SELECT * FROM users WHERE email like '${req.body.email}' LIMIT 1`,
+    `SELECT * FROM users WHERE email like "${req.body.email}" LIMIT 1`,
     async (err, results) => {
       const json = JSON.parse(JSON.stringify(results));
       console.log(json);

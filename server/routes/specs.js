@@ -1,4 +1,4 @@
-const { Router, json } = require("express");
+const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
 
@@ -55,10 +55,7 @@ router.get("/:subcat", (req, res) => {
       }
 
       console.log(arr);
-
       res.json(arr);
-
-      // arr;
     }
   );
 });
