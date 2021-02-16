@@ -16,14 +16,8 @@ router.post("/", async (req, res) => {
       const json = JSON.parse(JSON.stringify(results));
       console.log(json);
       if (json.length > 0) {
-        console.log(
-          "password:",
-          req.body.password,
-          "from DB: ",
-          json[0].password
-        );
         bcrypt.compare(req.body.password, json[0].password, (err, result) => {
-        if (result) {
+          if (result) {
             const token = jwt.sign(
               {
                 email: json[0].email,
@@ -32,16 +26,19 @@ router.post("/", async (req, res) => {
               process.env.SECRET,
               { expiresIn: "30d" }
             );
-            console.log(json[0].id, token)
-            db.query(`UPDATE users SET token = '${token}' WHERE id = ${json[0].id}`, (err, result) => {
-              if(err){
-                console.log(err)
-              }
-              res.status(200).json({
+            console.log(json[0].id, token);
+            db.query(
+              `UPDATE users SET token = '${token}' WHERE id = ${json[0].id}`,
+              (err, result) => {
+                if (err) {
+                  console.log(err);
+                }
+                res.status(200).json({
                   token: `${token}`,
-              });
-            });
-        } else {
+                });
+              }
+            );
+          } else {
             res.status(401).json({
               message: "Паролі не співпали",
             });

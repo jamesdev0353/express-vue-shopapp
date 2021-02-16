@@ -14,9 +14,9 @@ router.get("/", (req, res) => {
   // );
 
   db.query(
-    `SELECT products.*, orders.count FROM products
+    `SELECT products.*, orders.id, orders.count FROM products
     INNER JOIN orders ON products.id = orders.product_id
-    INNER JOIN users ON users.id = orders.user_id WHERE users.token = "${req.headers.token}"`,
+    INNER JOIN users ON users.id = orders.user_id`,
     (err, result) => {
       res.json(result);
       console.log(err);
