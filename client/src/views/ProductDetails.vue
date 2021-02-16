@@ -9,7 +9,7 @@
         </div>
         <div class="col col-lg-4 col-12 mt-5">
           <h3 class="mt-5 ml-2">{{ product.price }} грн</h3>
-          <router-link to="/cart" class="button">
+          <button @click="addToCart()" class="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -23,7 +23,7 @@
               />
             </svg>
             Купити
-          </router-link>
+          </button>
           <p>
             {{ product.description }}
           </p>
@@ -62,6 +62,13 @@ export default {
       console.error(e);
     }
   },
+  methods:
+  {
+    addToCart() {
+      axios.post("/api/add/" + this.$route.params.product_id)
+      this.$router.push({ name: 'Cart' })
+    }
+  }
 };
 </script>
 

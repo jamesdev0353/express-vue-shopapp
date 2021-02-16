@@ -21,7 +21,7 @@
             </router-link>
             <router-link class="mx-3 text-muted" to="#"> Новинки </router-link>
             <router-link class="mx-3 text-muted" to="/contacts"> Контакти </router-link>
-            <router-link class="mx-3 text-muted" to="/cart">
+            <router-link v-if="displayLogin == false" class="mx-3 text-muted" to="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -35,14 +35,9 @@
                 />
               </svg>
             </router-link>
-            <router-link
-              v-if="displayLogin"
-              class="ml-3 auth-button"
-              to="/login"
-            >
-              Вхід
-            </router-link>
-            <button v-if="displayLogin == false" class="ml-3 profile-button">
+
+            <div v-if="displayLogin == false">
+            <button class="ml-3 profile-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -59,8 +54,7 @@
               </svg>
               <span class="ml-2">{{username}}</span>
             </button>
-            <button
-              v-if="displayLogin == false"
+            <button              
               class="ml-0 auth-button button-exit"
               @click="removeLocalStorage()"
             >
@@ -82,6 +76,14 @@
                 />
               </svg>
             </button>
+            </div>
+            <router-link
+              v-if="displayLogin"
+              class="ml-3 auth-button"
+              to="/login"
+            >
+              Вхід
+            </router-link>
           </b-navbar-nav>
         </b-collapse>
       </b-container>
