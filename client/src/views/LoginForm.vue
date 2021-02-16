@@ -3,8 +3,7 @@
   <div class="container wrapper mt-5">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Вхід</h2>
-      <form
-        @submit.prevent="getToken" >
+      <form @submit.prevent="getToken">
         <div class="form-group">
           <label for="email">Email</label>
 
@@ -48,13 +47,12 @@
         </div>
 
         <div class="form-group">
-          <button
-            class="btn btn-primary w-100"
-            
-            :disabled="disabledBtn"
-          >
+          <button class="btn btn-primary w-100" :disabled="disabledBtn">
             Увійти
           </button>
+          <div class="invalid-feedback message">
+            {{ message }}
+          </div>
         </div>
         <div class="form-group row align-items-center">
           <div class="col-6 text-left">
@@ -90,7 +88,8 @@ export default {
         email: "",
         password: "",
       },
-      res: [1, 2, 3]
+      res: [1, 2, 3],
+      message: null,
     };
   },
 
@@ -112,16 +111,23 @@ export default {
       };
     },
     getToken() {
+      var _this = this;
       axios
         .post("/api/login", {
           password: this.formReg.password,
           email: this.formReg.email,
-        }).then((response) => {
-          console.log(response.data.token)
-          localStorage.token = response.data.token;         
-          this.$router.push({ name: 'Main' })
-          this.$router.go()
-        });    
+        })
+        .then((response) => {
+          console.log(response.data.token);
+          localStorage.token = response.data.token;
+          this.$router.push({ name: "Main" });
+          this.$router.go();
+        })
+        .catch(function (error) {
+          if (error.response) {
+            _this.message = error.response.data.message;
+          }
+        });
     },
     userRegister() {
       console.group();
@@ -164,6 +170,9 @@ form {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
+}
+.message {
+  display: block !important;
 }
 .error {
   background-color: #fdd;

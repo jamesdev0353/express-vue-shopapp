@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
             );
           } else {
             res.status(401).json({
-              message: "Паролі не співпали",
+              message: "Неправильний логін або пароль",
             });
           }
         });
