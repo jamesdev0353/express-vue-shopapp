@@ -62,7 +62,7 @@
               <h5 class="text-left ml-5">Разом</h5>
             </div>
             <div class="col">
-              <h4 class="text-right mr-5">{{ fullPrice }}</h4>
+              <h4 class="text-right mr-5">{{ fullPrice }} грн</h4>
             </div>
           </div>
         </div>

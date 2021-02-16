@@ -57,7 +57,7 @@
                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                 />
               </svg>
-              <span class="ml-2">Ім'я</span>
+              <span class="ml-2">{{username}}</span>
             </button>
             <button
               v-if="displayLogin == false"
@@ -90,17 +90,26 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       tokens: [],
       displayLogin: true,
+      username: null
     };
   },
   async created() {
     if (localStorage.getItem("token") != null) {
       this.displayLogin = false;
     }
+    axios.get("/api/users", {
+      headers: {
+        token: localStorage.getItem("token")
+      }
+      }).then((response) => {
+        this.username = response.data[0].name + ' ' + response.data[0].surname;
+      });
   },
   methods: {
     removeLocalStorage() {
