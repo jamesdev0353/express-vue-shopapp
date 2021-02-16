@@ -4,15 +4,65 @@
       <div class="row mt-3">
         <div class="col col-lg-7 col-12">
           <h3 class="my-4">Замовлення</h3>
-          <ProductCart />
-          <ProductCart />
+          <div
+            class="card product-card mt-3"
+            v-for="item of cartItems"
+            :key="item.id"
+          >
+            <div class="row">
+              <div class="col my-auto col-10">
+                <div class="row">
+                  <div class="col my-auto col-lg-4 col-7">
+                    <img class="image img-prod" :src="item.img" alt="product" />
+                  </div>
+                  <div class="col my-auto col-lg-3 col-5">
+                    <router-link to="#" class="text-dark">
+                      <p class="name">{{ item.name }}</p>
+                    </router-link>
+                  </div>
+                  <div class="col my-auto col-lg-3 col-7">
+                    <p class="parameter">Кількість</p>
+                    <b-input
+                      class="count"
+                      type="number"
+                      :value="item.count"
+                      min="1"
+                    />
+                  </div>
+                  <div class="col my-auto col-lg-2 col-5">
+                    <p class="parameter">Ціна</p>
+                    <p class="price">{{ item.price }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col my-auto col-lg-2 col-1">
+                <router-link to="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="text-muted"
+                    class="bi bi-x-circle delete"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                    />
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                    />
+                  </svg>
+                </router-link>
+              </div>
+            </div>
+          </div>
           <hr />
           <div class="row">
             <div class="col">
               <h5 class="text-left ml-5">Разом</h5>
             </div>
             <div class="col">
-              <h4 class="text-right mr-5">400 грн</h4>
+              <h4 class="text-right mr-5">{{ fullPrice }}</h4>
             </div>
           </div>
         </div>
@@ -22,9 +72,9 @@
             <div class="row">
               <div class="col-12">
                 <p class="section my-2">Користувач</p>
-                    <p class="user-info">Ім'я та прізвище: Петро Смішнявий</p>
-                    <p class="user-info">Електронна пошта: petroroflan@gmail.com</p>
-                    <p class="user-info">Номер телефону: +380123456789</p>
+                <p class="user-info">Ім'я та прізвище: Петро Смішнявий</p>
+                <p class="user-info">Електронна пошта: petroroflan@gmail.com</p>
+                <p class="user-info">Номер телефону: +380123456789</p>
               </div>
             </div>
             <div class="row">
@@ -43,7 +93,8 @@
             <div class="row">
               <div class="col-12">
                 <p class="section my-2">Доставка</p>
-                <b-form-select data-live-search="true"
+                <b-form-select
+                  data-live-search="true"
                   name="type"
                   class="form-select-md"
                   @change="onchangeDelivery()"
@@ -99,7 +150,7 @@
             </div>
             <div class="row" v-if="display_warehouse">
               <div class="col-12">
-                <p class="section my-2" >Відділення</p>
+                <p class="section my-2">Відділення</p>
                 <b-form-select
                   name="type"
                   class="form-select-md"
@@ -118,8 +169,8 @@
 
             <div class="row" v-if="display_address">
               <div class="col-12">
-                <p class="section my-2" >Вулиця, будинок, квартира</p>
-                <input class="form-control"/>
+                <p class="section my-2">Вулиця, будинок, квартира</p>
+                <input class="form-control" />
               </div>
             </div>
 
@@ -151,12 +202,8 @@
 </template>
 
 <script>
-import ProductCart from "@/components/ProductCart.vue";
 import axios from "axios";
 export default {
-  components: {
-    ProductCart,
-  },
   data() {
     return {
       key_delivery: 1,
@@ -166,14 +213,16 @@ export default {
       cities: [],
       regions: [],
       warehouses: [],
+      cartItems: [],
+      fullPrice: 0,
       display_warehouse: true,
       display_address: false,
       apiKey: "1248264db38907916e355ff139ab2def",
-      url: "https://api.novaposhta.ua/v2.0/json/"
+      url: "https://api.novaposhta.ua/v2.0/json/",
     };
   },
   methods: {
-    onchangeArea: function() {
+    onchangeArea: function () {
       axios
         .post(this.url, {
           modelName: "Address",
@@ -186,22 +235,19 @@ export default {
         .then((response) => {
           this.cities = response.data;
         });
-        this.warehouse_ref = null
-        this.onchangeWarehouse()
+      this.warehouse_ref = null;
+      this.onchangeWarehouse();
     },
-    onchangeDelivery: function() {
-      if (this.key_delivery == 1)
-      {
+    onchangeDelivery: function () {
+      if (this.key_delivery == 1) {
         this.display_address = false;
         this.display_warehouse = true;
-      }
-      else if (this.key_delivery == 2)
-      {
+      } else if (this.key_delivery == 2) {
         this.display_warehouse = false;
         this.display_address = true;
       }
     },
-    onchangeCity: function() {
+    onchangeCity: function () {
       axios
         .post(this.url, {
           modelName: "AddressGeneral",
@@ -209,7 +255,7 @@ export default {
           methodProperties: {
             CityRef: this.city_ref,
           },
-          apiKey: this.apiKey
+          apiKey: this.apiKey,
         })
         .then((response) => {
           this.warehouses = response.data;
@@ -236,7 +282,7 @@ export default {
         methodProperties: {
           AreaRef: this.area_ref,
         },
-        apiKey: this.apiKey
+        apiKey: this.apiKey,
       })
       .then((response) => {
         this.cities = response.data;
@@ -253,11 +299,27 @@ export default {
       .then((response) => {
         this.warehouses = response.data;
       });
+    axios
+      .get("/api/orders", {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        this.cartItems = response.data;
+        for (var i = 0; i < this.cartItems.length; i++) {
+          this.fullPrice += this.cartItems[i].price;
+        }
+      });
   },
 };
 </script>
 
 <style scoped>
+.img-prod {
+  height: 120px;
+  width: auto;
+}
 .button {
   width: 70%;
   margin: auto;
@@ -289,5 +351,43 @@ p {
 .section {
   text-align: left;
   margin-left: 10px;
+}
+.count {
+  height: 20px;
+  width: 50px;
+  margin: auto;
+}
+p {
+  margin: 0;
+}
+.name {
+  text-align: left;
+  font-size: 14px;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.parameter {
+  font-size: 9px;
+}
+
+.product-card {
+  margin-inline: 10px;
+  padding: 10px 0px;
+}
+
+@media (max-width: 768px) {
+  .name {
+    font-size: 14px;
+  }
+  .price {
+    font-size: 15px;
+  }
+
+  .delete {
+    margin: 0;
+  }
 }
 </style>
