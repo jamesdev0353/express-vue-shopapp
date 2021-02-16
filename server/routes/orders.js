@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
     INNER JOIN users ON users.id = orders.user_id WHERE users.token = "${req.headers.token}"`,
     (err, result) => {
       res.json(result);
-      console.log(err);
+      console.log(req.user_id);
     }
   );
 
@@ -27,19 +27,14 @@ router.get("/", (req, res) => {
 
 // Add to cart for current user
 router.post("/:product_id", (req, res) => {
-  let order = {};
+  const order = {
+    user_id: req.user_id,
+    product_id: req.params.product_id,
+  };
 
-  db.query(
-    `SELECT id FROM users WHERE token = "${req.headers.token}"`,
-    (err, result) => {
-      order.user_id = result[0].id;
-      order.product_id = req.params.product_id;
-
-      db.query(`INSERT INTO orders SET ?`, order, (err, result) => {
-        res.send("OK");
-      });
-    }
-  );
+  db.query(`INSERT INTO orders SET ?`, order, (err, result) => {
+    res.send("OK");
+  });
 });
 
 // Delete from cart for current user

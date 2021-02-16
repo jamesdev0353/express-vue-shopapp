@@ -1,0 +1,19 @@
+const db = require("../config/db");
+
+// Get user id by token
+function user_id(req, res, next) {
+  db.query(
+    `SELECT id FROM users WHERE token = "${req.headers.token}"`,
+    (err, result) => {
+      try {
+        req.user_id = result[0].id;
+      } catch (error) {
+        req.user_id = 0;
+      }
+
+      next();
+    }
+  );
+}
+
+module.exports = user_id;
