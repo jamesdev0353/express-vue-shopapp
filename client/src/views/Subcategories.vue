@@ -10,15 +10,12 @@
         >
           <router-link
             :to="
-              '/categories/' +
-              $route.params.category_id +
-              '/' +
-              subcategory.id
+              '/categories/' + $route.params.category_id + '/' + subcategory.id
             "
           >
             <div class="category">
               <img
-                src="@/assets/laptop.jpg"
+                :src="subcategory.img || require('@/assets/laptop.jpg')"
                 class="image category-img"
                 alt="category"
               />

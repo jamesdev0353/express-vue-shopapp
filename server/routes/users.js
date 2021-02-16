@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
     `SELECT *, null AS password FROM users WHERE id = "${req.user_id}"`,
     (err, result) => {
       res.json(result);
-      console.log(err);
+      // console.log(err);
     }
   );
 });

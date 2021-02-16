@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
   db.query(
     `SELECT products.*, orders.id, orders.product_id, orders.count FROM products
     INNER JOIN orders ON products.id = orders.product_id
-    INNER JOIN users ON users.id = orders.user_id WHERE users.token = "${req.headers.token}"`,
+    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}"`,
     (err, result) => {
       res.json(result);
       console.log(req.user_id);
@@ -34,7 +34,18 @@ router.post("/:product_id", (req, res) => {
 
   db.query(`INSERT INTO orders SET ?`, order, (err, result) => {
     res.send("OK");
+    console.log(req.user_id);
   });
+});
+
+// Update products count in cart for current user
+router.put("/:order_id", (req, res) => {
+  db.query(
+    `UPDATE orders SET count = "${req.body.count}" WHERE id = "${req.params.order_id}"`,
+    (err, result) => {
+      res.send("OK");
+    }
+  );
 });
 
 // Delete from cart for current user
@@ -43,7 +54,7 @@ router.delete("/:order_id", (req, res) => {
     `DELETE FROM orders WHERE id = "${req.params.order_id}"`,
     (err, result) => {
       res.send("OK");
-      console.log(err);
+      // console.log(err);
     }
   );
 });

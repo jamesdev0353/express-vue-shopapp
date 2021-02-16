@@ -1,6 +1,8 @@
+const express = require("express");
+const app = express();
 const db = require("../config/db");
 
-function user_id(req, res, next) {
+app.use((req, res, next) => {
   db.query(
     `SELECT id FROM users WHERE token = "${req.headers.token}"`,
     (err, result) => {
@@ -10,9 +12,11 @@ function user_id(req, res, next) {
         req.user_id = 0;
       }
 
+      console.log(req.user_id, req.headers.token);
+
       next();
     }
   );
-}
+});
 
-module.exports = user_id;
+module.exports = app;

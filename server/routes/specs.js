@@ -31,7 +31,7 @@ router.get("/:subcat", (req, res) => {
     `SELECT value FROM (SELECT name, value FROM specs WHERE subcategory_id = ${req.params.subcat} GROUP BY name) AS sp ORDER BY sp.name`,
     (err, result) => {
       res.json(result);
-      console.log(err);
+      // console.log(err);
     }
   );
 });
@@ -54,7 +54,7 @@ router.get("/:subcat", (req, res) => {
         );
       }
 
-      console.log(arr);
+      // console.log(arr);
       res.json(arr);
     }
   );
