@@ -1,7 +1,12 @@
 <template>
   <div class="cart">
     <div class="container">
-      <div class="row mt-3">
+      <div class="mt-5 text-center emptycart" v-if="displayCart == false">
+        <h2>Ваша корзина порожня</h2>
+        <img class="mt-2 empty-cart mr-4" src="@/assets/empty-cart.svg" />
+        <router-link to="/catalog" class="mt-3 button start">Почати покупки</router-link>
+      </div>
+      <div class="row mt-3" v-if="displayCart">
         <div class="col col-lg-7 col-12">
           <h3 class="my-4">Замовлення</h3>
           <div
@@ -16,7 +21,7 @@
                     <img class="image img-prod" :src="item.img" alt="product" />
                   </div>
                   <div class="col my-auto col-lg-3 col-5">
-                    <router-link to="#" class="text-dark">
+                    <router-link :to="'products/' + item.product_id" class="text-dark">
                       <p class="name">{{ item.name }}</p>
                     </router-link>
                   </div>
@@ -217,6 +222,7 @@ export default {
       fullPrice: 0,
       display_warehouse: true,
       display_address: false,
+      displayCart: false,
       apiKey: "1248264db38907916e355ff139ab2def",
       url: "https://api.novaposhta.ua/v2.0/json/",
     };
@@ -262,15 +268,29 @@ export default {
         });
     },
 
-    deleteFromCart(order_id)
-    {
-      axios.delete("/api/orders/" + order_id)
-      
-    }
+    deleteFromCart(order_id) {
+      axios.delete("/api/orders/" + order_id);
+      axios
+        .get("/api/orders", {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          this.cartItems = response.data;
+          if (this.cartItems.length != 0) {
+            this.displayCart = true;
+          }
+          for (var i = 0; i < this.cartItems.length; i++) {
+            this.fullPrice += this.cartItems[i].price * this.cartItems[i].count;
+          }
+          console.log(this.cartItems);
+        });
+    },
   },
   mounted() {
     if (localStorage.getItem("token") == null) {
-      this.$router.push({ name: 'Main' })
+      this.$router.push({ name: "Main" });
     }
     axios
       .post(this.url, {
@@ -316,10 +336,13 @@ export default {
       })
       .then((response) => {
         this.cartItems = response.data;
+        if (this.cartItems.length != 0) {
+            this.displayCart = true;
+          }
         for (var i = 0; i < this.cartItems.length; i++) {
           this.fullPrice += this.cartItems[i].price * this.cartItems[i].count;
         }
-        console.log(this.cartItems)
+        console.log(this.cartItems);
       });
   },
 };
@@ -334,8 +357,16 @@ export default {
   width: 70%;
   margin: auto;
 }
+
+.start {
+  width: 30%;
+}
 .cart {
   min-height: 100vh;
+}
+
+.empty-cart {
+  max-height: 20vh;
 }
 
 .ordering {
