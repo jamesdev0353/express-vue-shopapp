@@ -5,8 +5,8 @@
       <div class="text-center empty" v-if="displayProducts == 2">
         <h2>В цій категорії товарів немає</h2>
         <img class="mt-2 empty-category mr-4" src="@/assets/empty-cart.svg" />
-        <button @click="$router.go(-1)" class="mt-3 button start"> 
-        Повернутися назад 
+        <button @click="$router.go(-1)" class="mt-3 button start">
+          Повернутися назад
         </button>
       </div>
       <b-row v-if="displayProducts == 3">
@@ -50,7 +50,7 @@
 
         <b-column class="col-md-9 col-sm-12 products">
           <div>
-            <b-row>
+            <b-row class="row-products">
               <column
                 class="col-lg-3 col-md-4 col-sm-6 col-6 product"
                 v-for="product of products"
@@ -58,10 +58,10 @@
               >
                 <router-link class="text-dark" :to="'/products/' + product.id">
                   <img :src="product.img" class="image img-prod" />
-                  <p>
+                  <p class="mt-2">
                     <b>{{ product.name }}</b>
                   </p>
-                  <p>{{ product.price }} грн</p>
+                  <p class="mt-1">{{ product.price }} грн</p>
                 </router-link>
               </column>
             </b-row>
@@ -104,10 +104,10 @@ export default {
       );
       this.products = res.data;
       if (this.products.length != 0) {
-            this.displayProducts = 3;
-          } else {
-            this.displayProducts = 2;
-          }
+        this.displayProducts = 3;
+      } else {
+        this.displayProducts = 2;
+      }
     } catch (e) {
       console.error(e);
     }
@@ -169,6 +169,11 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+p {
+  font-size: medium;
+  margin: 0;
+}
+
 label {
   cursor: pointer;
 }
@@ -178,8 +183,20 @@ label {
   width: 80%;
 }
 
+.row-products {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
 .empty {
   margin-top: 20vh;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 280px;
 }
 
 .start {
@@ -211,6 +228,15 @@ label {
 @media (max-width: 767px) {
   .filters {
     margin-left: 30px;
+  }
+
+  .product {
+    padding: 0;
+  }
+
+  .row-products {
+    margin-left: -30px;
+    margin-right: -30px;
   }
 }
 </style>
