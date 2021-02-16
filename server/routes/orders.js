@@ -24,8 +24,14 @@ router.get("/", (req, res) => {
   );
 });
 
-router.post("/", (req, res) => {
-  res.send("Orders post");
+router.delete("/:order_id", (req, res) => {
+  db.query(
+    `DELETE FROM orders WHERE id = "${req.params.order_id}"`,
+    (err, result) => {
+      res.send("Ok");
+      console.log(err);
+    }
+  );
 });
 
 module.exports = router;
