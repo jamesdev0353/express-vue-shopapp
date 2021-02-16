@@ -29,11 +29,13 @@
             <h6>{{ spec.name }}</h6>
 
             <div v-for="value of spec.value" :key="value">
-              <input
-                type="checkbox"
-                @change="newFilter(spec.name, value, $event)"
-              />
-              <span>{{ value }}</span>
+              <label>
+                <input
+                  type="checkbox"
+                  @change="newFilter(spec.name, value, $event)"
+                />
+                {{ value }}
+              </label>
             </div>
           </div>
         </b-column>
@@ -121,9 +123,13 @@ export default {
   display: inline-block;
   text-align: start;
 }
-input {
-  margin-right: 1rem;
-  margin-left: 1rem;
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+label {
+  cursor: pointer;
 }
 .products {
   margin: 0 auto;
