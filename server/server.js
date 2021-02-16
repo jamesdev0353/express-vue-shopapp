@@ -6,7 +6,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Get user id to req.user_id
+// Get user id by token to req.user_id
 app.use(require("./middleware/user_id"));
 
 // Routes
