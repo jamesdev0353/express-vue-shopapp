@@ -2,17 +2,8 @@ const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
 
+// Get cart for current user
 router.get("/", (req, res) => {
-  // db.query(
-  //   `SELECT * FROM products WHERE id IN
-  //     (SELECT product_id FROM orders WHERE user_id =
-  //     (SELECT id FROM users WHERE token = "${req.params.token}"))`,
-  //   (err, result) => {
-  //     res.json(result);
-  //     console.log(err);
-  //   }
-  // );
-
   db.query(
     `SELECT products.*, orders.id, orders.product_id, orders.count FROM products
     INNER JOIN orders ON products.id = orders.product_id
@@ -22,13 +13,41 @@ router.get("/", (req, res) => {
       console.log(err);
     }
   );
+
+  // db.query(
+  //   `SELECT * FROM products WHERE id IN
+  //     (SELECT product_id FROM orders WHERE user_id =
+  //     (SELECT id FROM users WHERE token = "${req.params.token}"))`,
+  //   (err, result) => {
+  //     res.json(result);
+  //     console.log(err);
+  //   }
+  // );
 });
 
+// Add to cart for current user
+router.post("/:product_id", (req, res) => {
+  let order = {};
+
+  db.query(
+    `SELECT id FROM users WHERE token = "${req.headers.token}"`,
+    (err, result) => {
+      order.user_id = result[0].id;
+      order.product_id = req.params.product_id;
+
+      db.query(`INSERT INTO orders SET ?`, order, (err, result) => {
+        res.send("OK");
+      });
+    }
+  );
+});
+
+// Delete from cart for current user
 router.delete("/:order_id", (req, res) => {
   db.query(
     `DELETE FROM orders WHERE id = "${req.params.order_id}"`,
     (err, result) => {
-      res.send("Ok");
+      res.send("OK");
       console.log(err);
     }
   );
