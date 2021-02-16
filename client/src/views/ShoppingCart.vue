@@ -1,12 +1,15 @@
 <template>
   <div class="cart">
     <div class="container">
-      <div class="mt-5 text-center emptycart" v-if="displayCart == false">
+      <div v-if="displayCart == 1"></div>
+      <div class="mt-5 text-center emptycart" v-if="displayCart == 2">
         <h2>Ваша корзина порожня</h2>
         <img class="mt-2 empty-cart mr-4" src="@/assets/empty-cart.svg" />
-        <router-link to="/catalog" class="mt-3 button start">Почати покупки</router-link>
+        <router-link to="/catalog" class="mt-3 button start"
+          >Почати покупки</router-link
+        >
       </div>
-      <div class="row mt-3" v-if="displayCart">
+      <div class="row mt-3" v-if="displayCart == 3">
         <div class="col col-lg-7 col-12">
           <h3 class="my-4">Замовлення</h3>
           <div
@@ -21,7 +24,10 @@
                     <img class="image img-prod" :src="item.img" alt="product" />
                   </div>
                   <div class="col my-auto col-lg-3 col-5">
-                    <router-link :to="'products/' + item.product_id" class="text-dark">
+                    <router-link
+                      :to="'products/' + item.product_id"
+                      class="text-dark"
+                    >
                       <p class="name">{{ item.name }}</p>
                     </router-link>
                   </div>
@@ -75,11 +81,11 @@
           <h3 class="my-4">Оформлення</h3>
           <form class="ordering">
             <div class="row">
-              <div class="col-12">
+              <div class="col-12" v-for="user of userInfo" :key="user.id">
                 <p class="section my-2">Користувач</p>
-                <p class="user-info">Ім'я та прізвище: Петро Смішнявий</p>
-                <p class="user-info">Електронна пошта: petroroflan@gmail.com</p>
-                <p class="user-info">Номер телефону: +380123456789</p>
+                <p class="user-info">Ім'я та прізвище: {{user.name}} {{user.surname}}</p>
+                <p class="user-info">Електронна пошта: {{user.email}}</p>
+                <p class="user-info">Номер телефону: {{user.phone}}</p>
               </div>
             </div>
             <div class="row">
@@ -222,7 +228,8 @@ export default {
       fullPrice: 0,
       display_warehouse: true,
       display_address: false,
-      displayCart: false,
+      displayCart: 1,
+      userInfo: null,
       apiKey: "1248264db38907916e355ff139ab2def",
       url: "https://api.novaposhta.ua/v2.0/json/",
     };
@@ -279,7 +286,9 @@ export default {
         .then((response) => {
           this.cartItems = response.data;
           if (this.cartItems.length != 0) {
-            this.displayCart = true;
+            this.displayCart = 3;
+          } else {
+            this.displayCart = 2;
           }
           for (var i = 0; i < this.cartItems.length; i++) {
             this.fullPrice += this.cartItems[i].price * this.cartItems[i].count;
@@ -337,12 +346,21 @@ export default {
       .then((response) => {
         this.cartItems = response.data;
         if (this.cartItems.length != 0) {
-            this.displayCart = true;
-          }
+          this.displayCart = 3;
+        } else {
+          this.displayCart = 2;
+        }
         for (var i = 0; i < this.cartItems.length; i++) {
           this.fullPrice += this.cartItems[i].price * this.cartItems[i].count;
         }
         console.log(this.cartItems);
+      });
+      axios.get("/api/users", {
+      headers: {
+        token: localStorage.getItem("token")
+      }
+      }).then((response) => {
+        this.userInfo = response.data;
       });
   },
 };
