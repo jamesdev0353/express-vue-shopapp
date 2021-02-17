@@ -5,6 +5,7 @@ import Catalog from "../views/Catalog.vue";
 import Contacts from "../views/Contacts.vue";
 import Products from "../views/Products.vue";
 import UserOrders from "../views/UserOrders.vue";
+import Success from "../views/Success.vue";
 import LoginForm from "../views/LoginForm";
 import Registration from "../views/RegistrationForm";
 import ProductDetails from "../views/ProductDetails.vue";
@@ -58,6 +59,11 @@ const routes = [
     path: "/user-orders",
     name: "UserOrders",
     component: UserOrders,
+  },
+  {
+    path: "/success",
+    name: "Success",
+    component: Success,
   },
   {
     path: "/login",

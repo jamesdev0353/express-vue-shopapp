@@ -93,11 +93,15 @@
             <div class="row">
               <div class="col-12">
                 <p class="section my-2">Оплата</p>
-                <b-form-select name="type" class="form-select-md">
-                  <b-form-select-option selected="selected"
+                <b-form-select
+                  name="type"
+                  class="form-select-md"
+                  v-model="key_payment"
+                >
+                  <b-form-select-option value="1"
                     >Картою онлайн</b-form-select-option
                   >
-                  <b-form-select-option
+                  <b-form-select-option value="2"
                     >При отриманні товару</b-form-select-option
                   >
                 </b-form-select>
@@ -145,7 +149,7 @@
             <div class="row">
               <div class="col-12">
                 <p class="section my-2">Населений пункт</p>
-                <b-form-select
+                <b-form-select required
                   name="type"
                   class="form-select-md"
                   @change="onchangeCity()"
@@ -164,7 +168,7 @@
             <div class="row" v-if="display_warehouse">
               <div class="col-12">
                 <p class="section my-2">Відділення</p>
-                <b-form-select
+                <b-form-select required
                   name="type"
                   class="form-select-md"
                   v-model="warehouse_ref"
@@ -183,7 +187,7 @@
             <div class="row" v-if="display_address">
               <div class="col-12">
                 <p class="section my-2">Вулиця, будинок, квартира</p>
-                <input class="form-control" />
+                <input class="form-control" required v-model="address" />
               </div>
             </div>
 
@@ -220,6 +224,7 @@ export default {
   data() {
     return {
       key_delivery: 1,
+      key_payment: 1,
       area_ref: "71508131-9b87-11de-822f-000c2965ae0e",
       city_ref: "33ab7ee7-9e33-11e9-898c-005056b24375",
       warehouse_ref: "6eebcc98-b1d4-11e9-8c22-005056b24375",
@@ -232,6 +237,10 @@ export default {
       display_address: false,
       displayCart: 1,
       userInfo: null,
+      area: null,
+      city: null,
+      warehouse: null,
+      address: null,
       apiKey: "1248264db38907916e355ff139ab2def",
       url: "https://api.novaposhta.ua/v2.0/json/",
     };
@@ -298,23 +307,65 @@ export default {
           console.log(this.cartItems);
         });
     },
+    async addOrder() {
+      await axios
+        .post(this.url, {
+          apiKey: this.apiKey,
+          modelName: "Address",
+          calledMethod: "getAreas",
+          methodProperties: {
+            Ref: this.area_ref,
+          },
+        })
+        .then((response) => {
+          this.area = response.data.data[0].Description;
+        });
+      await axios
+        .post(this.url, {
+          modelName: "Address",
+          calledMethod: "getCities",
+          methodProperties: {
+            Ref: this.city_ref,
+          },
+          apiKey: this.apiKey,
+        })
+        .then((response) => {
+          this.city = response.data.data[0].Description;
+        });
+      if (this.key_delivery == 1) {
+        this.address = null;
+        await axios
+          .post(this.url, {
+            modelName: "AddressGeneral",
+            calledMethod: "getWarehouses",
+            methodProperties: {
+              Ref: this.warehouse_ref,
+            },
+            apiKey: this.apiKey,
+          })
+          .then((response) => {
+            this.warehouse = response.data.data[0].Description;
+          });
+      }
 
-    addOrder() {
-      var area = ''
-      axios
-      .post(this.url, {
-        apiKey: this.apiKey,
-        modelName: "Address",
-        calledMethod: "getAreas",
-        methodProperties: {
-          Ref: this.area_ref,
+      await axios.post(
+        "/api/orders",
+        {
+          payment_method: this.key_payment,
+          delivery_method: this.key_delivery,
+          region: this.area,
+          city: this.city,
+          delivery_address: this.warehouse || this.address,
         },
-      })
-      .then((response) => {
-        response.data.data[0].Description
-      });
-      console.log(area)
-    }
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+
+      this.$router.push({ name: "Success" });
+    },
   },
   mounted() {
     if (localStorage.getItem("token") == null) {
