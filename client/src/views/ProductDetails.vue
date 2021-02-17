@@ -8,7 +8,8 @@
           <img :src="product.img" class="image img-prod" />
         </div>
         <div class="col col-lg-4 col-12 mt-5">
-          <h3 class="mt-5 ml-2">{{ product.price }} грн</h3>
+          <h6 class="mt-5 ml-1" v-html="message"> </h6>
+          <h3 class="mt-1 ml-2">{{ product.price }} грн</h3>
           <button @click="addToCart()" class="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +51,7 @@ export default {
   data() {
     return {
       product: [],
+      message: '<span style="color: green">В наявності<span>'
     };
   },
   async created() {
@@ -58,6 +60,15 @@ export default {
         "/api/products/" + this.$route.params.product_id
       );
       this.product = res.data;
+      console.log(this.product.count)
+      if (this.product.count == 0)
+      {
+        this.message = '<span style="color: red">Немає в наявності<span>'
+      }
+      else if (this.product.count < 10)
+      {
+        this.message = '<span style="color: rgb(226, 155, 0)">Залишилось мало<span>'
+      }
     } catch (e) {
       console.error(e);
     }
@@ -97,7 +108,8 @@ export default {
 }
 
 h3,
-h4 {
+h4, 
+h6 {
   text-align: left;
 }
 
