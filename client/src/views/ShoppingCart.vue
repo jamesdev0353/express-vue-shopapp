@@ -5,7 +5,7 @@
       <div class="text-center empty" v-if="displayCart == 2">
         <h2>Ваша корзина порожня</h2>
         <img class="mt-2 empty-cart mr-4" src="@/assets/empty-cart.svg" />
-        <router-link to="/catalog" class="mt-3 button start"
+        <router-link to="/categories" class="mt-3 button start"
           >Почати покупки</router-link
         >
       </div>
