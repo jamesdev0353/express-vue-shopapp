@@ -43,7 +43,7 @@
             </router-link>
 
             <div v-if="displayLogin == false">
-              <button class="ml-3 profile-button">
+              <router-link to="/user-orders" class="ml-3 profile-button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -59,7 +59,7 @@
                   />
                 </svg>
                 <span class="ml-2">{{ username }}</span>
-              </button>
+              </router-link>
               <button
                 class="ml-0 auth-button button-exit"
                 @click="removeLocalStorage()"
@@ -163,7 +163,7 @@ header {
   font-weight: 400;
   text-align: center;
   line-height: 2em;
-  padding: 0 15px;
+  padding: 8px;
   width: fit-content;
 }
 
