@@ -5,9 +5,9 @@ const db = require("../config/db");
 // Get cart for current user
 router.get("/", (req, res) => {
   db.query(
-    `SELECT products.*, orders.id, orders.product_id, orders.count FROM products
+    `SELECT products.*, orders.id, orders.product_id, COUNT(*) AS count FROM products
     INNER JOIN orders ON products.id = orders.product_id
-    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}"`,
+    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND status = 0 GROUP BY user_id, product_id`,
     (err, result) => {
       res.json(result);
       // console.log(req.user_id);
@@ -23,6 +23,17 @@ router.get("/", (req, res) => {
   //     console.log(err);
   //   }
   // );
+});
+
+// Create order for current user
+router.post("/", (req, res) => {
+  db.query(
+    `UPDATE orders SET status = 1 WHERE user_id = ${req.user_id}`,
+    order,
+    (err, result) => {
+      res.send("OK");
+    }
+  );
 });
 
 // Add to cart for current user
