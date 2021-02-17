@@ -4,19 +4,23 @@
     <div class="row">
       <div class="col col-lg-2 col-0"></div>
       <div class="col col-lg-8 col-12">
-        <div class="card product-card my-3" v-for="item of items" :key="item.id">
+        <div
+          class="card product-card my-3 p-5"
+          v-for="item of items"
+          :key="item.id"
+        >
           <div class="row">
             <div class="col my-auto col-md-3 col-6 text-center">
               <p class="parameter">Замовлення</p>
-              <p class="value">№{{item.id}}</p>
+              <p class="value">№{{ item.id }}</p>
             </div>
             <div class="col my-auto col-md-3 col-6 text-center">
               <p class="parameter">Дата</p>
-              <p class="value">{{item.date}}</p>
+              <p class="value">{{ item.date }}</p>
             </div>
             <div class="col my-auto col-md-3 col-6 text-center">
               <p class="parameter">Сума замовлення</p>
-              <p class="value">{{item.price * item.count}} грн</p>
+              <p class="value">{{ item.price * item.count }} грн</p>
             </div>
             <div class="col my-auto col-md-3 col-6 text-center">
               <p class="parameter">Статус замовлення</p>
@@ -24,27 +28,25 @@
             </div>
           </div>
           <hr />
-          <h5>Товари</h5>
           <div class="row mt-3">
             <div class="col my-auto col-md-4 col-7 text-center">
-              <img
-                class="image img-prod"
-                :src="item.img"
-                alt="product"
-              />
+              <img class="image img-prod" :src="item.img" alt="product" />
             </div>
-            <div class="col my-auto col-md-3 col-5 text-center">
-              <router-link :to="'products/' + item.product_id" class="text-dark">
-                <p class="name">{{item.name}}</p>
+            <div class="col my-auto col-md-3 col-5">
+              <router-link
+                :to="'products/' + item.product_id"
+                class="text-dark"
+              >
+                <p class="name">{{ item.name }}</p>
               </router-link>
             </div>
             <div class="col my-auto col-md-2 col-7 text-center">
               <p class="parameter">Кількість</p>
-              <p class="value">{{item.count}}</p>
+              <p class="value">{{ item.count }}</p>
             </div>
             <div class="col my-auto col-md-3 col-5 text-center">
               <p class="parameter">Ціна</p>
-              <p class="value">{{item.price}}</p>
+              <p class="value">{{ item.price }}</p>
             </div>
           </div>
         </div>
@@ -55,13 +57,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-  data()
-  {
+  data() {
     return {
       items: [],
-    }
+    };
   },
   mounted() {
     axios
@@ -74,12 +75,11 @@ export default {
         this.items = response.data;
         console.log(this.items);
       });
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-
 .img-prod {
   object-fit: contain;
   height: 130px;
