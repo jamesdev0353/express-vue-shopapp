@@ -33,7 +33,7 @@
                   </div>
                   <div class="col my-auto col-lg-3 col-7">
                     <p class="parameter">Кількість</p>
-                    <b-input
+                    <b-input @change="changeCount($event, item.id)"
                       class="count"
                       type="number"
                       :value="item.count"
@@ -42,7 +42,7 @@
                   </div>
                   <div class="col my-auto col-lg-2 col-5">
                     <p class="parameter">Ціна</p>
-                    <p class="price">{{ item.price }}</p>
+                    <p class="price">{{ item.price }} грн</p>
                   </div>
                 </div>
               </div>
@@ -241,6 +241,8 @@ export default {
       city: null,
       warehouse: null,
       address: null,
+      currentValue: 0,
+      countDict: {},
       apiKey: "1248264db38907916e355ff139ab2def",
       url: "https://api.novaposhta.ua/v2.0/json/",
     };
@@ -366,6 +368,23 @@ export default {
 
       this.$router.push({ name: "Success" });
     },
+    changeCount(event, id) {
+      this.countDict[id] = event;
+      this.fullPrice = 0
+      for (var i = 0; i < this.cartItems.length; i++) {
+        if (!(this.cartItems[i].id in this.countDict))
+        {
+          this.countDict[this.cartItems[i].id] = this.cartItems[i].count;
+        }
+        for(var key in this.countDict)
+        {
+          if (this.cartItems[i].id == key)
+          {
+            this.fullPrice += this.cartItems[i].price * this.countDict[key];
+          }
+        }
+      }
+    }
   },
   mounted() {
     if (localStorage.getItem("token") == null) {
@@ -488,7 +507,7 @@ p {
 }
 .count {
   height: 20px;
-  width: 50px;
+  width: 60px;
   margin: auto;
 }
 p {
