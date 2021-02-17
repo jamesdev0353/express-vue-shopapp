@@ -27,8 +27,17 @@ router.get("/", (req, res) => {
 
 // Create order for current user
 router.post("/", (req, res) => {
+  const order = {
+    status: 1,
+    payment_method: req.body.payment_method,
+    delivery_method: req.body.delivery_method,
+    region: req.body.region,
+    city: req.body.city,
+    delivery_office: req.body.delivery_office,
+  };
+
   db.query(
-    `UPDATE orders SET status = 1 WHERE user_id = ${req.user_id}`,
+    `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
     order,
     (err, result) => {
       res.send("OK");
