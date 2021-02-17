@@ -93,16 +93,12 @@ const routes = [
   {
     path: "/admin",
     name: "adminmain",
-    component: () => {
-      return import("../views/AdminMain.vue");
-    },
+    component: require("../views/AdminMain.vue").default,
   },
   {
     path: "/admin/categories",
     name: "Admincategory",
-    component: () => {
-      return import("../views/AdminCategory.vue");
-    },
+    component: require("../views/AdminCategory.vue").default,
   },
   {
     path: "/admin/categories/:cat",
@@ -112,23 +108,17 @@ const routes = [
   {
     path: "/admin/additem/:cat",
     name: "Adminadditem",
-    component: () => {
-      return import("../views/AdminAddItem.vue");
-    },
+    component: require("../views/AdminAddItem.vue").default,
   },
   {
     path: "/admin/addcategory",
     name: "Adminaddcategory",
-    component: () => {
-      return import("../views/AdminAddCategory.vue");
-    },
+    component: require("../views/AdminAddCategory.vue").default,
   },
   {
     path: "/admin/addsubcategory/:cat",
     name: "Adminaddsubcategory",
-    component: () => {
-      return import("../views/AdminAddSubCategory.vue");
-    },
+    component: require("../views/AdminAddSubCategory.vue").default,
   },
   {
     path: "/admin/delete/:product_id",
@@ -143,9 +133,7 @@ const routes = [
   {
     path: "/admin/soldItems",
     name: "Adminsolditems",
-    component: () => {
-      return import("../views/AdminSoldItems.vue");
-    },
+    component: require("../views/AdminSoldItems.vue").default,
   },
 ];
 

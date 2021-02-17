@@ -1,5 +1,5 @@
 <template>
-  <div class="category">
+  <div>
     <h2 class="mt-4 text-center">Категорії</h2>
     <div class="container" style="margin-left: 150px auto">
       <div class="d-flex">

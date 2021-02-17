@@ -64,7 +64,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 70px;
-  transition: transform .5s, filter 1.5s ease-in-out;
+  transition: transform 0.5s, filter 1.5s ease-in-out;
   filter: grayscale(0%);
 }
 
