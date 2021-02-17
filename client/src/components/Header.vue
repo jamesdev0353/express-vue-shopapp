@@ -22,28 +22,35 @@
             <router-link class="mx-3 text-muted" to="/contacts">
               Контакти
             </router-link>
-            <router-link v-if="admin" class="mx-3 text-muted" to="/admin/categories">
+            <router-link
+              v-if="admin"
+              class="mx-3 text-muted"
+              to="/admin/categories"
+            >
               Адмін-панель
             </router-link>
-            <router-link
-              v-if="displayLogin == false"
-              class="mx-3 text-muted"
-              to="/cart"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart"
-                viewBox="0 0 18 21"
+            <div>
+              <router-link
+                v-if="displayLogin == false"
+                class="mx-3 text-muted"
+                to="/cart"
               >
-                <path
-                  d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                />
-              </svg>
-            </router-link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  class="bi bi-cart icon"
+                  viewBox="0 0 18 21"
+                >
+                  <path
+                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                  />
+                </svg>
 
+                <span class="badge">{{ count }}</span>
+              </router-link>
+            </div>
             <div v-if="displayLogin == false">
               <router-link to="/user-orders" class="ml-3 profile-button">
                 <svg
@@ -107,8 +114,20 @@ export default {
       tokens: [],
       displayLogin: true,
       username: null,
-      admin: false
+      admin: false,
+      count: 0,
     };
+  },
+  mounted() {
+    axios
+      .get("/api/orders/0", {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        this.count = response.data.length;
+      });
   },
   async created() {
     if (localStorage.getItem("token") != null) {
@@ -122,9 +141,8 @@ export default {
       })
       .then((response) => {
         this.username = response.data[0].name + " " + response.data[0].surname;
-        if (response.data[0].role == 1)
-        {
-          this.admin = true
+        if (response.data[0].role == 1) {
+          this.admin = true;
         }
       });
   },
@@ -151,9 +169,23 @@ export default {
   }
 }
 
+.badge {
+  font-size: 9px;
+  vertical-align: top;
+  margin: 0;
+  position: relative;
+  margin-left: 18px;
+  background-color: #4da9bdff;
+  color: white;
+}
+
 header {
   background: #fff;
   box-shadow: 0px 0px 20px 0px #ccc;
+}
+
+.icon {
+  position: fixed;
 }
 
 .button-exit {
