@@ -76,6 +76,10 @@ export default {
   margin: 0;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .container {
   position: relative;
   text-align: center;

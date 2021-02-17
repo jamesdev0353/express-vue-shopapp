@@ -8,7 +8,7 @@
           v-for="subcategory of subcategories"
           :key="subcategory.id"
         >
-          <router-link
+          <router-link 
             :to="
               '/categories/' + $route.params.category_id + '/' + subcategory.id
             "
