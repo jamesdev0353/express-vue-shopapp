@@ -408,7 +408,7 @@ export default {
         this.warehouses = response.data;
       });
     axios
-      .get("/api/orders", {
+      .get("/api/orders/0", {
         headers: {
           token: localStorage.getItem("token"),
         },
