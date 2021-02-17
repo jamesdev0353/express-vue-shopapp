@@ -9,9 +9,19 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:product_id", (req, res) => {
-  arr = {};
-
-  db.query(
+   if(req.baseUrl == "/api/admin/delete"){
+    db.query(
+    `DELETE FROM products WHERE id = ${req.params.product_id}`,
+    (err, result) => {
+      if(err){ console.log(err)
+      } else {
+      res.redirect(req.header('Referer'))
+      }
+    }
+    );
+   } else {
+   arr = {};
+   db.query(
     `SELECT * FROM products WHERE id = ${req.params.product_id}`,
     (err, result) => {
       arr = result[0];
@@ -26,6 +36,7 @@ router.get("/:product_id", (req, res) => {
       );
     }
   );
+}
 
   // db.query(
   //   `SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))`,

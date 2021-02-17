@@ -21,6 +21,13 @@ app.use("/api/forgetPassword", require("./routes/forgetPassword"));
 app.use("/api/resetPassword", require("./routes/resetPassword"));
 app.use("/api/users", require("./routes/users"));
 
+app.use("/api/admin/categories", require("./routes/categories"));
+app.use("/api/admin/additem", require("./routes/additem"));
+app.use("/api/admin/delete", require("./routes/products"));
+app.use("/api/admin/edit", require("./routes/edit"));
+app.use("/api/admin/addcategory", require("./routes/addcategory"));
+app.use("/api/admin/addsubcategory", require("./routes/addsubcategory"));
+
 // SPA
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
