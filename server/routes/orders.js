@@ -1,15 +1,15 @@
 const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
-
 const moment = require("moment");
 
-// Get cart for current user
-router.get("/", (req, res) => {
+// Get cart or purchased products for current user
+router.get("/:status", (req, res) => {
+  req.user_id = 45;
   db.query(
-    `SELECT products.*, orders.id, orders.product_id, COUNT(*) AS count FROM products
+    `SELECT products.*, orders.*, COUNT(*) AS count FROM products
     INNER JOIN orders ON products.id = orders.product_id
-    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND status = 0 GROUP BY user_id, product_id`,
+    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND status = "${req.params.status}" GROUP BY user_id, product_id`,
     (err, result) => {
       res.json(result);
     }
@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
   // );
 });
 
-// Create order for current user
+// Purchase products for current user
 router.post("/", (req, res) => {
   const order = {
     status: 1,
