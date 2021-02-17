@@ -23,11 +23,7 @@
             <router-link class="mx-3 text-muted" to="/contacts">
               Контакти
             </router-link>
-            <router-link
-              v-if="admin"
-              class="mx-3 text-muted"
-              to="/admin/categories"
-            >
+            <router-link v-if="admin" class="mx-3 text-muted" to="/admin/categories">
               Адмін-панель
             </router-link>
             <router-link
@@ -68,7 +64,7 @@
                 <span class="ml-2">{{ username }}</span>
               </router-link>
               <button
-                class="ml-2 auth-button button-exit"
+                class="ml-0 auth-button button-exit"
                 @click="removeLocalStorage()"
               >
                 <svg
@@ -112,7 +108,7 @@ export default {
       tokens: [],
       displayLogin: true,
       username: null,
-      admin: false,
+      admin: false
     };
   },
   async created() {
@@ -127,8 +123,9 @@ export default {
       })
       .then((response) => {
         this.username = response.data[0].name + " " + response.data[0].surname;
-        if (response.data[0].role == 1) {
-          this.admin = true;
+        if (response.data[0].role == 1)
+        {
+          this.admin = true
         }
       });
   },
