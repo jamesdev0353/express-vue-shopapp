@@ -19,7 +19,6 @@
             <router-link class="mx-3 text-muted" to="/categories">
               Каталог
             </router-link>
-            <router-link class="mx-3 text-muted" to="#"> Новинки </router-link>
             <router-link class="mx-3 text-muted" to="/contacts">
               Контакти
             </router-link>
