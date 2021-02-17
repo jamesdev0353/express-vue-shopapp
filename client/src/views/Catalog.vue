@@ -56,14 +56,21 @@ export default {
   object-fit: cover;
   position: relative;
   border-radius: 50px;
-  filter: brightness(40%);
   margin-bottom: -120px;
+  filter: brightness(40%);
 }
 
 .category {
   display: flex;
   flex-direction: column;
   margin-bottom: 70px;
+  transition: transform .5s, filter 1.5s ease-in-out;
+  filter: grayscale(0%);
+}
+
+.category:hover {
+  filter: grayscale(80%);
+  transform: scale(1.1);
 }
 
 .category-name {
