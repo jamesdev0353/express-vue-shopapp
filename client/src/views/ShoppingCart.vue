@@ -79,7 +79,7 @@
         </div>
         <div class="col col-lg-5 col-12">
           <h3 class="my-4">Оформлення</h3>
-          <form class="ordering">
+          <form class="ordering" @submit.prevent="addOrder()">
             <div class="row">
               <div class="col-12" v-for="user of userInfo" :key="user.id">
                 <p class="section my-2">Користувач</p>
@@ -153,7 +153,7 @@
                 >
                   <b-form-select-option
                     v-for="city of cities.data"
-                    :key="city.Description"
+                    :key="city.Ref"
                     :value="city.Ref"
                   >
                     {{ city.Description }}
@@ -298,6 +298,23 @@ export default {
           console.log(this.cartItems);
         });
     },
+
+    addOrder() {
+      var area = ''
+      axios
+      .post(this.url, {
+        apiKey: this.apiKey,
+        modelName: "Address",
+        calledMethod: "getAreas",
+        methodProperties: {
+          Ref: this.area_ref,
+        },
+      })
+      .then((response) => {
+        response.data.data[0].Description
+      });
+      console.log(area)
+    }
   },
   mounted() {
     if (localStorage.getItem("token") == null) {
