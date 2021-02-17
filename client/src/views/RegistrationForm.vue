@@ -256,10 +256,6 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background: #f1f1f1;
-}
-
 form {
   background-color: white;
   padding: 20px;

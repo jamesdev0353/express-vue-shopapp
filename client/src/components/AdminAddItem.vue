@@ -244,9 +244,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #f1f1f1;
-}
 form {
   background-color: white;
   padding: 20px;

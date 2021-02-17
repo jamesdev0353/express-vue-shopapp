@@ -9,21 +9,21 @@
           @click="$router.push({ name: 'Adminaddcategory' })"
         >
           Додати категорію
-         <!--  <i class="far fa-plus-circle"></i> -->
+          <!--  <i class="far fa-plus-circle"></i> -->
         </button>
       </div>
       <div v-for="i in category" v-bind:key="i">
         <div v-if="i.level === 0">
           <div class="form-group">
-              <h2 class="mt-4 text-left">{{ i.name }}</h2>
-              <div class="d-flex justify-content-end">
-              <a :href="'/admin/addsubcategory/'+ i.id">
+            <h2 class="mt-4 text-left">{{ i.name }}</h2>
+            <div class="d-flex justify-content-end">
+              <a :href="'/admin/addsubcategory/' + i.id">
                 <button type="button" class="btn btn-info">
                   Додати підкатегорію
                   <!-- <i class="far fa-plus-circle"></i> -->
                 </button>
-             </a>
-           </div>
+              </a>
+            </div>
           </div>
         </div>
         <div v-for="j in category" v-bind:key="j.id">
@@ -60,36 +60,3 @@ export default {
   },
 };
 </script>
-
-
-<style>
-@media (max-width: 767px) {
-  a {
-    margin-top: 10px;
-  }
-
-  .auth-button {
-    margin-left: 15 !important;
-    align-self: center;
-  }
-}
-
-.auth-button {
-  background-color: #4da9bdff;
-  border: none;
-  border-radius: 50px;
-  color: white;
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 400;
-  height: 30px;
-  width: 100px;
-  text-align: center;
-  line-height: 2em;
-}
-
-.auth-button:hover {
-  background-color: rgb(46, 136, 156);
-  color: white !important;
-}
-</style>

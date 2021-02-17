@@ -60,36 +60,3 @@ export default {
   },
 };
 </script>
-
-
-<style>
-@media (max-width: 767px) {
-  a {
-    margin-top: 10px;
-  }
-
-  .auth-button {
-    margin-left: 15 !important;
-    align-self: center;
-  }
-}
-
-.auth-button {
-  background-color: #4da9bdff;
-  border: none;
-  border-radius: 50px;
-  color: white;
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 400;
-  height: 30px;
-  width: 100px;
-  text-align: center;
-  line-height: 2em;
-}
-
-.auth-button:hover {
-  background-color: rgb(46, 136, 156);
-  color: white !important;
-}
-</style>

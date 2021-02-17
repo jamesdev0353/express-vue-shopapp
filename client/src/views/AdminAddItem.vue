@@ -144,14 +144,14 @@
           <div class="form-group">
             <label>{{ spec.name }}</label>
 
-            <input type="text" class="form-control" v-bind:name="spec.id" />
+            <input type="text" class="form-control" :name="'spec_' + spec.id" />
           </div>
         </div>
 
         <button
           type="button"
           class="btn btn-light mr-2"
-          @click="$router.push({ name: 'AdminTabl' })"
+          @click="$router.push({ name: 'AdminTable' })"
         >
           Назад
         </button>
@@ -268,9 +268,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #f1f1f1;
-}
 form {
   background-color: white;
   padding: 20px;

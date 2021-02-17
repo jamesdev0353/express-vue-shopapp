@@ -1,29 +1,26 @@
 <template>
-  <div>
+  <div style="min-height: 100vh">
     <br />
-    <form>
-      <div class="form-group">
-        <div class="d-flex justify-content-end">
-          <input
-            type="form-control"
-            v-model="search"
-            placeholder="Пошук"
-            height="35"
-            width="200"
-            autofocus
-          />
+    <div class="form-group">
+      <div class="d-flex justify-content-end">
+        <input
+          type="form-control"
+          v-model="search"
+          placeholder="Пошук"
+          height="35"
+          width="200"
+          autofocus
+        />
 
-          <a
-              :href="'/admin/additem/' + this.$route.params.cat"
-            >
-              <button type="button" class="btn btn-info">
-                Додати товар
-                <i class="far fa-trash-alt"></i>
-              </button>
-          </a>
-        </div>
+        <a
+          :href="'/admin/additem/' + this.$route.params.cat"
+          class="btn btn-info"
+        >
+          Додати товар
+          <i class="far fa-trash-alt"></i>
+        </a>
       </div>
-    </form>
+    </div>
     <br />
     <br />
     <table class="table table-striped">
@@ -73,24 +70,21 @@
           <td>
             {{ product.count }}
           </td>
+
+          <td>
+            <a :href="'/admin/edit/' + product.id" class="btn btn-info">
+              Редагувати
+              <i class="far fa-edit"></i>
+            </a>
+          </td>
           <td>
             <a
               :href="'/api/admin/delete/' + product.id"
-              onclick="return confirm('Ти реальано хочеш видалити?');"
+              onclick="return confirm('Ви дійсно хочете видалити даний товар?');"
+              class="btn btn-danger"
             >
-              <button type="button" class="btn btn-danger">
-                Видалити
-                <i class="far fa-trash-alt"></i>
-              </button>
-            </a>
-          </td>
-
-          <td>
-            <a :href="'/admin/edit/' + product.id">
-              <button type="button" class="btn btn-info">
-                Редагувати
-                <i class="far fa-edit"></i>
-              </button>
+              Видалити
+              <i class="far fa-trash-alt"></i>
             </a>
           </td>
         </tr>
@@ -102,8 +96,8 @@
         </tr>
       </tfoot>
     </table>
-    <div class="clearfix"></div>
-    <div class="col-md-12 mb-2">
+    <!-- <div class="clearfix"></div> -->
+    <!-- <div class="col-md-12 mb-2">
       <button type="button" class="btn btn-info" @click="addNewRow">
         Додати
         <i class="fas fa-plus-circle"></i>
@@ -119,7 +113,7 @@
         Додати товар
         <i class="fas fa-plus-circle"></i>
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 

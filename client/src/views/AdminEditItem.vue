@@ -139,7 +139,7 @@
         <button
           type="button"
           class="btn btn-light mr-2"
-          @click="$router.push({ name: 'AdminTabl' })"
+          @click="$router.push({ name: 'AdminTable' })"
         >
           Назад
         </button>
@@ -244,9 +244,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #f1f1f1;
-}
 form {
   background-color: white;
   padding: 20px;

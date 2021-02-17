@@ -11,8 +11,8 @@ import ShoppingCart from "../views/ShoppingCart";
 import Subcategories from "../views/Subcategories";
 import ForgetPassword from "../views/ForgetPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
-import AdminTabl from '../views/AdminTabl.vue'
-import AdminEditItem from '../views/AdminEditItem.vue'
+import AdminTable from "../views/AdminTable.vue";
+import AdminEditItem from "../views/AdminEditItem.vue";
 
 Vue.use(VueRouter);
 
@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path: "/categories",
-    name: "categories", 
+    name: "categories",
     component: Catalog,
   },
   {
@@ -79,50 +79,62 @@ const routes = [
     component: ForgetPassword,
   },
   {
-   path: '/admin/main',
-    name: 'adminmain',
-    component: () => {return import ('../views/AdminMain.vue')}
+    path: "/admin",
+    name: "adminmain",
+    component: () => {
+      return import("../views/AdminMain.vue");
+    },
   },
   {
-    path: '/admin/categories',
-    name: 'Admincategory',
-    component: () => { return import ('../views/AdminCategory.vue') }
+    path: "/admin/categories",
+    name: "Admincategory",
+    component: () => {
+      return import("../views/AdminCategory.vue");
+    },
   },
   {
-    path: '/admin/categories/:cat',
-    name: 'AdminTableOfSubCategory',
-    component: AdminTabl
+    path: "/admin/categories/:cat",
+    name: "AdminTableOfSubCategory",
+    component: AdminTable,
   },
   {
-    path: '/admin/additem/:cat',
-    name: 'Adminadditem',
-    component: () => { return import ('../views/AdminAddItem.vue') }
+    path: "/admin/additem/:cat",
+    name: "Adminadditem",
+    component: () => {
+      return import("../views/AdminAddItem.vue");
+    },
   },
   {
-    path: '/admin/addcategory',
-    name: 'Adminaddcategory',
-    component: () => {return import ('../views/AdminAddCategory.vue')}
+    path: "/admin/addcategory",
+    name: "Adminaddcategory",
+    component: () => {
+      return import("../views/AdminAddCategory.vue");
+    },
   },
   {
-    path: '/admin/addsubcategory/:cat',            
-    name: 'Adminaddsubcategory',
-    component: () => {return import ('../views/AdminAddSubCategory.vue')}
+    path: "/admin/addsubcategory/:cat",
+    name: "Adminaddsubcategory",
+    component: () => {
+      return import("../views/AdminAddSubCategory.vue");
+    },
   },
   {
-  path:'/admin/delete/:product_id',
-  name: 'AdminDelProd',
-  component: AdminTabl
-},
+    path: "/admin/delete/:product_id",
+    name: "AdminDelProd",
+    component: AdminTable,
+  },
   {
-  path:'/admin/edit/:product_id',
-  name: 'AdminEditProd',
-  component: AdminEditItem
-},
-{
-path:'/admin/soldItems',
-name: 'Adminsolditems',
-component: () => {return import ('../views/AdminSoldItems.vue')}
-}
+    path: "/admin/edit/:product_id",
+    name: "AdminEditProd",
+    component: AdminEditItem,
+  },
+  {
+    path: "/admin/soldItems",
+    name: "Adminsolditems",
+    component: () => {
+      return import("../views/AdminSoldItems.vue");
+    },
+  },
 ];
 
 const router = new VueRouter({

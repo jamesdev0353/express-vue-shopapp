@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-bottom: 100px; margin-top: -40px">
     <div class="main-page">
       <img src="@/assets/background.png" class="image back" alt="background" />
 
@@ -81,7 +81,6 @@
 
 <style>
 body {
-  background: #f1f1f1;
   min-height: 100vh;
 }
 

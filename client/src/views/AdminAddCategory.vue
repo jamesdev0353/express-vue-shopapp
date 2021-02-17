@@ -2,7 +2,8 @@
   <div class="container mt-4">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Додати категорію</h2>
-      <form method="POST" action="/api/admin/addcategory" novalidate> <!--  @submit.prevent="userRegister"  -->
+      <form method="POST" action="/api/admin/addcategory" novalidate>
+        <!--  @submit.prevent="userRegister"  -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали категорію!
         </div>
@@ -64,12 +65,8 @@
         >
           Назад
         </button>
-        <button
-          :disabled="disabledBtn"
-          type="submit"
-          class="btn btn-primary"
-        >
-        <!-- @click="$router.push({ name: 'Admincategory' })" -->
+        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
+          <!-- @click="$router.push({ name: 'Admincategory' })" -->
           Додати
         </button>
       </form>
@@ -144,9 +141,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #f1f1f1;
-}
 form {
   background-color: white;
   padding: 20px;

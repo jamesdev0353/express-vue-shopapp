@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col col-lg-8 col-12">
-          <h4 class="my-4">{{ product.name }}</h4>
+          <h4 class="mt-3 mb-5">{{ product.name }}</h4>
           <!-- <h5 class="text-left">{{ product.brand }}</h5> -->
           <img :src="product.img" class="image img-prod" />
         </div>

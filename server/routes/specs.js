@@ -15,15 +15,10 @@ router.get("/:subcat", (req, res) => {
 });
 
 // router.get("/:subcat", (req, res) => {
-//   db.query(
-//     `SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))`,
-//     (err, result) => {
-//       db.query(`SELECT name, value FROM specs GROUP BY name`, (err, result) => {
-//         res.json(result);
-//         console.log(err);
-//       });
-//     }
-//   );
+// db.query(`SELECT name, value FROM specs GROUP BY name`, (err, result) => {
+//   res.json(result);
+//   console.log(err);
+// });
 // });
 
 router.get("/:subcat", (req, res) => {

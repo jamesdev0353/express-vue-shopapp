@@ -13,7 +13,7 @@
         <div class="col col-lg-7 col-12">
           <h3 class="my-4">Замовлення</h3>
           <div
-            class="card product-card mt-3"
+            class="card product-card mt-3 mb-5"
             v-for="item of cartItems"
             :key="item.id"
           >
@@ -83,9 +83,11 @@
             <div class="row">
               <div class="col-12" v-for="user of userInfo" :key="user.id">
                 <p class="section my-2">Користувач</p>
-                <p class="user-info">Ім'я та прізвище: {{user.name}} {{user.surname}}</p>
-                <p class="user-info">Електронна пошта: {{user.email}}</p>
-                <p class="user-info">Номер телефону: {{user.phone}}</p>
+                <p class="user-info">
+                  Ім'я та прізвище: {{ user.name }} {{ user.surname }}
+                </p>
+                <p class="user-info">Електронна пошта: {{ user.email }}</p>
+                <p class="user-info">Номер телефону: {{ user.phone }}</p>
               </div>
             </div>
             <div class="row">
@@ -355,11 +357,13 @@ export default {
         }
         console.log(this.cartItems);
       });
-      axios.get("/api/users", {
-      headers: {
-        token: localStorage.getItem("token")
-      }
-      }).then((response) => {
+    axios
+      .get("/api/users", {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
         this.userInfo = response.data;
       });
   },
@@ -438,6 +442,7 @@ p {
 .product-card {
   margin-inline: 10px;
   padding: 10px 0px;
+  box-shadow: 5px 5px 10px 0px #e0e0e0;
 }
 
 @media (max-width: 768px) {
