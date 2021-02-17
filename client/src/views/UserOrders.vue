@@ -1,6 +1,6 @@
 <template>
   <div class="user-orders">
-      <h3 class="mt-5 text-center"> Мої замовлення </h3>
+    <h3 class="mt-5 text-center">Мої замовлення</h3>
     <div class="row">
       <div class="col col-lg-2 col-0"></div>
       <div class="col col-lg-8 col-12">
@@ -49,11 +49,7 @@
           </div>
           <div class="row mt-3">
             <div class="col my-auto col-md-4 col-7 text-center">
-              <img
-                class="image img-prod"
-                src="@/assets/hp.png"
-                alt="product"
-              />
+              <img class="image img-prod" src="@/assets/hp.png" alt="product" />
             </div>
             <div class="col my-auto col-md-3 col-5 text-center">
               <router-link :to="'products/' + 113" class="text-dark">
@@ -82,7 +78,7 @@ p {
 }
 
 .user-orders {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 .name {
   font-size: 18px;
@@ -97,7 +93,7 @@ p {
 }
 
 .parameter {
-  font-size: 9px;
+  font-size: 75%;
 }
 
 .product-card {

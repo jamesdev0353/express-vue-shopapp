@@ -2,6 +2,8 @@ const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
 
+const moment = require("moment");
+
 // Get cart for current user
 router.get("/", (req, res) => {
   db.query(
@@ -10,7 +12,6 @@ router.get("/", (req, res) => {
     INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND status = 0 GROUP BY user_id, product_id`,
     (err, result) => {
       res.json(result);
-      // console.log(req.user_id);
     }
   );
 
@@ -29,6 +30,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const order = {
     status: 1,
+    date: moment().format("DD.MM.YYYY"),
     payment_method: req.body.payment_method,
     delivery_method: req.body.delivery_method,
     region: req.body.region,
