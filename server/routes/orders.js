@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
     delivery_method: req.body.delivery_method,
     region: req.body.region,
     city: req.body.city,
-    delivery_office: req.body.delivery_office,
+    delivery_address: req.body.delivery_address,
   };
 
   db.query(
