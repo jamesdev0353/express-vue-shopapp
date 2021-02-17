@@ -5,7 +5,6 @@ const moment = require("moment");
 
 // Get cart or purchased products for current user
 router.get("/:status", (req, res) => {
-  req.user_id = 45;
   db.query(
     `SELECT products.*, orders.*, COUNT(*) AS count FROM products
     INNER JOIN orders ON products.id = orders.product_id
