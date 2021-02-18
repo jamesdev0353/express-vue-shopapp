@@ -1,11 +1,30 @@
 <template>
   <div>
     <br />
-    <input type="form-control" v-model="search" placeholder="Пошук" autofocus />
+    <div class="d-flex">
+      <input
+        type="form-control"
+        v-model="search"
+        placeholder="Пошук"
+        autofocus
+      />
+    </div>
     <br />
     <br />
     <table>
       <thead>
+        <tr>
+          <td
+            colspan="5"
+            class="text-left"
+            style="color: black; font-size: 20px"
+          >
+            Загальна сума
+          </td>
+          <td class="text-left" style="color: black; font-size: 20px">
+            {{ subtotal }}
+          </td>
+        </tr>
         <th scope="col">Логін покупця</th>
         <th scope="col text-right">Назва товару</th>
         <th scope="col">Статус</th>
@@ -79,7 +98,7 @@
               v-model="product.city"
             />
           </td>
-          
+
           <td>
             <input
               readonly
@@ -88,7 +107,6 @@
               v-model="product.delivery_address"
             />
           </td>
-
         </tr>
       </tbody>
     </table>
@@ -98,10 +116,11 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 export default {
   data() {
     return {
+      product_subtotal: 0,
       products: [],
       search: "",
     };
@@ -109,9 +128,7 @@ export default {
 
   async created() {
     try {
-      const res = await axios.get(
-        "/api/admin/solditems"
-      );
+      const res = await axios.get("/api/admin/solditems");
       this.products = res.data;
     } catch (e) {
       console.error(e);
@@ -121,25 +138,17 @@ export default {
   computed: {
     filterByTerm() {
       return this.products.filter((product) => {
-        return (
-          product.email.toLowerCase().includes(this.search.toLowerCase()) ||
-          product.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          product.price.toLowerCase().includes(this.search.toLowerCase()) ||
-          product.count.toLowerCase().includes(this.search.toLowerCase()) ||
-          product.total.toLowerCase().includes(this.search.toLowerCase()) ||
-          product.status.toLowerCase().includes(this.search.toLowerCase())
-        );
+        return product.name.toLowerCase().includes(this.search.toLowerCase());
       });
     },
-  },
-  methods: {
-    calculateLineTotal(product) {
-      var total_p = parseFloat(product.price) * parseFloat(product.count);
-      if (!isNaN(total_p)) {
-        product.total = total_p.toFixed(2);
-      }
+
+    subtotal: function () {
+      return this.products.reduce((total, item) => {
+        return total + item.price * item.count;
+      }, 0);
     },
   },
+  methods: {},
 };
 </script>
 
