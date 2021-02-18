@@ -34,10 +34,12 @@
                   <div class="col my-auto col-lg-3 col-7">
                     <p class="parameter">Кількість</p>
                     <b-input @change="changeCount($event, item.id)"
+                    onkeydown="return false"
                       class="count"
                       type="number"
                       :value="item.count"
                       min="1"
+                      :max="item.max_count"
                     />
                   </div>
                   <div class="col my-auto col-lg-2 col-5">
@@ -243,6 +245,7 @@ export default {
       address: null,
       currentValue: 0,
       countDict: {},
+      max_count: 10,
       apiKey: "1248264db38907916e355ff139ab2def",
       url: "https://api.novaposhta.ua/v2.0/json/",
     };
