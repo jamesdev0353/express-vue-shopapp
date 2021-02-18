@@ -3,11 +3,7 @@
   <div class="container mt-4 add-container mb-5">
     <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Редагувати товар</h2>
-      <form
-        method="POST"
-        :action="'/api/admin/edit/' + $route.params.product_id"
-        novalidate
-      >
+      <form @submit.prevent="editItem()">
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали товар!
         </div>
@@ -153,7 +149,7 @@
 
 <script>
 import { required, helpers, url } from "vuelidate/lib/validators";
-
+import axios from "axios";
 const alpha = helpers.regex("alpha", /^[0-9]*$/);
 
 export default {
@@ -164,11 +160,13 @@ export default {
       alphaText: "Заборонені любі символи крім цифр",
       reqUrl: "Потрібна силка",
       formReg: {
-        name: "",
-        brand: "",
-        image: "",
+        name: null,
+        brand: null,
+        image: null,
+        count: null,
+        surname: null,
+        desc: null,
       },
-      avatar: null,
     };
   },
 
@@ -184,7 +182,18 @@ export default {
       );
     },
   },
-
+  mounted() {
+    axios
+      .get("/api/products/" + this.$route.params.product_id)
+      .then((response) => {
+        this.formReg.name = response.data.name;
+        this.formReg.brand = response.data.brand;
+        this.formReg.surname = response.data.price;
+        this.formReg.count = response.data.count;
+        this.formReg.desc = response.data.description;
+        this.formReg.image = response.data.img;
+      });
+  },
   methods: {
     GetImage(e) {
       let image = e.target.files[0];
@@ -199,6 +208,25 @@ export default {
         "is-invalid": validation.$error,
         error: validation.$error,
       };
+    },
+
+    async editItem() {
+      await axios.post("/api/admin/edit/" + this.$route.params.product_id, {
+        image: this.formReg.image,
+        price: this.formReg.surname,
+        name: this.formReg.name,
+        brand: this.formReg.brand,
+        count: this.formReg.count,
+        description: this.formReg.desc,
+      });
+
+      axios
+        .get("/api/products/" + this.$route.params.product_id)
+        .then((response) => {
+          this.$router.push({
+            path: `/admin/categories/` + response.data.subcategory_id,
+          });
+        });
     },
 
     reset() {
