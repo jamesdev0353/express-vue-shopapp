@@ -10,7 +10,7 @@
         <div class="col col-lg-4 col-12 mt-5">
           <h6 class="mt-5 ml-1" v-html="message"> </h6>
           <h3 class="mt-1 ml-2">{{ product.price }} грн</h3>
-          <a href='/cart' @click="addToCart()" class="button" :disabled="disabled">
+          <a href='/cart' @click="addToCart()" class="button" :class="{ 'disabled' : disabled}">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -64,8 +64,8 @@ export default {
       console.log(this.product.count)
       if (this.product.count == 0)
       {
-        this.message = '<span style="color: red">Немає в наявності<span>'
         this.disabled = true
+        this.message = '<span style="color: red">Немає в наявності<span>'
       }
       else if (this.product.count < 10)
       {
@@ -102,7 +102,7 @@ export default {
   max-height: 60vh;
 }
 
-.button:disabled {
+.disabled {
   background-color: rgb(207, 207, 207);
   color: rgb(136, 136, 136);
   pointer-events: none;
