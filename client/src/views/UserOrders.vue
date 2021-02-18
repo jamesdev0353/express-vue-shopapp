@@ -1,5 +1,5 @@
 <template>
-  <div class="container user-orders">
+  <div class="container user-orders mb-5">
     <h3 class="mt-5 text-center">Мої замовлення</h3>
     <div class="row">
       <div class="col-12">
