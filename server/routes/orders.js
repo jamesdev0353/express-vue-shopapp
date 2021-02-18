@@ -6,7 +6,7 @@ const moment = require("moment");
 // Get cart or purchased products for current user
 router.get("/:status", async (req, res) => {
   let [result] = await db.query(
-    `SELECT products.*, orders.*, COUNT(*) AS count FROM products
+    `SELECT products.*, orders.* FROM products
     INNER JOIN orders ON products.id = orders.product_id
     INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND status = "${req.params.status}" GROUP BY user_id, product_id`
   );
