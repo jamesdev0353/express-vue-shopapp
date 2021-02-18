@@ -28,7 +28,7 @@
 
         <button
           type="button"
-          class="sold-button"
+          class="sold-button ml-2"
           @click="$router.push({ name: 'Adminsolditems' })"
         >
           Продані товари

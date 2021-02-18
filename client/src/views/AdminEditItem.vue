@@ -1,9 +1,13 @@
   
 <template>
-  <div class="container mt-4">
+  <div class="container mt-4" style="min-height: 100vh">
     <div class="col-sm-4 mx-auto">
-      <h2 class="reg-title">Редагувати товар товар</h2>
-      <form method="POST" :action="'/api/admin/edit/'+ $route.params.product_id" novalidate>
+      <h2 class="reg-title">Редагувати товар</h2>
+      <form
+        method="POST"
+        :action="'/api/admin/edit/' + $route.params.product_id"
+        novalidate
+      >
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали товар!
         </div>

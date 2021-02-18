@@ -2,15 +2,23 @@ const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
 
-router.get("/", async(req, res) => {
-  let [categories] = await db.query(`SELECT id,name from categories where level = 0`)
-  var arr = [];
-  for(const element of categories){
-    let [products] = await db.query(`SELECT * FROM products where subcategory_id in (SELECT id from categories where parent_id = ${element.id}) ORDER by RAND() LIMIT 4`)
-    arr.push({name: element.name, products: products })
+router.get("/", async (req, res) => {
+  let [categories] = await db.query(
+    `SELECT id, name FROM categories WHERE level = 0`
+  );
+
+  let arr = [];
+
+  for (element of categories) {
+    let [products] = await db.query(
+      `SELECT * FROM products WHERE subcategory_id IN (SELECT id FROM categories WHERE parent_id = ${element.id}) ORDER BY RAND() LIMIT 4`
+    );
+
+    arr.push({ name: element.name, products: products });
   }
-  res.json(arr)
-})
+
+  res.json(arr);
+});
 
 router.get("/:product_id", async (req, res) => {
   if (req.baseUrl == "/api/admin/delete") {

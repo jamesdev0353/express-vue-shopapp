@@ -3,7 +3,7 @@
   <div class="container mt-4 add-container">
     <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати товар</h2>
-      <form @submit.prevent="addItem()">
+      <form @submit.prevent="addItem()" class="mb-5">
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали товар!
         </div>
@@ -225,7 +225,10 @@ export default {
         count: this.formReg.count,
         description: this.formReg.desc,
       });
-      this.$router.push({ name: 'AdminTableOfSubCategory', params: this.$route.params.cat });
+      this.$router.push({
+        name: "AdminTableOfSubCategory",
+        params: this.$route.params.cat,
+      });
     },
 
     reset() {

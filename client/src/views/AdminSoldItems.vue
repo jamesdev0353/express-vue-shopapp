@@ -1,18 +1,16 @@
 <template>
-  <div>
+  <div class="container" style="min-height: 100vh">
     <br />
-<div class="row">
-      <div class="col-md-3 col-1"></div>
-      <div class="col-md-6 col-10">
+    <div class="row">
+      <div class="col-10 mx-auto">
         <input
-          class="form-control search-big "
+          class="form-control search-big"
           type="search"
           v-model="search"
           placeholder="Пошук..."
           autofocus
         />
       </div>
-      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
@@ -27,7 +25,7 @@
             Загальна сума
           </td>
           <td class="text-left" style="color: black; font-size: 20px">
-            {{ subtotal }}
+            {{ subtotal }} грн.
           </td>
         </tr>
         <th scope="col">Логін покупця</th>
