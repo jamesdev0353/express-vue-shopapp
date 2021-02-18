@@ -10,7 +10,7 @@
         <div class="col col-lg-4 col-12 mt-5">
           <h6 class="mt-5 ml-1" v-html="message"> </h6>
           <h3 class="mt-1 ml-2">{{ product.price }} грн</h3>
-          <button @click="addToCart()" class="button" :disabled="disabled">
+          <a href='/cart' @click="addToCart()" class="button" :disabled="disabled">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -24,7 +24,7 @@
               />
             </svg>
             Купити
-          </button>
+          </a>
           <p>
             {{ product.description }}
           </p>
@@ -76,8 +76,8 @@ export default {
     }
   },
   methods: {
-    addToCart() {
-      axios.post(
+    async addToCart() {
+      await axios.post(
         "/api/orders/" + this.$route.params.product_id,
         {},
         {
@@ -86,7 +86,7 @@ export default {
           },
         }
       );
-      this.$router.push({ name: "Cart" });
+      //this.$router.push({ name: "Cart" });
     },
   },
 };

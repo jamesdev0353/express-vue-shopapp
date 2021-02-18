@@ -291,7 +291,7 @@ export default {
     deleteFromCart(order_id) {
       axios.delete("/api/orders/" + order_id);
       axios
-        .get("/api/orders", {
+        .get("/api/orders/0", {
           headers: {
             token: localStorage.getItem("token"),
           },
