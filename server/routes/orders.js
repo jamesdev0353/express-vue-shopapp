@@ -37,21 +37,16 @@ router.post("/", async (req, res) => {
   };
 
   await db.query(
+    `UPDATE products
+    INNER JOIN ((SELECT product_id, count FROM orders WHERE user_id = ${req.user_id} AND status = 0)) 
+    AS product ON products.id = product.product_id
+    SET products.count = products.count - product.count`
+  );
+
+  await db.query(
     `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
     order
   );
-
-  // let [result] = await db.query(
-  //   `SELECT * FROM products WHERE id IN (SELECT product_id FROM orders WHERE user_id = ${req.user_id} AND status = 0)`
-  // );
-
-  // res.json(result);
-
-  // TODO
-
-  // await db.query(
-  //   `UPDATE products SET count = count - 1 WHERE id = ${req.user_id} AND status = 0`
-  // );
 
   res.send("OK");
 });
@@ -63,18 +58,36 @@ router.post("/:product_id", async (req, res) => {
     product_id: req.params.product_id,
   };
 
-  await db.query(`INSERT INTO orders SET ?`, order);
+  let [result] = await db.query(
+    `SELECT * FROM orders WHERE product_id = ${req.params.product_id} AND user_id = ${req.user_id} AND status = 0`
+  );
+
+  if (result.length > 0) {
+    await db.query(
+      `UPDATE orders SET count = count + 1 WHERE product_id = ${req.params.product_id} AND user_id = ${req.user_id} AND status = 0`
+    );
+  } else {
+    await db.query(`INSERT INTO orders SET ?`, order);
+  }
 
   res.send("OK");
 });
 
 // Update products count in cart for current user
 router.put("/:order_id", async (req, res) => {
-  await db.query(
-    `UPDATE orders SET count = "${req.body.count}" WHERE id = "${req.params.order_id}"`
+  let [result] = await db.query(
+    `SELECT * FROM products WHERE count >= ${req.body.count} AND id IN (SELECT product_id FROM orders WHERE id = ${req.params.order_id})`
   );
 
-  res.send("OK");
+  if (result.length) {
+    await db.query(
+      `UPDATE orders SET count = "${req.body.count}" WHERE id = "${req.params.order_id}"`
+    );
+
+    res.send("OK");
+  } else {
+    res.send("Error");
+  }
 });
 
 // Delete from cart for current user
