@@ -4,9 +4,9 @@ const db = require("../config/db");
 
 router.get("/", async (req, res) => {
   if (req.baseUrl == "/api/admin/categories") {
-    var [result] = await db.query(`SELECT * FROM categories`);
+    var [result] = await db.query(`SELECT * FROM categories where deleted = 0`);
   } else {
-    var [result] = await db.query(`SELECT * FROM categories WHERE level = 0`);
+    var [result] = await db.query(`SELECT * FROM categories WHERE level = 0 and deleted = 0`);
   }
 
   res.json(result);
@@ -37,7 +37,7 @@ router.get("/:cat", async (req, res) => {
     );
   } else {
     var [result] = await db.query(
-      `SELECT * FROM categories WHERE parent_id = ${req.params.cat}`
+      `SELECT * FROM categories WHERE parent_id = ${req.params.cat} and deleted = 0`
     );
   }
 
@@ -49,6 +49,14 @@ router.get("/:cat/:subcat", async (req, res) => {
     `SELECT * FROM products WHERE subcategory_id = ${req.params.subcat} ORDER BY id DESC`
   );
 
+  res.json(result);
+});
+
+router.delete("/:cat", async (req, res) => {
+  let [result] = await db.query(
+    `Update categories set deleted = 1 where id = ${req.params.cat}`
+  );
+  console.log("it work!!")
   res.json(result);
 });
 

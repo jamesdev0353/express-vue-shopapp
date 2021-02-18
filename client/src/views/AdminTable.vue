@@ -28,6 +28,24 @@
           </svg>
           Додати товар
         </router-link>
+        <button
+            @click="deleteCategory($route.params.cat)"
+            class="add-button mt-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="currentColor"
+              class="bi bi-plus-circle-fill"
+              viewBox="0 0 16 19"
+            >
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+              />
+            </svg>
+            Видалити категорію
+         </button>
       </div>
     </div>
     <br />
@@ -194,6 +212,10 @@ export default {
         this.products.splice(indx, 1);
       }
       this.calculateTotal();
+    },
+    async deleteCategory(cat_id) {
+        await axios.delete("/api/categories/" + cat_id);
+        this.$router.push("/admin/categories");
     },
     calculateLineTotal(product) {
       var total_p = parseFloat(product.price) * parseFloat(product.count);
