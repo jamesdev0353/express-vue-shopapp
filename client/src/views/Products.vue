@@ -154,7 +154,7 @@ export default {
         );
       }
 
-      let res = await axios.post("/api/filter", {
+      let res = await axios.post("/api/products", {
         names: this.checked.names.join(),
         values: this.checked.values.join(),
       });
