@@ -84,7 +84,10 @@ export default {
     return {
       display: check,
       specs: [],
-      checked: [],
+      checked: {
+        names: [],
+        values: [],
+      },
       products: [],
       displayProducts: 1,
     };
@@ -136,16 +139,27 @@ export default {
         return a[0] < b[0] ? -1 : 1;
       }
     },
-    newFilter(name, value, event) {
+    async newFilter(name, value, event) {
       if (event.target.checked) {
-        this.checked.push({ name, value });
+        this.checked.names.push(name);
+        this.checked.values.push(value);
       } else {
-        this.checked = this.checked.filter(
-          (elem) => elem.name !== name || elem.value !== value
+        this.checked.names.splice(
+          this.checked.names.findIndex((e) => e === name),
+          1
+        );
+        this.checked.values.splice(
+          this.checked.values.findIndex((e) => e === value),
+          1
         );
       }
 
-      console.log(this.checked);
+      let res = await axios.post("/api/filter", {
+        names: this.checked.names.join(),
+        values: this.checked.values.join(),
+      });
+
+      console.log(res.json());
     },
   },
 };
