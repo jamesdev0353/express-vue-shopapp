@@ -7,77 +7,48 @@
         <router-link to="/categories" class="button">Каталог</router-link>
       </div>
     </div>
-    <div class="category-1">
-      <h4 class="title"><b>Електроніка</b></h4>
-      <b-container>
-        <b-row class="mt-4">
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
+    <div class="category-1" v-for="item of items" :key="item">
+      <h4 class="title" v-if="item.products.length != 0">
+        <b>{{ item.name }}</b>
+      </h4>
+      <div class="container" v-if="item.products.length != 0">
+        <div class="row mt-4 row-products">
+          <column
+            class="col-lg-3 col-md-4 col-sm-6 col-6 product"
+            v-for="product of item.products"
+            :key="product"
+          >
+            <router-link class="text-dark" :to="'/products/' + product.id"
+              >
+              <img :src="product.img" class="image img-prod" />
+              <p class="mt-2 products">
+                <b>{{ product.name }}</b>
+              </p>
+              <p class="mt-1 products">{{ product.price }} грн</p>
+            </router-link>
           </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-        </b-row>
-      </b-container>
-    </div>
-    <div class="category-1">
-      <h4 class="title"><b>Одяг</b></h4>
-      <b-container>
-        <b-row class="mt-4">
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/clothes-1.jpg" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/clothes-1.jpg" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/clothes-1.jpg" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/clothes-1.jpg" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-        </b-row>
-      </b-container>
-    </div>
-    <div class="category-2">
-      <h4 class="title"><b>Електроніка</b></h4>
-      <b-container>
-        <b-row class="mt-4">
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-          <column class="col-md-3 col-6 product my-auto">
-            <img src="@/assets/hp.png" class="image img-prod" />
-            <p>hp elitebook 840 g1</p>
-          </column>
-        </b-row>
-      </b-container>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      all_items: null,
+      items: null,
+    };
+  },
+  mounted() {
+    axios.get("/api/products").then((response) => {
+      this.items = response.data;
+    });
+  },
+};
+</script>
 
 <style>
 body {
@@ -100,11 +71,25 @@ body {
   width: 80%;
 }
 
+.products {
+  font-size: medium;
+  margin: 0;
+}
+
+.row-products {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .product {
   height: 100%;
-  widows: 100%;
   margin-top: 20px;
   transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 280px;
 }
 
 .product:hover {
@@ -153,7 +138,7 @@ b-row {
 .category-2 {
   margin: auto;
   margin-top: 20px;
-  width: 100%;
+  width: 70%;
   position: relative;
 }
 
