@@ -134,17 +134,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-size: 1rem;
-  font-family: Tahoma;
-  background-color: rgb(255, 255, 255);
-  color: #ffffff;
-}
-</style>
