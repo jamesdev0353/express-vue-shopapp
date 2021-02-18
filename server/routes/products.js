@@ -13,7 +13,6 @@ router.get("/", async (req, res) => {
     let [products] = await db.query(
       `SELECT * FROM products WHERE subcategory_id IN (SELECT id FROM categories WHERE parent_id = ${element.id}) ORDER BY RAND() LIMIT 4`
     );
-
     arr.push({ name: element.name, products: products });
   }
 
@@ -40,6 +39,14 @@ router.get("/:product_id", async (req, res) => {
   // let [result] = await db.query(
   //   `SELECT products.*, products.name name, GROUP_CONCAT(specs.name) spec_name, GROUP_CONCAT(specs.value) spec_value FROM products INNER JOIN specs ON specs.product_id = products.id WHERE products.id = ${req.params.product_id} GROUP BY products.id`
   // );
+});
+
+
+router.post("/", async (req, res) => {
+  let [products] = await db.query(
+      `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id where specs.name in (${req.body.names}) and specs.value in (${req.body.values}) `
+    );
+  res.json(products)
 });
 
 module.exports = router;
