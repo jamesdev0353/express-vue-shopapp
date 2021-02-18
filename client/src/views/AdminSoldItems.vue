@@ -1,8 +1,9 @@
 <template>
-  <div class="container" style="min-height: 100vh">
+  <div>
     <br />
     <div class="row">
-      <div class="col-10 mx-auto">
+      <div class="col-md-3 col-1"></div>
+      <div class="col-md-6 col-10">
         <input
           class="form-control search-big"
           type="search"
@@ -11,10 +12,11 @@
           autofocus
         />
       </div>
+      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
-    <table>
+    <table class="table table-striped">
       <thead>
         <tr>
           <td
@@ -25,7 +27,7 @@
             Загальна сума
           </td>
           <td class="text-left" style="color: black; font-size: 20px">
-            {{ subtotal }} грн.
+            {{ subtotal }}
           </td>
         </tr>
         <th scope="col">Логін покупця</th>
@@ -40,28 +42,23 @@
       </thead>
       <tbody>
         <tr v-for="(product, k) in filterByTerm" :key="k">
-          <td class="form-control">
+          <td>
             {{ product.email }}
           </td>
 
           <td>
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              v-model="product.name"
-            />
+            {{ product.name }}
           </td>
 
           <td>
             <div v-if="product.status == 1">
-              <select class="form-control" aria-label="Default select example">
+              <select aria-label="Default select example">
                 <option selected>Замовлений</option>
                 <option value="2">Завершений</option>
               </select>
             </div>
             <div v-else-if="product.status == 2">
-              <select class="form-control" aria-label="Default select example">
+              <select aria-label="Default select example">
                 <option selected>Завершений</option>
                 <option value="1">Замовлений</option>
               </select>
@@ -69,46 +66,21 @@
           </td>
 
           <td>
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              v-model="product.price"
-            />
+            {{ product.price }}
           </td>
           <td>
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              v-model="product.count"
-            />
+            {{ product.count }}
           </td>
-          <td class="form-control">{{ product.count * product.price }}</td>
+          <td>{{ product.count * product.price }}</td>
           <td>
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              v-model="product.region"
-            />
+            {{ product.region }}
           </td>
           <td>
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              v-model="product.city"
-            />
+            {{ product.city }}
           </td>
 
           <td>
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              v-model="product.delivery_address"
-            />
+            {{ product.delivery_address }}
           </td>
         </tr>
       </tbody>
@@ -141,7 +113,15 @@ export default {
   computed: {
     filterByTerm() {
       return this.products.filter((product) => {
-        return product.name.toLowerCase().includes(this.search.toLowerCase());
+        return (
+          product.region.toLowerCase().includes(this.search.toLowerCase()) ||
+          product.city.toLowerCase().includes(this.search.toLowerCase()) ||
+          product.delivery_address
+            .toLowerCase()
+            .includes(this.search.toLowerCase()) ||
+          product.email.toLowerCase().includes(this.search.toLowerCase()) ||
+          product.name.toLowerCase().includes(this.search.toLowerCase())
+        );
       });
     },
 
