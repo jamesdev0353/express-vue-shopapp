@@ -77,6 +77,14 @@
               <i class="far fa-edit"></i>
             </a>
           </td>
+
+          <td>
+            <a :href="'/admin/specs/' + product.id" class="btn btn-light">
+              Характеристики
+              <i class="far fa-properties"></i>
+            </a>
+          </td>
+
           <td>
             <a
               :href="'/api/admin/delete/' + product.id"
@@ -96,24 +104,6 @@
         </tr>
       </tfoot>
     </table>
-    <!-- <div class="clearfix"></div> -->
-    <!-- <div class="col-md-12 mb-2">
-      <button type="button" class="btn btn-info" @click="addNewRow">
-        Додати
-        <i class="fas fa-plus-circle"></i>
-      </button>
-    </div>
-
-    <div class="col-md-12 mb-2">
-      <button
-        type="button"
-        class="btn btn-info"
-        @click="$router.push({ name: 'Adminadditem' })"
-      >
-        Додати товар
-        <i class="fas fa-plus-circle"></i>
-      </button>
-    </div> -->
   </div>
 </template>
 

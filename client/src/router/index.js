@@ -130,10 +130,25 @@ const routes = [
     name: "AdminEditProd",
     component: AdminEditItem,
   },
+{
+    path:"/admin/specs/add/:product_id",
+    name: "Adminaddspecs",
+    component: require("../views/AdminAddSpec.vue").default,
+  },
   {
     path: "/admin/soldItems",
     name: "Adminsolditems",
     component: require("../views/AdminSoldItems.vue").default,
+  },
+  {
+    path: "/admin/specs/:product_id",
+    name: "AdminSpecsTable",
+    component: require("../views/AdminSpecsTable").default,
+  },
+  {
+    path:"/admin/specs/delete/:product_id",
+    name: "AdminDeleteSpec",
+    component: require("../views/AdminSpecsTable").default
   },
 ];
 
