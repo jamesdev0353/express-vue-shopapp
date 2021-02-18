@@ -1,45 +1,73 @@
 <template>
   <div>
     <h2 class="mt-4 text-center">Категорії</h2>
-    <div class="container" style="margin-left: 150px auto">
+    <div class="container mb-4" style="margin-left: 150px auto; max-width: 960px">
       <div class="d-flex">
         <button
           type="button"
-          class="btn btn-info mr-2"
+          class="add-button"
           @click="$router.push({ name: 'Adminaddcategory' })"
         >
+         <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="currentColor"
+              class="bi bi-plus-circle-fill"
+              viewBox="0 0 16 19"
+            >
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+              />
+            </svg>
           Додати категорію
-          <!--  <i class="far fa-plus-circle"></i> -->
         </button>
       </div>
-      <div v-for="i in category" v-bind:key="i">
-        <div v-if="i.level === 0">
-          <div class="form-group">
-            <h2 class="mt-4 text-left">{{ i.name }}</h2>
-            <div class="d-flex justify-content-end">
-              <a :href="'/admin/addsubcategory/' + i.id">
-                <button type="button" class="btn btn-info">
-                  Додати підкатегорію
-                  <!-- <i class="far fa-plus-circle"></i> -->
-                </button>
-              </a>
+      <div class="row" v-for="i in category" v-bind:key="i">
+        <div class="col-md-6 col-12 mt-4" v-if="i.level === 0">
+          <div class="category mx-3">
+            <img :src="i.img" class="image category-img" alt="category" />
+            <div
+              class="category-name d-flex justify-content-center align-items-center"
+            >
+              <h5>{{ i.name }}</h5>
             </div>
           </div>
         </div>
-        <div v-for="j in category" v-bind:key="j.id">
-          <div v-if="i.id === j.parent_id && j.level === 1">
-            <div class="d-flex justify-content-center">
-              <router-link :to="'/admin/categories/' + j.id" class="text-blue">
-                <h5 class="mt-4 text-left">
+        <div class="col-md-6 col-12 mt-md-4 mt-0" v-if="i.level === 0">
+          <div v-for="j in category" v-bind:key="j.id">
+            <div v-if="i.id === j.parent_id && j.level === 1">
+              <div class="d-flex justify-content-center link">
+                <router-link :to="'/admin/categories/' + j.id" class="mt-1 text-muted">
                   {{ j.name }}
-                </h5>
-              </router-link>
+                </router-link>
+              </div>
             </div>
           </div>
+          <router-link
+            v-if="i.level === 0"
+            :to="'/admin/addsubcategory/' + i.id"
+            type="button"
+            class="add-button mt-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="currentColor"
+              class="bi bi-plus-circle-fill"
+              viewBox="0 0 16 19"
+            >
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+              />
+            </svg>
+            Додати підкатегорію
+          </router-link>
         </div>
       </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -60,3 +88,38 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.category {
+  pointer-events: none;
+}
+
+.category-img {
+  margin-bottom: -150px;
+  height: 210px;
+}
+
+.add-button {
+  background-color: rgb(207, 207, 207);
+  color: rgb(136, 136, 136);
+  border-radius: 50px;
+  border: none;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 2em;
+  padding: 7px 20px;
+  width: fit-content;
+}
+
+.add-button:hover {
+  background-color: rgb(190, 190, 190);
+}
+
+@media (max-width: 767px) {
+  .link {
+    margin-top: 10px;
+  }
+}
+</style>
