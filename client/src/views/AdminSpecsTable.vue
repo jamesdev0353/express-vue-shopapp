@@ -11,7 +11,7 @@
           autofocus
         />
         <router-link
-          :to="'/admin/additem/' + this.$route.params.cat"
+          :to="'/admin/specs/add/' + this.$route.params.product_id"
           class="ml-4 add-button"
         >
           <svg

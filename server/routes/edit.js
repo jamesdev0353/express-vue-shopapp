@@ -12,7 +12,6 @@ router.get("/:product_id", async (req, res) => {
 
 router.post("/:product_id", async (req, res) => {
   let product = {
-    subcategory_id: req.params.cat,
     name: req.body.name,
     brand: req.body.brand,
     description: req.body.description,
