@@ -29,6 +29,13 @@
             >
               Адмін-панель
             </router-link>
+            <router-link
+              v-if="!displayLogin"
+              to="/user-orders"
+              class="ml-3 text-muted"
+            >
+              Мої замовлення
+            </router-link>
             <div>
               <router-link
                 v-if="displayLogin == false"
@@ -51,8 +58,8 @@
                 <span class="badge">{{ count }}</span>
               </router-link>
             </div>
-            <div v-if="displayLogin == false">
-              <router-link to="/user-orders" class="ml-3 profile-button">
+            <div v-if="!displayLogin">
+              <span class="profile-button ml-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -68,9 +75,10 @@
                   />
                 </svg>
                 <span class="ml-2">{{ username }}</span>
-              </router-link>
+              </span>
+
               <button
-                class="ml-0 auth-button button-exit"
+                class="auth-button button-exit"
                 @click="removeLocalStorage()"
               >
                 <svg
@@ -204,11 +212,12 @@ header {
   line-height: 2em;
   padding: 8px;
   width: fit-content;
+  cursor: default;
 }
 
-.profile-button:hover {
+/* .profile-button:hover {
   background-color: rgb(228, 228, 228);
-}
+} */
 
 .auth-button {
   background-color: #4da9bdff;

@@ -1,9 +1,8 @@
 <template>
-  <div class="user-orders">
+  <div class="container user-orders">
     <h3 class="mt-5 text-center">Мої замовлення</h3>
     <div class="row">
-      <div class="col col-lg-2 col-0"></div>
-      <div class="col col-lg-8 col-12">
+      <div class="col-12">
         <div
           class="card product-card my-3 p-5"
           v-for="item of items"
@@ -32,7 +31,7 @@
             <div class="col my-auto col-md-4 col-7 text-center">
               <img class="image img-prod" :src="item.img" alt="product" />
             </div>
-            <div class="col my-auto col-md-3 col-5">
+            <div class="col my-auto col-md-3 col-5 text-left">
               <router-link
                 :to="'products/' + item.product_id"
                 class="text-dark"
@@ -51,7 +50,6 @@
           </div>
         </div>
       </div>
-      <div class="col col-lg-2 col-0"></div>
     </div>
   </div>
 </template>
