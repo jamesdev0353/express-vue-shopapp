@@ -41,12 +41,11 @@ router.get("/:product_id", async (req, res) => {
   // );
 });
 
-
 router.post("/", async (req, res) => {
   let [products] = await db.query(
-      `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id where specs.name in (${req.body.names}) and specs.value in (${req.body.values}) `
-    );
-  res.json(products)
+    `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id where specs.name in (${req.body.names}) AND specs.value in (${req.body.values}) GROUP BY id`
+  );
+  res.json(products);
 });
 
 module.exports = router;
