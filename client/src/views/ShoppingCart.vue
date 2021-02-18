@@ -368,8 +368,8 @@ export default {
           },
         }
       );
-
-      this.$router.push({ name: "Success" });
+      window.location.href = '/success';
+       //this.$router.push({ name: "Success" });
     },
     changeCount(event, id) {
       this.countDict[id] = event;
