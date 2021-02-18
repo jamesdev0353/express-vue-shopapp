@@ -1,51 +1,63 @@
 <template>
-  <div class="container user-orders mb-5">
-    <h3 class="mt-5 text-center">Мої замовлення</h3>
-    <div class="row">
-      <div class="col-12">
-        <div
-          class="card product-card my-3 p-5"
-          v-for="item of items"
-          :key="item.id"
+  <div class="user-orders" >
+    <div class="container">
+      <div v-if="displayOrders == 1"></div>
+      <div class="text-center empty" v-if="displayOrders == 2">
+        <h2>У вас ще немає замовлень</h2>
+        <img class="mt-2 empty-order mr-4" src="@/assets/empty-cart.svg" />
+        <router-link to="/categories" class="mt-3 button start"
+          >Почати покупки</router-link
         >
-          <div class="row">
-            <div class="col my-auto col-md-3 col-6 text-center">
-              <p class="parameter">Замовлення</p>
-              <p class="value">№{{ item.id }}</p>
+      </div>
+    </div>
+    <div class="container mb-5" v-if="displayOrders == 3">
+      <h3 class="mt-5 text-center">Мої замовлення</h3>
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="card product-card my-3 p-5"
+            v-for="item of items"
+            :key="item.id"
+          >
+            <div class="row">
+              <div class="col my-auto col-md-3 col-6 text-center">
+                <p class="parameter">Замовлення</p>
+                <p class="value">№{{ item.id }}</p>
+              </div>
+              <div class="col my-auto col-md-3 col-6 text-center">
+                <p class="parameter">Дата</p>
+                <p class="value">{{ item.date }}</p>
+              </div>
+              <div class="col my-auto col-md-3 col-6 text-center">
+                <p class="parameter">Сума замовлення</p>
+                <p class="value">{{ item.price * item.count }} грн</p>
+              </div>
+              <div class="col my-auto col-md-3 col-6 text-center">
+                <p class="parameter">Статус замовлення</p>
+                <p class="value text-success">Оплачено</p>
+              </div>
             </div>
-            <div class="col my-auto col-md-3 col-6 text-center">
-              <p class="parameter">Дата</p>
-              <p class="value">{{ item.date }}</p>
-            </div>
-            <div class="col my-auto col-md-3 col-6 text-center">
-              <p class="parameter">Сума замовлення</p>
-              <p class="value">{{ item.price * item.count }} грн</p>
-            </div>
-            <div class="col my-auto col-md-3 col-6 text-center">
-              <p class="parameter">Статус замовлення</p>
-              <p class="value text-success">Оплачено</p>
-            </div>
-          </div>
-          <hr />
-          <div class="row mt-3">
-            <div class="col my-auto col-md-4 col-7 text-center">
-              <img class="image img-prod" :src="item.img" alt="product" />
-            </div>
-            <div class="col my-auto col-md-3 col-5 text-left">
-              <router-link
-                :to="'products/' + item.product_id"
-                class="text-dark"
-              >
-                <p class="name">{{ item.name }}</p>
-              </router-link>
-            </div>
-            <div class="col my-auto col-md-2 col-7 text-center">
-              <p class="parameter">Кількість</p>
-              <p class="value">{{ item.count }}</p>
-            </div>
-            <div class="col my-auto col-md-3 col-5 text-center">
-              <p class="parameter">Ціна</p>
-              <p class="value">{{ item.price }}</p>
+            <hr />
+            <div class="row mt-3">
+              <div class="col my-auto col-md-4 col-7 text-center">
+                <img class="image img-prod" :src="item.img" alt="product" />
+              </div>
+              <div class="col my-auto col-md-3 col-5 text-left">
+                <router-link
+                  :to="'products/' + item.product_id"
+                  class="text-dark"
+                >
+                  <p class="name">{{ item.name }}</p>
+                </router-link>
+              </div>
+              <div class="col my-auto col-md-2 col-7 text-center">
+                <p class="parameter">Кількість</p>
+                <p class="value">{{ item.count }}</p>
+              </div>
+              <div class="col my-auto col-md-3 col-5 text-center">
+                <p class="parameter">Ціна</p>
+                <p class="value">{{ item.price }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -60,9 +72,13 @@ export default {
   data() {
     return {
       items: [],
+      displayOrders: 1,
     };
   },
   mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.push({ name: "Main" });
+    }
     axios
       .get("/api/orders/1", {
         headers: {
@@ -71,7 +87,11 @@ export default {
       })
       .then((response) => {
         this.items = response.data;
-        console.log(this.items);
+        if (this.items.length != 0) {
+          this.displayOrders = 3;
+        } else {
+          this.displayOrders = 2;
+        }
       });
   },
 };
@@ -83,7 +103,16 @@ export default {
   height: 130px;
   width: auto;
 }
+.start {
+  width: 30% !important;
+}
 
+.empty {
+  margin-top: 20vh;
+}
+.empty-order {
+  max-height: 20vh;
+}
 p {
   margin: 0;
 }
