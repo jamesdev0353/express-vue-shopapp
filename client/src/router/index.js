@@ -103,7 +103,7 @@ const routes = [
   {
     path: "/admin/categories/:cat",
     name: "AdminTableOfSubCategory",
-    component: AdminTable,
+    component: require("../views/AdminTable").default,
   },
   {
     path: "/admin/additem/:cat",

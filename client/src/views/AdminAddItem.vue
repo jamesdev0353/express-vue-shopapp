@@ -1,47 +1,11 @@
   
 <template>
-  <div class="container mt-4">
-    <div class="col-sm-4 mx-auto">
+  <div class="container mt-4 add-container">
+    <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати товар</h2>
-      <form
-        method="POST"
-        :action="'/api/admin/additem/' + $route.params.cat"
-        novalidate
-      >
+      <form @submit.prevent="addItem()">
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали товар!
-        </div>
-
-        <div class="form-group">
-          <label for="image">Фотографія</label>
-
-          <input
-            @blur="$v.formReg.image.$touch()"
-            :class="status($v.formReg.image)"
-            v-model.trim="formReg.image"
-            type="text"
-            class="form-control"
-            id="image"
-            name="image"
-            @change="GetImage"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.image.required">
-            {{ reqText }}
-          </div>
-
-          <div class="invalid-feedback" v-if="!$v.formReg.image.url">
-            {{ reqUrl }}
-          </div>
-          <br />
-          <div>
-            <div class="card" style="width: 19rem">
-              <img class="card-img-top" :src="formReg.image" alt="Зображення" />
-              <div class="card-body">
-                <p class="card-text"></p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="form-group">
@@ -148,15 +112,43 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="image">Фотографія</label>
+
+          <input
+            @blur="$v.formReg.image.$touch()"
+            :class="status($v.formReg.image)"
+            v-model.trim="formReg.image"
+            type="text"
+            class="form-control"
+            id="image"
+            name="image"
+            @change="GetImage"
+          />
+
+          <div class="invalid-feedback" v-if="!$v.formReg.image.required">
+            {{ reqText }}
+          </div>
+
+          <div class="invalid-feedback" v-if="!$v.formReg.image.url">
+            {{ reqUrl }}
+          </div>
+          <br />
+          <div>
+            <div class="card">
+              <img class="card-img-top" :src="formReg.image" />
+            </div>
+          </div>
+        </div>
+
         <button
           type="button"
-          class="btn btn-light mr-2"
-          @click="$router.push({ name: 'AdminTable' })"
+          class="button button-back mb-3 mr-2"
+          @click="$router.go(-1)"
         >
           Назад
         </button>
-
-        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
+        <button :disabled="disabledBtn" type="submit" class="button mb-3 ml-2">
           Додати
         </button>
       </form>
@@ -166,16 +158,15 @@
 
 <script>
 import { required, helpers, url } from "vuelidate/lib/validators";
-
 const alpha = helpers.regex("alpha", /^[0-9]*$/);
 import axios from "axios";
 export default {
   data() {
     return {
       regMessage: false,
-      reqText: "Поле обовязкове для заповнення",
-      alphaText: "Заборонені любі символи крім цифр",
-      reqUrl: "Потрібна силка",
+      reqText: "Поле обов'язкове для заповнення",
+      alphaText: "Заборонені будь-які символи, крім цифр",
+      reqUrl: "Вставте посилання",
       formReg: {
         name: "",
         brand: "",
@@ -225,6 +216,21 @@ export default {
         error: validation.$error,
       };
     },
+    addItem() {
+      axios.post("/api/admin/additem/" + this.$route.params.cat, {
+        image: this.formReg.image,
+        price: this.formReg.surname,
+        name: this.formReg.name,
+        brand: this.formReg.brand,
+        count: this.formReg.count,
+        description: this.formReg.desc,
+      });
+      //this.$router.go(-2)
+      console.log('sflksl')
+      //this.$router.push({ name: 'AdminTableOfSubCategory' })
+      //this.$router.push({ path: `/admin/categories/${this.$route.params.cat}`})
+      this.$router.push({ name: 'AdminTableOfSubCategory', params: this.$route.params.cat });
+    },
 
     reset() {
       this.regMessage = true;
@@ -268,31 +274,4 @@ export default {
 </script>
 
 <style>
-form {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
-}
-.error {
-  background-color: #fdd;
-}
-.reg-title {
-  color: #5d5d5d;
-  font-size: 24px;
-  margin-bottom: 18px;
-  padding-left: 20px;
-}
-.slide-fade-enter-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-enter {
-  transform: translateX(10px);
-  opacity: 0;
-}
-
-.img {
-  width: 100px;
-  height: 20px;
-}
 </style>

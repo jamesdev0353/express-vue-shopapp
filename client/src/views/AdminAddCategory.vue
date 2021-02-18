@@ -1,11 +1,28 @@
 <template>
-  <div class="container mt-4">
-    <div class="col-sm-4 mx-auto">
+  <div class="container mt-4 add-container">
+    <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати категорію</h2>
-      <form method="POST" action="/api/admin/addcategory" novalidate>
-        <!--  @submit.prevent="userRegister"  -->
+      <form @submit.prevent="addCategory()">
+        <!-- @submit.prevent="userRegister" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали категорію!
+        </div>
+        <div class="form-group">
+          <label for="name">Назва категорії</label>
+
+          <input
+            @blur="$v.formReg.name.$touch()"
+            :class="status($v.formReg.name)"
+            v-model.trim="formReg.name"
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+          />
+
+          <div class="invalid-feedback" v-if="!$v.formReg.name.required">
+            {{ reqText }}
+          </div>
         </div>
 
         <div class="form-group">
@@ -31,42 +48,20 @@
           </div>
           <br />
           <div>
-            <div class="card" style="width: 19rem">
-              <img class="card-img-top" :src="formReg.image" alt="Зображення" />
-              <div class="card-body">
-                <p class="card-text"></p>
-              </div>
+            <div class="card card-image">
+              <img class="card-img-top" :src="formReg.image" />
             </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="name">Назва категорії</label>
-
-          <input
-            @blur="$v.formReg.name.$touch()"
-            :class="status($v.formReg.name)"
-            v-model.trim="formReg.name"
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.name.required">
-            {{ reqText }}
           </div>
         </div>
 
         <button
           type="button"
-          class="btn btn-light mr-2"
-          @click="$router.push({ name: 'Admincategory' })"
+          class="button button-back mb-3 mr-2"
+          @click="$router.go(-1)"
         >
           Назад
         </button>
-        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
-          <!-- @click="$router.push({ name: 'Admincategory' })" -->
+        <button :disabled="disabledBtn" type="submit" class="button mb-3 ml-2">
           Додати
         </button>
       </form>
@@ -76,7 +71,7 @@
 
 <script>
 import { required, url } from "vuelidate/lib/validators";
-
+import axios from 'axios'
 //const alpha = helpers.regex("alpha", /^[a-zA-Zа-яёА-А-ЯҐЄІЇ-яґєії]*$/);
 
 export default {
@@ -112,6 +107,13 @@ export default {
         "is-invalid": validation.$error,
         error: validation.$error,
       };
+    },
+    async addCategory() {
+      await axios.post("/api/admin/addcategory", {
+        name: this.formReg.name,
+        image: this.formReg.image,
+      });
+      this.$router.push({ name: "Admincategory" });
     },
 
     reset() {

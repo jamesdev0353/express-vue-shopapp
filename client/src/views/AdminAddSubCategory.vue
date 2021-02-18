@@ -1,16 +1,30 @@
 <template>
-  <div class="container mt-4">
-    <div class="col-sm-4 mx-auto">
+  <div class="container mt-4 add-container">
+    <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати підкатегорію</h2>
-      <form
-        method="POST"
-        :action="'/api/admin/addsubcategory/' + this.$route.params.cat"
-        novalidate
-      >
+      <form @submit.prevent="addSubcategory()">
         <!-- @submit.prevent="userRegister" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали підкатегорію!
         </div>
+        <div class="form-group">
+          <label for="name">Назва підкатегорії</label>
+
+          <input
+            @blur="$v.formReg.name.$touch()"
+            :class="status($v.formReg.name)"
+            v-model.trim="formReg.name"
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+          />
+
+          <div class="invalid-feedback" v-if="!$v.formReg.name.required">
+            {{ reqText }}
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="image">Фотографія</label>
 
@@ -34,42 +48,20 @@
           </div>
           <br />
           <div>
-            <div class="card" style="width: 19rem">
-              <img class="card-img-top" :src="formReg.image" alt="Зображення" />
-              <div class="card-body">
-                <p class="card-text"></p>
-              </div>
+            <div class="card card-image">
+              <img class="card-img-top" :src="formReg.image" />
             </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="name">Назва підкатегорії</label>
-
-          <input
-            @blur="$v.formReg.name.$touch()"
-            :class="status($v.formReg.name)"
-            v-model.trim="formReg.name"
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.name.required">
-            {{ reqText }}
           </div>
         </div>
 
         <button
           type="button"
-          class="btn btn-light mr-2"
-          @click="$router.push({ name: 'Admincategory' })"
+          class="button button-back mb-3 mr-2"
+          @click="$router.go(-1)"
         >
           Назад
         </button>
-        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
-          <!-- @click="$router.push({ name: 'Admincategory' })" -->
+        <button :disabled="disabledBtn" type="submit" class="button mb-3 ml-2">
           Додати
         </button>
       </form>
@@ -79,6 +71,7 @@
 
 <script>
 import { required, url } from "vuelidate/lib/validators";
+import axios from "axios";
 
 //const alpha = helpers.regex("alpha", /^[a-zA-Zа-яёА-А-ЯҐЄІЇ-яґєії]*$/);
 
@@ -86,8 +79,8 @@ export default {
   data() {
     return {
       regMessage: false,
-      reqText: "Поле обовязкове для заповнення",
-      reqUrl: "Потрібна силка",
+      reqText: "Поле обов'язкове для заповнення",
+      reqUrl: "Вставте посилання",
 
       formReg: {
         name: "",
@@ -116,6 +109,13 @@ export default {
         "is-invalid": validation.$error,
         error: validation.$error,
       };
+    },
+    async addSubcategory() {
+      await axios.post("/api/admin/addsubcategory/" + this.$route.params.cat, {
+        name: this.formReg.name,
+        image: this.formReg.image,
+      });
+      this.$router.go(-1)
     },
 
     reset() {
@@ -148,10 +148,29 @@ export default {
 </script>
 
 <style>
+.add-container {
+  min-height: 100vh;
+}
+.card-image {
+  border: 0px;
+}
+.button-back {
+  background-color: rgb(238, 238, 238);
+  color: rgb(143, 143, 143);
+}
+.button-back:hover {
+  background-color: rgb(228, 228, 228);
+}
+.button {
+  margin: 0;
+  display: unset;
+  width: auto;
+  padding: 8px 20px;
+}
 form {
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border: 1px solid rgba(206, 206, 206, 0.678);
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
 }
 .error {
