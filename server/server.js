@@ -29,6 +29,7 @@ app.use("/api/admin/addcategory", require("./routes/addcategory"));
 app.use("/api/admin/addsubcategory", require("./routes/addsubcategory"));
 app.use("/api/admin/specs", require("./routes/adminspecs"));
 app.use("/api/admin/solditems", require("./routes/solditems"));
+
 // SPA
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
