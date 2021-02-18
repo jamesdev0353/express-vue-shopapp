@@ -28,16 +28,19 @@ router.post("/:cat", async (req, res) => {
     `SELECT * FROM specs WHERE subcategory_id = ${req.params.cat} GROUP BY name`
   );
 
-  results.forEach(async (element) => {
-    let specs = {
-      subcategory_id: req.params.cat,
-      product_id: insertId,
-      name: element.name,
-      value: req.body["spec_" + element.id],
-    };
+  console.log(req.body)
+  for(element of results){
+    if(req.body["spec_" + element.id]){
+      let specs = {
+        subcategory_id: req.params.cat,
+        product_id: insertId,
+        name: element.name,
+        value: req.body["spec_" + element.id],
+      };
 
-    await db.query(`INSERT INTO specs set ?`, specs);
-  });
+      await db.query(`INSERT INTO specs set ?`, specs);
+    }
+  }
 
   res.redirect(req.header("Referer"));
 });

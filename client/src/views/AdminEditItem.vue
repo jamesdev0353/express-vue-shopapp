@@ -143,7 +143,7 @@
         <button
           type="button"
           class="btn btn-light mr-2"
-          @click="$router.push({ name: 'AdminTable' })"
+          @click="$router.push('/admin/categories')"
         >
           Назад
         </button>
