@@ -384,6 +384,11 @@ export default {
           }
         }
       }
+      console.log(id);
+
+      axios.put("api/orders/" + id, {
+        count: event
+      })
     }
   },
   mounted() {
