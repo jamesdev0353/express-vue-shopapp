@@ -103,7 +103,7 @@ const routes = [
   {
     path: "/admin/categories/:cat",
     name: "AdminTableOfSubCategory",
-    component: require("../views/AdminTable").default,
+    component: AdminTable,
   },
   {
     path: "/admin/additem/:cat",
@@ -130,8 +130,8 @@ const routes = [
     name: "AdminEditProd",
     component: AdminEditItem,
   },
-{
-    path:"/admin/specs/add/:product_id",
+  {
+    path: "/admin/specs/add/:product_id",
     name: "Adminaddspecs",
     component: require("../views/AdminAddSpec.vue").default,
   },
@@ -146,9 +146,9 @@ const routes = [
     component: require("../views/AdminSpecsTable").default,
   },
   {
-    path:"/admin/specs/delete/:product_id",
+    path: "/admin/specs/delete/:product_id",
     name: "AdminDeleteSpec",
-    component: require("../views/AdminSpecsTable").default
+    component: require("../views/AdminSpecsTable").default,
   },
 ];
 

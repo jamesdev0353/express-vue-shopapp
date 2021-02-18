@@ -138,15 +138,13 @@ export default {
     },
     newFilter(name, value, event) {
       if (event.target.checked) {
-        this.checked.push([name, value]);
+        this.checked.push({ name, value });
       } else {
-        for (let i = 0; i < this.checked.length; i++) {
-          if (this.checked[i][0] == name && this.checked[i][1] == value) {
-            this.checked.splice(i, 1);
-          }
-        }
+        this.checked = this.checked.filter(
+          (elem) => elem.name !== name || elem.value !== value
+        );
       }
-      this.checked.sort(this.sortFunction);
+
       console.log(this.checked);
     },
   },

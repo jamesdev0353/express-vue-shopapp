@@ -140,13 +140,9 @@
           </div>
         </div>
 
-        <button
-          type="button"
-          class="btn btn-light mr-2"
-          @click="$router.push('/admin/categories')"
-        >
+        <router-link to="/admin/categories" class="btn btn-light mr-2">
           Назад
-        </button>
+        </router-link>
 
         <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
           Додати
