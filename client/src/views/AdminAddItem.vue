@@ -1,5 +1,4 @@
-  
-<template>
+  <template>
   <div class="container mt-4 add-container">
     <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати товар</h2>
@@ -135,7 +134,7 @@
           </div>
           <br />
           <div>
-            <div class="card">
+            <div class="card card-image">
               <img class="card-img-top" :src="formReg.image" />
             </div>
           </div>

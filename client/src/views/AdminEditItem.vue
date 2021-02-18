@@ -1,7 +1,7 @@
   
 <template>
-  <div class="container mt-4" style="min-height: 100vh">
-    <div class="col-sm-4 mx-auto">
+  <div class="container mt-4 add-container mb-5">
+    <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Редагувати товар</h2>
       <form
         method="POST"
@@ -10,38 +10,6 @@
       >
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали товар!
-        </div>
-
-        <div class="form-group">
-          <label for="image">Фотографія</label>
-
-          <input
-            @blur="$v.formReg.image.$touch()"
-            :class="status($v.formReg.image)"
-            v-model.trim="formReg.image"
-            type="text"
-            class="form-control"
-            id="image"
-            name="image"
-            @change="GetImage"
-          />
-
-          <div class="invalid-feedback" v-if="!$v.formReg.image.required">
-            {{ reqText }}
-          </div>
-
-          <div class="invalid-feedback" v-if="!$v.formReg.image.url">
-            {{ reqUrl }}
-          </div>
-          <br />
-          <div>
-            <div class="card" style="width: 19rem">
-              <img class="card-img-top" :src="formReg.image" alt="Зображення" />
-              <div class="card-body">
-                <p class="card-text"></p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="form-group">
@@ -140,12 +108,43 @@
           </div>
         </div>
 
-        <router-link to="/admin/categories" class="btn btn-light mr-2">
-          Назад
-        </router-link>
+        <div class="form-group">
+          <label for="image">Фотографія</label>
 
-        <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
-          Додати
+          <input
+            @blur="$v.formReg.image.$touch()"
+            :class="status($v.formReg.image)"
+            v-model.trim="formReg.image"
+            type="text"
+            class="form-control"
+            id="image"
+            name="image"
+            @change="GetImage"
+          />
+
+          <div class="invalid-feedback" v-if="!$v.formReg.image.required">
+            {{ reqText }}
+          </div>
+
+          <div class="invalid-feedback" v-if="!$v.formReg.image.url">
+            {{ reqUrl }}
+          </div>
+          <div>
+            <div class="card card-image">
+              <img class="card-img-top" :src="formReg.image" />
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="button button-back mb-3 mr-2"
+          @click="$router.go(-1)"
+        >
+          Назад
+        </button>
+        <button :disabled="disabledBtn" type="submit" class="button mb-3 ml-2">
+          Підтвердити
         </button>
       </form>
     </div>
@@ -243,11 +242,30 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.add-container {
+  min-height: 100vh;
+}
+.card-image {
+  border: 0px;
+}
+.button-back {
+  background-color: rgb(238, 238, 238);
+  color: rgb(143, 143, 143);
+}
+.button-back:hover {
+  background-color: rgb(228, 228, 228);
+}
+.button {
+  margin: 0;
+  display: unset;
+  width: auto;
+  padding: 8px 20px;
+}
 form {
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border: 1px solid rgba(206, 206, 206, 0.678);
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
 }
 .error {
