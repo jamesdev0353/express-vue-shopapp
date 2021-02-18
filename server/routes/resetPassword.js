@@ -7,17 +7,14 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 router.post("/:token", async (req, res) => {
-  try {
-    const user = jwt.verify(req.params.token, process.env.SECRET);
-    var hashpass = await bcrypt.hash(req.body.password, 10);
-    let sql = `UPDATE users SET password = "${hashpass}" WHERE id = "${user.id}"`;
-    db.query(sql, (err, result) => {
-      res.json({ message: "Пароль успішно змінено" });
-    });
-  } catch (e) {
-    res.send("error:", e);
-    console.log("error:", e);
-  }
+  const user = jwt.verify(req.params.token, process.env.SECRET);
+  let hashpass = await bcrypt.hash(req.body.password, 10);
+
+  await db.query(
+    `UPDATE users SET password = "${hashpass}" WHERE id = "${user.id}"`
+  );
+
+  res.json({ message: "Пароль успішно змінено" });
 });
 
 module.exports = router;

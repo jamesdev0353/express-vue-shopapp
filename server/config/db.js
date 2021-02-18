@@ -1,20 +1,20 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 require("dotenv").config();
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_USER,
-});
+const db = mysql
+  .createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_USER,
+  })
+  .promise();
 
-db.connect((err) => {
-  if (err) throw err;
+db.connect().then(async () => {
   console.log("Mysql connected");
 
-  db.query(
-    `SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))`,
-    () => {}
+  await db.query(
+    `SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))`
   );
 
   setInterval(function () {

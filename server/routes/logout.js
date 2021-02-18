@@ -1,21 +1,11 @@
 const { Router } = require("express");
+const db = require("../config/db");
 const router = Router();
 
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-
 router.delete("/logout", async (req, res) => {
-  const token = jwt.sign(
-    {
-      email: "",
-      userId: "",
-    },
-    process.env.SECRET,
-    { expiresIn: "0s" }
-  );
-  res.status(200).json({
-    token: `${token}`,
-  });
+  await db.query(`UPDATE users SET token = "" WHERE id = ${req.user_id}`);
+
+  res.send("OK");
 });
 
 module.exports = router;

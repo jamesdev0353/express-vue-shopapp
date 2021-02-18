@@ -1,9 +1,8 @@
 <template>
-  <div style="min-height: 100vh">
+  <div class="container" style="min-height: 100vh">
     <br />
     <div class="row">
-      <div class="col-md-3 col-1"></div>
-      <div class="col-md-8 col-10">
+      <div class="col-10 mx-auto">
         <input
           class="form-control search"
           type="search"
@@ -30,12 +29,11 @@
           Додати товар
         </router-link>
       </div>
-      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
-    <div class="container text-left">
-    <table class="table table-striped">
+
+    <table class="table table-striped text-left">
       <thead>
         <th scope="col">id</th>
         <th scope="col">Назва</th>
@@ -110,8 +108,8 @@
           </td>
 
           <td>
-
-            <a class="btn btn-danger"
+            <a
+              class="btn btn-danger"
               :href="'/api/admin/delete/' + product.id"
               onclick="return confirm('Ви дійсно хочете видалити даний товар?');"
             >
@@ -138,7 +136,6 @@
         </tr>
       </tfoot>
     </table>
-    </div>
   </div>
 </template>
 
