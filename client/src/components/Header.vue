@@ -185,7 +185,7 @@ header {
 }
 
 .icon {
-  position: fixed;
+  position: absolute;
 }
 
 .button-exit {
