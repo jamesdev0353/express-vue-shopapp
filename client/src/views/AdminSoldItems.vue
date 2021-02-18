@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="container-fluid" style="min-height: 100vh">
     <br />
     <div class="row">
-      <div class="col-md-3 col-1"></div>
-      <div class="col-md-6 col-10">
+      <div class="mx-auto col-4">
         <input
           class="form-control search-big"
           type="search"
@@ -12,7 +11,6 @@
           autofocus
         />
       </div>
-      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
@@ -85,8 +83,6 @@
         </tr>
       </tbody>
     </table>
-    <div class="clearfix"></div>
-    <div class="col-md-12 mb-2"></div>
   </div>
 </template>
 
