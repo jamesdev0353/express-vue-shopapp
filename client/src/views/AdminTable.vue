@@ -1,27 +1,40 @@
 <template>
   <div style="min-height: 100vh">
     <br />
-    <div class="form-group">
-      <div class="d-flex justify-content-center">
+    <div class="row">
+      <div class="col-md-3 col-1"></div>
+      <div class="col-md-8 col-10">
         <input
-          type="form-control"
+          class="form-control search"
+          type="search"
           v-model="search"
           placeholder="Пошук..."
-          height="35"
           autofocus
         />
-
         <router-link
           :to="'/admin/additem/' + this.$route.params.cat"
-          class="btn btn-info"
+          class="ml-4 add-button"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="currentColor"
+            class="bi bi-plus-circle-fill"
+            viewBox="0 0 16 19"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+            />
+          </svg>
           Додати товар
-          <i class="far fa-trash-alt"></i>
         </router-link>
       </div>
+      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
+    <div class="container text-left">
     <table class="table table-striped">
       <thead>
         <th scope="col">id</th>
@@ -31,6 +44,8 @@
         <th scope="col text-right">Зображення</th>
         <th scope="col text-right">Ціна</th>
         <th scope="col text-right">Кількість</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
         <th scope="col"></th>
       </thead>
       <tbody>
@@ -71,13 +86,6 @@
           </td>
 
           <td>
-            <a :href="'/admin/edit/' + product.id" class="btn btn-info">
-              Редагувати
-              <i class="far fa-edit"></i>
-            </a>
-          </td>
-
-          <td>
             <a :href="'/admin/specs/' + product.id" class="btn btn-light">
               Характеристики
               <i class="far fa-properties"></i>
@@ -85,13 +93,40 @@
           </td>
 
           <td>
-            <a
+            <a :href="'/admin/edit/' + product.id" class="btn btn-info">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-pen-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"
+                />
+              </svg>
+            </a>
+          </td>
+
+          <td>
+
+            <a class="btn btn-danger"
               :href="'/api/admin/delete/' + product.id"
               onclick="return confirm('Ви дійсно хочете видалити даний товар?');"
-              class="btn btn-danger"
             >
-              Видалити
-              <i class="far fa-trash-alt"></i>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
+              </svg>
             </a>
           </td>
         </tr>
@@ -103,6 +138,7 @@
         </tr>
       </tfoot>
     </table>
+    </div>
   </div>
 </template>
 
@@ -189,6 +225,30 @@ body {
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   font-weight: 300;
+}
+.search {
+  width: 60% !important;
+  display: unset;
+}
+.search:focus {
+  border: 1px solid rgba(151, 151, 151, 0.678);
+}
+.add-button {
+  background-color: #4da9bdff;
+  color: white;
+  border-radius: 50px;
+  border: none;
+  text-decoration: none;
+  font-size: 16px;
+  text-align: center;
+  line-height: 2em;
+  padding: 10px 20px;
+  width: fit-content;
+}
+
+.add-button:hover {
+  background-color: rgb(46, 136, 156);
+  color: white !important;
 }
 .main-title {
   font-weight: 500;

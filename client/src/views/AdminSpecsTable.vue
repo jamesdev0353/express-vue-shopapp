@@ -1,33 +1,46 @@
 <template>
   <div style="min-height: 100vh">
     <br />
-    <div class="form-group">
-      <div class="d-flex justify-content-end">
+     <div class="row">
+      <div class="col-md-3 col-1"></div>
+      <div class="col-md-8 col-10">
         <input
-          type="form-control"
+          class="form-control search"
+          type="search"
           v-model="search"
-          placeholder="Пошук"
-          height="35"
-          width="200"
+          placeholder="Пошук..."
           autofocus
         />
-        <a
-          :href="'/admin/specs/add/' + $route.params.product_id"
-          class="btn btn-info"
+        <router-link
+          :to="'/admin/additem/' + this.$route.params.cat"
+          class="ml-4 add-button"
         >
-          Додати характеристику
-          <i class="far fa-trash-alt"></i>
-        </a>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="currentColor"
+            class="bi bi-plus-circle-fill"
+            viewBox="0 0 16 19"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+            />
+          </svg>
+          Додати
+        </router-link>
       </div>
+      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
+    <div class="container">
     <table class="table table-striped">
       <thead>
         <th scope="col">id</th>
         <th scope="col">Назва</th>
         <th scope="col">Значення</th>
-        <th scope="col">Видалення</th>
+        <th scope="col"></th>
       </thead>
       <tbody>
         <tr v-for="spec in filterList" :key="spec.id">
@@ -49,8 +62,18 @@
               onclick="return confirm('Ви дійсно хочете видалити дану характеристику?');"
               class="btn btn-danger"
             >
-              Видалити
-              <i class="far fa-trash-alt"></i>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
+              </svg>
             </a>
           </td>
         </tr>
@@ -62,6 +85,7 @@
         </tr>
       </tfoot>
     </table>
+  </div>
   </div>
 </template>
 
@@ -100,6 +124,10 @@ export default {
 </script>
 
 <style>
+
+.search {
+  width: 70% !important;
+}
 body {
   font-family: "Raleway", sans-serif;
   font-size: 16px;

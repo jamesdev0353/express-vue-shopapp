@@ -100,8 +100,8 @@ export default {
 }
 
 .add-button {
-  background-color: rgb(207, 207, 207);
-  color: rgb(136, 136, 136);
+  background-color: #4da9bdff;
+  color:white;
   border-radius: 50px;
   border: none;
   text-decoration: none;
@@ -114,7 +114,8 @@ export default {
 }
 
 .add-button:hover {
-  background-color: rgb(190, 190, 190);
+  background-color: rgb(46, 136, 156);
+  color: white !important;
 }
 
 @media (max-width: 767px) {

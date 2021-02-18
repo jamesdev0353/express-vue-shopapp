@@ -1,13 +1,18 @@
 <template>
   <div>
     <br />
-    <div class="d-flex">
-      <input
-        type="form-control"
-        v-model="search"
-        placeholder="Пошук"
-        autofocus
-      />
+<div class="row">
+      <div class="col-md-3 col-1"></div>
+      <div class="col-md-6 col-10">
+        <input
+          class="form-control search-big "
+          type="search"
+          v-model="search"
+          placeholder="Пошук..."
+          autofocus
+        />
+      </div>
+      <div class="col-md-3 col-1"></div>
     </div>
     <br />
     <br />
@@ -153,6 +158,9 @@ export default {
 </script>
 
 <style>
+.search-big {
+  width: 100% !important;
+}
 body {
   font-family: "Raleway", sans-serif;
   font-size: 16px;
