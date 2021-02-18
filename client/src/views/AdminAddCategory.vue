@@ -2,7 +2,7 @@
   <div class="container mt-4 add-container">
     <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати категорію</h2>
-      <form @submit.prevent="addCategory()">
+      <form @submit.prevent="addcategory()">
         <!-- @submit.prevent="userRegister" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали категорію!
@@ -142,11 +142,30 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.add-container {
+  min-height: 100vh;
+}
+.card-image {
+  border: 0px;
+}
+.button-back {
+  background-color: rgb(238, 238, 238);
+  color: rgb(143, 143, 143);
+}
+.button-back:hover {
+  background-color: rgb(228, 228, 228);
+}
+.button {
+  margin: 0;
+  display: unset;
+  width: auto;
+  padding: 8px 20px;
+}
 form {
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border: 1px solid rgba(206, 206, 206, 0.678);
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
 }
 .error {

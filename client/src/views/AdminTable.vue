@@ -2,23 +2,22 @@
   <div style="min-height: 100vh">
     <br />
     <div class="form-group">
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-center">
         <input
           type="form-control"
           v-model="search"
-          placeholder="Пошук"
+          placeholder="Пошук..."
           height="35"
-          width="200"
           autofocus
         />
 
-        <a
-          :href="'/admin/additem/' + this.$route.params.cat"
+        <router-link
+          :to="'/admin/additem/' + this.$route.params.cat"
           class="btn btn-info"
         >
           Додати товар
           <i class="far fa-trash-alt"></i>
-        </a>
+        </router-link>
       </div>
     </div>
     <br />

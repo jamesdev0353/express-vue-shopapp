@@ -225,10 +225,6 @@ export default {
         count: this.formReg.count,
         description: this.formReg.desc,
       });
-      //this.$router.go(-2)
-      console.log('sflksl')
-      //this.$router.push({ name: 'AdminTableOfSubCategory' })
-      //this.$router.push({ path: `/admin/categories/${this.$route.params.cat}`})
       this.$router.push({ name: 'AdminTableOfSubCategory', params: this.$route.params.cat });
     },
 
@@ -273,5 +269,51 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.add-container {
+  min-height: 100vh;
+}
+.card-image {
+  border: 0px;
+}
+.button-back {
+  background-color: rgb(238, 238, 238);
+  color: rgb(143, 143, 143);
+}
+.button-back:hover {
+  background-color: rgb(228, 228, 228);
+}
+.button {
+  margin: 0;
+  display: unset;
+  width: auto;
+  padding: 8px 20px;
+}
+form {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid rgba(206, 206, 206, 0.678);
+  box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
+}
+.error {
+  background-color: #fdd;
+}
+.reg-title {
+  color: #5d5d5d;
+  font-size: 24px;
+  margin-bottom: 18px;
+  padding-left: 20px;
+}
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-enter {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.img {
+  width: 100px;
+  height: 20px;
+}
 </style>
