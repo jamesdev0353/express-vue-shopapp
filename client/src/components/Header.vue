@@ -1,6 +1,6 @@
 <template>
   <header class="p-3" style="margin-bottom: 40px">
-    <b-navbar collapseOnSelect expand="md" toggleable="md" bg="white">
+    <b-navbar collapseOnSelect expand="lg" toggleable="lg" bg="white">
       <b-container>
         <router-link to="/">
           <b-navbar-brand>
@@ -32,7 +32,7 @@
             <router-link
               v-if="!displayLogin"
               to="/user-orders"
-              class="ml-3 text-muted"
+              class="mx-3 text-muted"
             >
               Мої замовлення
             </router-link>
