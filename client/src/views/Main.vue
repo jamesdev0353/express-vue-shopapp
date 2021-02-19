@@ -7,6 +7,14 @@
         <router-link to="/categories" class="button">Каталог</router-link>
       </div>
     </div>
+    <div class="search-block col-6 my-5 mx-auto">
+      <input
+        class="form-control"
+        placeholder="Пошук товарів..."
+        v-model="search"
+        autofocus
+      />
+    </div>
     <div class="category-1" v-for="item of items" :key="item">
       <h4 class="title" v-if="item.products.length != 0">
         <b>{{ item.name }}</b>
@@ -18,8 +26,7 @@
             v-for="product of item.products"
             :key="product"
           >
-            <router-link class="text-dark" :to="'/products/' + product.id"
-              >
+            <router-link class="text-dark" :to="'/products/' + product.id">
               <img :src="product.img" class="image img-prod" />
               <p class="mt-2 products">
                 <b>{{ product.name }}</b>
