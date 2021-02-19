@@ -61,9 +61,7 @@
         >
           Назад
         </button>
-        <button :disabled="disabledBtn" class="button mb-3 ml-2">
-          Додати
-        </button>
+        <button :disabled="disabledBtn" class="button mb-3 ml-2">Додати</button>
       </form>
     </div>
   </div>
@@ -71,7 +69,7 @@
 
 <script>
 import { required, url } from "vuelidate/lib/validators";
-import axios from 'axios'
+import axios from "axios";
 //const alpha = helpers.regex("alpha", /^[a-zA-Zа-яёА-А-ЯҐЄІЇ-яґєії]*$/);
 
 export default {
@@ -85,6 +83,12 @@ export default {
       },
       avatar: null,
     };
+  },
+
+  mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.back();
+    }
   },
 
   computed: {
@@ -109,7 +113,7 @@ export default {
       };
     },
     add() {
-     axios.post("/api/admin/addcategory", {
+      axios.post("/api/admin/addcategory", {
         name: this.formReg.name,
         image: this.formReg.image,
       });

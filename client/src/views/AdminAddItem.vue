@@ -2,7 +2,12 @@
   <div class="container mt-4 add-container">
     <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати товар</h2>
-      <form method="POST" :action = "'/api/admin/additem/' + $route.params.cat" class="mb-5"><!-- @submit.prevent="addItem()" -->
+      <form
+        method="POST"
+        :action="'/api/admin/additem/' + $route.params.cat"
+        class="mb-5"
+      >
+        <!-- @submit.prevent="addItem()" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали товар!
         </div>
@@ -184,6 +189,12 @@ export default {
       this.specs = res.data;
     } catch (e) {
       console.error(e);
+    }
+  },
+
+  mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.back();
     }
   },
 

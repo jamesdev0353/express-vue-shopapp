@@ -402,7 +402,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("token") == null) {
-      this.$router.push({ name: "Main" });
+      this.$router.back();
     }
 
     if (window.Stripe === undefined) {

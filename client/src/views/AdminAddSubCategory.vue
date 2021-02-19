@@ -89,6 +89,12 @@ export default {
     };
   },
 
+  mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.back();
+    }
+  },
+
   computed: {
     disabledBtn() {
       return this.$v.formReg.image.$invalid || this.$v.formReg.name.$invalid;
@@ -115,7 +121,7 @@ export default {
         name: this.formReg.name,
         image: this.formReg.image,
       });
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
 
     reset() {

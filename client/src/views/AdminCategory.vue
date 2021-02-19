@@ -123,6 +123,12 @@ export default {
     }
   },
 
+  mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.back();
+    }
+  },
+
   methods: {
     async deleteCategory(cat_id) {
       await axios.delete("/api/categories/" + cat_id);

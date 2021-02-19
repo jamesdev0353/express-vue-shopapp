@@ -1,5 +1,5 @@
 <template>
-  <div class="user-orders" >
+  <div class="user-orders">
     <div class="container">
       <div v-if="displayOrders == 1"></div>
       <div class="text-center empty" v-if="displayOrders == 2">
@@ -34,7 +34,13 @@
               </div>
               <div class="col my-auto col-md-3 col-6 text-center">
                 <p class="parameter">Статус замовлення</p>
-                <p class="value" style="color: rgb(226, 155, 0)" v-if="item.status == 1">В обробці</p>
+                <p
+                  class="value"
+                  style="color: rgb(226, 155, 0)"
+                  v-if="item.status == 1"
+                >
+                  В обробці
+                </p>
                 <p class="value text-success" v-else>Завершено</p>
               </div>
             </div>
@@ -78,8 +84,9 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("token") == null) {
-      this.$router.push({ name: "Main" });
+      this.$router.back();
     }
+
     axios
       .get("/api/orders/1", {
         headers: {

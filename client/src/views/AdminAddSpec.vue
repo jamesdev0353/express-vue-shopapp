@@ -3,9 +3,7 @@
     <div class="container mt-4 add-container">
       <div class="col-md-6 col-10 mx-auto">
         <h2 class="reg-title">Додати характеристику</h2>
-        <form @submit.prevent="addSpec()"
-          novalidate
-        >
+        <form @submit.prevent="addSpec()" novalidate>
           <div v-if="regMessage" class="alert alert-success" role="alert">
             Ви успішно додали характеристику!
           </div>
@@ -78,6 +76,12 @@ export default {
     };
   },
 
+  mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.back();
+    }
+  },
+
   computed: {
     disabledBtn() {
       return this.$v.formReg.name.$invalid || this.$v.formReg.value.$invalid;
@@ -99,7 +103,10 @@ export default {
           value: this.formReg.value,
         }
       );
-      this.$router.push({ name: 'AdminSpecsTable', params: this.$route.params.product_id});
+      this.$router.push({
+        name: "AdminSpecsTable",
+        params: this.$route.params.product_id,
+      });
     },
 
     reset() {

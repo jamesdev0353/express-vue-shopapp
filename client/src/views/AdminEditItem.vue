@@ -183,6 +183,10 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.getItem("token") == null) {
+      this.$router.back();
+    }
+
     axios
       .get("/api/products/" + this.$route.params.product_id)
       .then((response) => {
