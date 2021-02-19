@@ -9,11 +9,15 @@ router.get("/", async (req, res) => {
 
   let arr = [];
 
-  for (element of categories) {
+  for (category of categories) {
     let [products] = await db.query(
-      `SELECT * FROM products WHERE subcategory_id IN (SELECT id FROM categories WHERE parent_id = ${element.id} and deleted = 0) ORDER BY RAND() LIMIT 4`
+      `SELECT * FROM products WHERE subcategory_id IN (SELECT id FROM categories WHERE parent_id = ${category.id} and deleted = 0) ORDER BY RAND() LIMIT 4`
     );
-    arr.push({ name: element.name, products: products });
+    arr.push({
+      name: category.name,
+      category_id: category.id,
+      products: products,
+    });
   }
 
   res.json(arr);

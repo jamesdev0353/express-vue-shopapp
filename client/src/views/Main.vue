@@ -34,10 +34,16 @@
       </div>
     </div>
     <div v-if="display == false">
-      <div class="category-1" v-for="item of items" :key="item">
-        <h4 class="title" v-if="item.products.length != 0">
-          <b>{{ item.name }}</b>
-        </h4>
+      <div class="category-1 text-center" v-for="item of items" :key="item">
+        <router-link :to="'/categories/' + item.category_id">
+          <h4
+            class="title"
+            v-if="item.products.length != 0"
+            style="display: inline-block"
+          >
+            <b>{{ item.name }}</b>
+          </h4>
+        </router-link>
         <div class="container" v-if="item.products.length != 0">
           <div class="row mt-4 row-products">
             <column
