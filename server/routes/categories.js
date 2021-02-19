@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
 router.get("/:cat", async (req, res) => {
   if (req.baseUrl == "/api/admin/categories") {
     var [result] = await db.query(
-      `SELECT * FROM products WHERE subcategory_id = ${req.params.cat} ORDER BY id DESC`
+      `SELECT * FROM products WHERE subcategory_id = ${req.params.cat} and deleted = 0 ORDER BY id DESC`
     );
   } else {
     var [result] = await db.query(
@@ -46,20 +46,20 @@ router.get("/:cat", async (req, res) => {
 
 router.get("/:cat/:subcat", async (req, res) => {
   let [result] = await db.query(
-    `SELECT * FROM products WHERE subcategory_id = ${req.params.subcat} ORDER BY id DESC`
+    `SELECT * FROM products WHERE subcategory_id = ${req.params.subcat} and deleted = 0 ORDER BY id DESC`
   );
 
   res.json(result);
 });
 
 router.delete("/:cat", async (req, res) => {
-  let [result] = await db.query(
+  await db.query(
     `Update categories set deleted = 1 where id = ${req.params.cat}`
   );
-  let [result] = await db.query(
-    `Update products set deleted = 1 where subcategory_id = ${req.params.cat}`
+  await db.query(
+    `Update products set deleted = 1 where subcategory_id in (SELECT id from categories where parent_id = ${req.params.cat}) or subcategory_id = ${req.params.cat}`
   );
-  res.json(result);
+  res.send("OK");
 });
 
 module.exports = router;

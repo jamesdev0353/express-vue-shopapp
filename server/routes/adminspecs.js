@@ -12,7 +12,7 @@ router.get("/:product_id", async (req, res) => {
 
 router.post("/add/:product_id", async (req, res) => {
   let [result] = await db.query(
-    `SELECT * FROM products WHERE id = ${req.params.product_id}`
+    `SELECT * FROM products WHERE id = ${req.params.product_id} and deleted = 0`
   );
 
   let spec = {
