@@ -32,10 +32,14 @@ router.get("/:status", async (req, res) => {
   // );
 });
 
-// Purchase products for current user
+// Pay products for current user
 router.post("/", async (req, res) => {
   let [products] = await db.query(
-    `SELECT products.name AS name, products.price AS price, orders.count AS count FROM products INNER JOIN orders ON products.id = orders.product_id WHERE orders.user_id = "${req.user_id}" AND orders.status = 0`
+    `SELECT products.*,
+    orders.count AS count 
+    FROM products INNER JOIN orders 
+    ON products.id = orders.product_id 
+    WHERE orders.user_id = "${req.user_id}" AND orders.status = 0`
   );
 
   let items = [];
@@ -46,6 +50,8 @@ router.post("/", async (req, res) => {
         currency: "UAH",
         product_data: {
           name: product.name,
+          description: product.description,
+          images: [product.img],
         },
         unit_amount: product.price * 100,
       },
