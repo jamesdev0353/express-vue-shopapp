@@ -7,37 +7,40 @@
         <router-link to="/categories" class="button">Каталог</router-link>
       </div>
     </div>
-    <div class="search-block col-6 my-5 mx-auto">
+    <div class="search-block col-6 mt-5 mx-auto">
       <input
         class="form-control"
         placeholder="Пошук товарів..."
         v-model="search"
         autofocus
-        @change="change()"
       />
     </div>
-    <div class="container" v-if="display">
+    <div class="container">
       <div class="row mt-4 row-products">
-        <column
-          class="col-lg-3 col-md-4 col-sm-6 col-6 product"
-          v-for="product in filterList"
-          :key="product"
-        >
-          <router-link class="text-dark" :to="'/products/' + product.id">
-            <img :src="product.img" class="image img-prod" />
-            <p class="mt-2 products">
-              <b>{{ product.name }}</b>
-            </p>
-            <p class="mt-1 products">{{ product.price }} грн</p>
-          </router-link>
-        </column>
+        <span v-for="product in filterList" :key="product" class="all-products">
+          <column
+            class="col-lg-3 col-md-4 col-sm-6 col-6 product"
+            v-if="display"
+          >
+            <router-link class="text-dark" :to="'/products/' + product.id">
+              <img :src="product.img" class="image img-prod" />
+              <p class="mt-2 products">
+                <b>{{ product.name }}</b>
+              </p>
+              <p class="mt-1 products">{{ product.price }} грн</p>
+            </router-link>
+          </column>
+        </span>
       </div>
+    </div>
+    <div v-if="filterList.length == 0" class="text-center mt-5">
+      За вашим запитом товарів не знайдено
     </div>
     <div v-if="display == false">
       <div class="category-1 text-center" v-for="item of items" :key="item">
         <router-link :to="'/categories/' + item.category_id">
           <h4
-            class="title"
+            class="text-dark title"
             v-if="item.products.length != 0"
             style="display: inline-block"
           >
@@ -104,13 +107,7 @@ export default {
       });
     },
   },
-  methods: {
-    change() {
-      this.display = true;
-      console.log(this.search);
-    },
-  },
-};
+}
 </script>
 
 <style>
@@ -136,6 +133,10 @@ body {
 .products {
   font-size: medium;
   margin: 0;
+}
+
+.all-products {
+  display: contents;
 }
 
 .row-products {
