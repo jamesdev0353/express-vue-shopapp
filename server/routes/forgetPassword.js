@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
 
     res.json({
       message: "Лист з підтвердженням був надісланий Вам на пошту",
-      email: json[0].email,
+      email: results[0].email,
     });
   } else {
     res.json({
