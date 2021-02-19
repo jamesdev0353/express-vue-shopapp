@@ -158,7 +158,7 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(8),
+        minLength: minLength(6),
       },
       passwordConfirm: {
         sameAs: sameAs("password"),

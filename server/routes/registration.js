@@ -17,30 +17,26 @@ let transporter = nodemailer.createTransport({
 
 router.post("/", async (req, res) => {
   let [result] = await db.query(
-    `SELECT * FROM users WHERE email like "${req.body.email}"`
+    `SELECT * FROM users WHERE email = "${req.body.email}"`
   );
 
-  let json = JSON.parse(JSON.stringify(result));
-
-  if (json.length > 0) {
+  if (result.length > 0) {
     res.json({ message: "Користувач з такою поштою вже існує" });
   } else {
-    json = JSON.parse(JSON.stringify(req.body));
-    let hashpass = await bcrypt.hash(json.password, 10);
-
-    let emailToken = jwt.sign({ email: json.email }, process.env.SECRET);
+    let hashpass = await bcrypt.hash(req.body.password, 10);
+    let emailToken = jwt.sign({ email: req.body.email }, process.env.SECRET);
 
     transporter.sendMail({
-      to: json.email,
+      to: req.body.email,
       subject: "Підтвердження електронної пошти",
-      html: `Доброго дня, ${json.name} ${json.surname}. Для підтвердження аккаунту <a href="http://localhost:5000/api/registration/${emailToken}">натисніть сюди</a>`,
+      html: `Доброго дня, ${req.body.name} ${req.body.surname}. Для підтвердження аккаунту <a href="http://localhost:5000/api/registration/${emailToken}">натисніть сюди</a>`,
     });
 
     let user = {
-      name: json.name,
-      surname: json.surname,
-      email: json.email,
-      phone: json.phone,
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      phone: req.body.phone,
       password: hashpass,
       token: emailToken,
     };
@@ -49,7 +45,7 @@ router.post("/", async (req, res) => {
 
     res.json({
       message: "Ми відправили лист з підтвердженням Вам на пошту",
-      email: json.email,
+      email: req.body.email,
     });
   }
 });
