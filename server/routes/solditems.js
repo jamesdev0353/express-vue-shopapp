@@ -12,4 +12,12 @@ router.get("/", async (req, res) => {
   res.json(result);
 });
 
+router.put("/:order_id", async (req, res) => {
+  await db.query(
+    `UPDATE orders SET status = ${req.body.status} WHERE id = ${req.params.order_id}`
+  );
+
+  res.send("OK");
+});
+
 module.exports = router;

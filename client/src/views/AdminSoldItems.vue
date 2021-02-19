@@ -25,7 +25,7 @@
             Загальна сума
           </td>
           <td class="text-left" style="color: black; font-size: 20px">
-            {{ subtotal }}
+            {{ subtotal }} грн.
           </td>
         </tr>
         <th scope="col">Логін покупця</th>
@@ -49,18 +49,20 @@
           </td>
 
           <td>
-            <div v-if="product.status == 1">
-              <select aria-label="Default select example">
-                <option selected>Замовлений</option>
-                <option value="2">Завершений</option>
-              </select>
-            </div>
-            <div v-else-if="product.status == 2">
-              <select aria-label="Default select example">
-                <option selected>Завершений</option>
-                <option value="1">Замовлений</option>
-              </select>
-            </div>
+            <select
+              v-if="product.status == 1"
+              @change="onChange($event, product.id)"
+            >
+              <option value="1" selected>Замовлений</option>
+              <option value="2">Завершений</option>
+            </select>
+            <select
+              v-else-if="product.status == 2"
+              @change="onChange($event, product.id)"
+            >
+              <option value="2" selected>Завершений</option>
+              <option value="1">Замовлений</option>
+            </select>
           </td>
 
           <td>
@@ -127,7 +129,13 @@ export default {
       }, 0);
     },
   },
-  methods: {},
+  methods: {
+    async onChange(event, order_id) {
+      await axios.put("/api/admin/solditems/" + order_id, {
+        status: event.target.value,
+      });
+    },
+  },
 };
 </script>
 
