@@ -8,11 +8,11 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   let [results] = await db.query(
-    `SELECT * FROM users WHERE email like "${req.body.email}" LIMIT 1`
+    `SELECT * FROM users WHERE email = "${req.body.email}"`
   );
 
   if (results.length > 0) {
-    let result = bcrypt.compare(req.body.password, results[0].password);
+    let result = await bcrypt.compare(req.body.password, results[0].password);
 
     if (result) {
       const token = jwt.sign(

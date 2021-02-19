@@ -39,7 +39,7 @@ router.get("/:product_id", async (req, res) => {
     res.redirect(req.header("Referer"));
   } else {
     let [products] = await db.query(
-      `SELECT * FROM products WHERE id = ${req.params.product_id} and deleted = 0`
+      `SELECT * FROM products WHERE id = ${req.params.product_id} AND deleted = 0`
     );
 
     [products[0].specs] = await db.query(
@@ -55,9 +55,9 @@ router.get("/:product_id", async (req, res) => {
 });
 
 // Search filter
-router.post("/", async (req, res) => {
+router.post("/:subcat", async (req, res) => {
   let [products] = await db.query(
-    `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id WHERE specs.name IN (${req.body.names}) AND specs.value IN (${req.body.values}) AND deleted = 0 GROUP BY id`
+    `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id WHERE specs.name IN (${req.body.names}) AND specs.value IN (${req.body.values}) AND products.subcategory_id = ${req.params.subcat} AND deleted = 0 GROUP BY id`
   );
   res.json(products);
 });

@@ -60,19 +60,24 @@ export default {
       disabled: false,
     };
   },
+
   async created() {
     try {
       const res = await axios.get(
         "/api/products/" + this.$route.params.product_id
       );
       this.product = res.data;
-      console.log(this.product.count);
+
       if (this.product.count == 0) {
         this.disabled = true;
         this.message = '<span style="color: red">Немає в наявності<span>';
       } else if (this.product.count < 10) {
         this.message =
           '<span style="color: rgb(226, 155, 0)">Закінчується<span>';
+      } else if (localStorage.getItem("token") == null) {
+        this.disabled = true;
+        this.message =
+          '<span style="color: #9C27B0">Увійдіть для покупки<span>';
       }
     } catch (e) {
       console.error(e);

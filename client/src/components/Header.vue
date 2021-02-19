@@ -158,7 +158,7 @@ export default {
     removeLocalStorage() {
       localStorage.removeItem("token");
       this.displayLogin = true;
-      this.$router.push({ name: "Login" });
+      location.href = "/login";
     },
   },
 };

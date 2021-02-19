@@ -163,10 +163,13 @@ export default {
         );
         this.products = res.data;
       } else {
-        let res = await axios.post("/api/products", {
-          names: this.checked.names.join(),
-          values: this.checked.values.join(),
-        });
+        let res = await axios.post(
+          "/api/products/" + this.$route.params.subcategory_id,
+          {
+            names: this.checked.names.join(),
+            values: this.checked.values.join(),
+          }
+        );
 
         this.products = res.data;
       }

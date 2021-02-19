@@ -83,7 +83,7 @@ export default {
       regMessage: false,
       reqText: "Поле обовязкове для заповнення",
       alphaText: "Заборонені пробіли а також інші символи",
-      minLengthText: "Мінімальна довжина 8 символів!",
+      minLengthText: "Мінімальна довжина 6 символів!",
       formReg: {
         email: "",
         password: "",
