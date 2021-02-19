@@ -465,15 +465,6 @@ export default {
         }
         console.log(this.cartItems);
       });
-    axios
-      .get("/api/users", {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        this.userInfo = response.data;
-      });
   },
 };
 </script>

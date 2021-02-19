@@ -150,10 +150,10 @@ router.post("/:product_id", async (req, res) => {
 // Change products count in cart for current user
 router.put("/:order_id", async (req, res) => {
   let [result] = await db.query(
-    `SELECT * FROM products WHERE count >= ${req.body.count} AND id IN (SELECT product_id FROM orders WHERE id = ${req.params.order_id})`
+    `SELECT COUNT(*) AS count FROM products WHERE count >= ${req.body.count} AND id IN (SELECT product_id FROM orders WHERE id = ${req.params.order_id})`
   );
 
-  if (result.length && req.body.count > 0) {
+  if (result[0].count > 0 && req.body.count > 0) {
     await db.query(
       `UPDATE orders SET count = "${req.body.count}" WHERE id = "${req.params.order_id}"`
     );
