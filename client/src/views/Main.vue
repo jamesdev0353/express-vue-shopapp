@@ -22,7 +22,7 @@
             class="col-lg-3 col-md-4 col-sm-6 col-6 product"
             v-if="display"
           >
-            <router-link class="text-dark" :to="'/products/' + product.id">
+            <router-link class="text-dark text center" :to="'/products/' + product.id">
               <img :src="product.img" class="image img-prod" />
               <p class="mt-2 products">
                 <b>{{ product.name }}</b>
