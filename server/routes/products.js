@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/all", async (req, res) => {
-  let [result] = await db.query(`SELECT * FROM products`);
+  let [result] = await db.query(`SELECT * FROM products WHERE deleted = 0`);
 
   res.json(result);
 });
