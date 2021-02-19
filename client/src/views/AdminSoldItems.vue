@@ -1,6 +1,11 @@
 <template>
   <div class="container-fluid" style="min-height: 100vh">
     <br />
+    <section id="charting-demo">
+      <h1>Статистика</h1>
+      <demo-chart :chart-data="datacollection"></demo-chart>
+    </section>
+    <br />
     <div class="row">
       <div class="mx-auto col-4">
         <input
@@ -98,13 +103,19 @@
 </template>
 
 <script>
+import DemoChart from "../components/DemoChart.vue";
 import axios from "axios";
 export default {
+  components: { DemoChart },
   data() {
     return {
       product_subtotal: 0,
       products: [],
       search: "",
+      price: null,
+      name: null,
+      date: null,
+      datacollection: null,
     };
   },
 
@@ -115,6 +126,10 @@ export default {
     } catch (e) {
       console.error(e);
     }
+  },
+
+  mounted() {
+    this.fillData();
   },
 
   computed: {
@@ -146,6 +161,38 @@ export default {
 
       const res = await axios.get("/api/admin/solditems");
       this.products = res.data;
+    },
+
+    fillData() {
+      axios
+        .get("/api/admin/solditems")
+        .then((response) => {
+          let results = response.data;
+          let priceresult = results.map((a) => a.price);
+          let nameresult = results.map((a) => a.name);
+          let dateresult = results.map((a) => a.date);
+          this.price = priceresult;
+          this.date = dateresult;
+          this.name = nameresult;
+          this.datacollection = {
+            labels: this.date,
+            datasets: [
+              {
+                label: "Ціна",
+                backgroundColor: "#f87979",
+                data: this.price,
+              },
+              {
+                label: "Назва товару",
+                backgroundColor: "#5bf8bf",
+                data: this.name,
+              },
+            ],
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
