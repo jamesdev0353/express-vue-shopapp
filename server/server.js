@@ -14,7 +14,6 @@ app.use("/api/categories", require("./routes/categories"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/specs", require("./routes/specs"));
 app.use("/api/orders", require("./routes/orders"));
-app.use("/api/pay", require("./routes/pay"));
 
 app.use("/api/login", require("./routes/login"));
 app.use("/api/registration", require("./routes/registration"));
