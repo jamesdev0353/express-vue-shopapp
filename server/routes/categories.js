@@ -56,7 +56,9 @@ router.delete("/:cat", async (req, res) => {
   let [result] = await db.query(
     `Update categories set deleted = 1 where id = ${req.params.cat}`
   );
-  console.log("it work!!")
+  let [result] = await db.query(
+    `Update products set deleted = 1 where subcategory_id = ${req.params.cat}`
+  );
   res.json(result);
 });
 
