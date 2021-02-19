@@ -16,7 +16,7 @@ router.get("/:status", async (req, res) => {
   let [result] = await db.query(
     `SELECT products.*, products.count as max_count, orders.* FROM products
     INNER JOIN orders ON products.id = orders.product_id
-    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND ${status_check} GROUP BY user_id, product_id ORDER BY orders.id DESC`
+    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND ${status_check} ORDER BY orders.id DESC`
   );
 
   res.json(result);
@@ -34,43 +34,6 @@ router.get("/:status", async (req, res) => {
 
 // Pay products for current user
 router.post("/", async (req, res) => {
-  let [products] = await db.query(
-    `SELECT products.*,
-    orders.count AS count 
-    FROM products INNER JOIN orders 
-    ON products.id = orders.product_id 
-    WHERE orders.user_id = "${req.user_id}" AND orders.status = 0`
-  );
-
-  let items = [];
-
-  for (product of products) {
-    items.push({
-      price_data: {
-        currency: "UAH",
-        product_data: {
-          name: product.name,
-          description: product.description,
-          images: [product.img],
-        },
-        unit_amount: product.price * 100,
-      },
-      quantity: product.count,
-    });
-  }
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: items,
-    mode: "payment",
-    success_url:
-      "http://localhost:5000/api/orders/success/{CHECKOUT_SESSION_ID}",
-    cancel_url: "http://localhost:5000/cart",
-    metadata: {
-      user_id: req.user_id,
-    },
-  });
-
   const order = {
     date: moment().format("DD.MM.YYYY"),
     payment_method: req.body.payment_method,
@@ -80,12 +43,66 @@ router.post("/", async (req, res) => {
     delivery_address: req.body.delivery_address,
   };
 
-  await db.query(
-    `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
-    order
-  );
+  if (req.body.payment_method == 1) {
+    let [products] = await db.query(
+      `SELECT products.*,
+      orders.count AS count 
+      FROM products INNER JOIN orders 
+      ON products.id = orders.product_id 
+      WHERE orders.user_id = "${req.user_id}" AND orders.status = 0`
+    );
 
-  res.json({ id: session.id });
+    let items = [];
+
+    for (product of products) {
+      items.push({
+        price_data: {
+          currency: "UAH",
+          product_data: {
+            name: product.name,
+            description: product.description,
+            images: [product.img],
+          },
+          unit_amount: product.price * 100,
+        },
+        quantity: product.count,
+      });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: items,
+      mode: "payment",
+      success_url:
+        "http://localhost:5000/api/orders/success/{CHECKOUT_SESSION_ID}",
+      cancel_url: "http://localhost:5000/cart",
+      metadata: {
+        user_id: req.user_id,
+      },
+    });
+
+    await db.query(
+      `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
+      order
+    );
+
+    res.json({ id: session.id });
+  } else {
+    await db.query(
+      `UPDATE products
+      INNER JOIN ((SELECT product_id, count FROM orders WHERE user_id = ${req.user_id} AND status = 0))
+      AS product ON products.id = product.product_id
+      SET products.count = products.count - product.count`
+    );
+
+    order.status = 1;
+    await db.query(
+      `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
+      order
+    );
+
+    res.send("OK");
+  }
 });
 
 // Payment success
@@ -102,7 +119,7 @@ router.get("/success/:payment_token", async (req, res) => {
   );
 
   await db.query(
-    `UPDATE orders SET status =  1 WHERE user_id = ${session.metadata.user_id} AND status = 0`
+    `UPDATE orders SET status = 1 WHERE user_id = ${session.metadata.user_id} AND status = 0`
   );
 
   res.redirect("/success");

@@ -374,7 +374,11 @@ export default {
         }
       );
 
-      this.stripe.redirectToCheckout({ sessionId: checkout.data.id });
+      try {
+        this.stripe.redirectToCheckout({ sessionId: checkout.data.id });
+      } catch (error) {
+        location.href = "/success";
+      }
     },
     changeCount(event, id) {
       this.countDict[id] = event;

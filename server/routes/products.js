@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
 
+// Get 4 products of each category for main page
 router.get("/", async (req, res) => {
   let [categories] = await db.query(
     `SELECT id, name FROM categories WHERE level = 0 and deleted = 0`
@@ -23,12 +24,14 @@ router.get("/", async (req, res) => {
   res.json(arr);
 });
 
+// Get all products for search
 router.get("/all", async (req, res) => {
   let [result] = await db.query(`SELECT * FROM products WHERE deleted = 0`);
 
   res.json(result);
 });
 
+// Product details
 router.get("/:product_id", async (req, res) => {
   if (req.baseUrl == "/api/admin/delete") {
     await db.query(`DELETE FROM products WHERE id = ${req.params.product_id}`);
@@ -51,9 +54,10 @@ router.get("/:product_id", async (req, res) => {
   // );
 });
 
+// Search filter
 router.post("/", async (req, res) => {
   let [products] = await db.query(
-    `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id where specs.name in (${req.body.names}) AND specs.value in (${req.body.values}) and deleted = 0 GROUP BY id`
+    `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id WHERE specs.name IN (${req.body.names}) AND specs.value IN (${req.body.values}) AND deleted = 0 GROUP BY id`
   );
   res.json(products);
 });
