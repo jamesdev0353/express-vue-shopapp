@@ -2,7 +2,7 @@
   <div class="container mt-4 add-container">
     <div class="col-md-6 col-10 mx-auto">
       <h2 class="reg-title">Додати категорію</h2>
-      <form @submit.prevent="addcategory()">
+      <form @submit.prevent="add()">
         <!-- @submit.prevent="userRegister" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно додали категорію!
@@ -61,7 +61,7 @@
         >
           Назад
         </button>
-        <button :disabled="disabledBtn" type="submit" class="button mb-3 ml-2">
+        <button :disabled="disabledBtn" class="button mb-3 ml-2">
           Додати
         </button>
       </form>
@@ -108,8 +108,8 @@ export default {
         error: validation.$error,
       };
     },
-    async addCategory() {
-      await axios.post("/api/admin/addcategory", {
+    add() {
+     axios.post("/api/admin/addcategory", {
         name: this.formReg.name,
         image: this.formReg.image,
       });
