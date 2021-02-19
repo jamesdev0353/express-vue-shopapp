@@ -33,8 +33,9 @@
                   </div>
                   <div class="col my-auto col-lg-3 col-7">
                     <p class="parameter">Кількість</p>
-                    <b-input @change="changeCount($event, item.id)"
-                    onkeydown="return false"
+                    <b-input
+                      @change="changeCount($event, item.id)"
+                      onkeydown="return false"
                       class="count"
                       type="number"
                       :value="item.count"
@@ -151,7 +152,8 @@
             <div class="row">
               <div class="col-12">
                 <p class="section my-2">Населений пункт</p>
-                <b-form-select required
+                <b-form-select
+                  required
                   name="type"
                   class="form-select-md"
                   @change="onchangeCity()"
@@ -170,7 +172,8 @@
             <div class="row" v-if="display_warehouse">
               <div class="col-12">
                 <p class="section my-2">Відділення</p>
-                <b-form-select required
+                <b-form-select
+                  required
                   name="type"
                   class="form-select-md"
                   v-model="warehouse_ref"
@@ -368,21 +371,19 @@ export default {
           },
         }
       );
-      window.location.href = '/success';
-       //this.$router.push({ name: "Success" });
+      window.open("https://checkout.stripe.dev/preview", "_blank");
+      window.location.href = "/success";
+      //this.$router.push({ name: "Success" });
     },
     changeCount(event, id) {
       this.countDict[id] = event;
-      this.fullPrice = 0
+      this.fullPrice = 0;
       for (var i = 0; i < this.cartItems.length; i++) {
-        if (!(this.cartItems[i].id in this.countDict))
-        {
+        if (!(this.cartItems[i].id in this.countDict)) {
           this.countDict[this.cartItems[i].id] = this.cartItems[i].count;
         }
-        for(var key in this.countDict)
-        {
-          if (this.cartItems[i].id == key)
-          {
+        for (var key in this.countDict) {
+          if (this.cartItems[i].id == key) {
             this.fullPrice += this.cartItems[i].price * this.countDict[key];
           }
         }
@@ -390,9 +391,9 @@ export default {
       console.log(id);
 
       axios.put("api/orders/" + id, {
-        count: event
-      })
-    }
+        count: event,
+      });
+    },
   },
   mounted() {
     if (localStorage.getItem("token") == null) {

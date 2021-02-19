@@ -3,7 +3,7 @@
     <h2 class="mt-4 text-center">Категорії</h2>
     <div
       class="container mb-4"
-      style="margin-left: 150px auto; max-width: 960px"
+      style="margin-left: 150px auto; max-width: 960px; min-height: 100vh"
     >
       <div class="d-flex">
         <button
@@ -45,7 +45,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-12 mt-md-4 mt-0" v-if="i.level === 0">
+        <div class="col-md-6 col-12 mt-md-4 text-center" v-if="i.level === 0">
           <div v-for="j in category" v-bind:key="j.id">
             <div v-if="i.id === j.parent_id && j.level === 1">
               <div class="d-flex justify-content-center link">
@@ -83,6 +83,7 @@
               v-if="i.level === 0"
               @click="deleteCategory(i.id)"
               class="add-button mt-1"
+              style="background: #dc3545"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

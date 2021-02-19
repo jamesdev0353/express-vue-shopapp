@@ -1,5 +1,5 @@
 <template>
-  <div class="catalog">
+  <div class="catalog text-center">
     <h2 class="mt-4 text-center">Каталог</h2>
     <b-container class="mt-4">
       <b-row class="categories-b-row">
@@ -85,11 +85,6 @@ export default {
 
 a:hover {
   text-decoration: none;
-}
-
-.container {
-  position: relative;
-  text-align: center;
 }
 
 @media (max-width: 768px) {

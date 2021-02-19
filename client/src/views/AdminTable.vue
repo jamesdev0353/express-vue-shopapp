@@ -2,13 +2,14 @@
   <div class="container" style="min-height: 100vh">
     <br />
     <div class="row">
-      <div class="col-10 mx-auto">
+      <div class="col-12 mx-auto">
         <input
           class="form-control search"
           type="search"
           v-model="search"
           placeholder="Пошук..."
           autofocus
+          style="width: 60% !important"
         />
         <router-link
           :to="'/admin/additem/' + this.$route.params.cat"
@@ -29,23 +30,24 @@
           Додати товар
         </router-link>
         <button
-            @click="deleteCategory($route.params.cat)"
-            class="ml-4 add-button"
+          @click="deleteCategory($route.params.cat)"
+          class="ml-2 add-button"
+          style="background: #dc3545; padding: 2.5px 20px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 19"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="currentColor"
-              class="bi bi-plus-circle-fill"
-              viewBox="0 0 16 19"
-            >
-              <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-              />
-            </svg>
-            Видалити підкатегорію
-         </button>
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+            />
+          </svg>
+          Видалити підкатегорію
+        </button>
       </div>
     </div>
     <br />
@@ -214,8 +216,8 @@ export default {
       this.calculateTotal();
     },
     async deleteCategory(cat_id) {
-        await axios.delete("/api/categories/" + cat_id);
-        this.$router.push("/admin/categories");
+      await axios.delete("/api/categories/" + cat_id);
+      this.$router.push("/admin/categories");
     },
     calculateLineTotal(product) {
       var total_p = parseFloat(product.price) * parseFloat(product.count);
