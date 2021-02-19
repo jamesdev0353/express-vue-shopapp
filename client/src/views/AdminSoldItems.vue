@@ -37,6 +37,7 @@
         <th scope="col text-right">Область</th>
         <th scope="col text-right">Місто</th>
         <th scope="col text-right">Поштове відділеня</th>
+        <th scope="col text-right">Дата</th>
       </thead>
       <tbody>
         <tr v-for="(product, k) in filterByTerm" :key="k">
@@ -85,6 +86,10 @@
 
           <td>
             {{ product.delivery_address }}
+          </td>
+
+          <td>
+            {{ product.date }}
           </td>
         </tr>
       </tbody>
