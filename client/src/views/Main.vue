@@ -90,27 +90,24 @@ export default {
   computed: {
     filterList() {
       return this.all_products.filter((post) => {
-      console.log(this.search)
-      if (this.search == "")
-      {
-        this.display = false
-      }
-      else {
-        this.display = true
-      }
-        return (         
+        console.log(this.search);
+        if (this.search == "") {
+          this.display = false;
+        } else {
+          this.display = true;
+        }
+        return (
           post.name.toLowerCase().includes(this.search.toLowerCase()) ||
           post.brand.toLowerCase().includes(this.search.toLowerCase()) ||
           post.description.toLowerCase().includes(this.search.toLowerCase())
         );
-      
       });
     },
   },
   methods: {
     change() {
       this.display = true;
-      console.log(this.search)
+      console.log(this.search);
     },
   },
 };
@@ -133,8 +130,7 @@ body {
 .img-prod {
   margin: auto;
   object-fit: cover;
-  height: 80%;
-  width: 80%;
+  width: 100%;
 }
 
 .products {
