@@ -19,6 +19,12 @@ router.get("/", async (req, res) => {
   res.json(arr);
 });
 
+router.get("/all", async (req, res) => {
+  let [result] = await db.query(`SELECT * FROM products`);
+
+  res.json(result);
+});
+
 router.get("/:product_id", async (req, res) => {
   if (req.baseUrl == "/api/admin/delete") {
     await db.query(`DELETE FROM products WHERE id = ${req.params.product_id}`);
