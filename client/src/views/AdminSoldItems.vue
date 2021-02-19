@@ -53,8 +53,8 @@
             <select
               class="form-control"
               v-if="product.status == 1"
-              @change="onChange($event, product.id)"
-              style="background: #ff9800"
+              @change="onChangeStatus($event, product.id)"
+              style="background: #ff9800; color: #fff"
             >
               <option value="1" selected>Замовлений</option>
               <option value="2">Завершений</option>
@@ -62,8 +62,8 @@
             <select
               class="form-control"
               v-else-if="product.status == 2"
-              @change="onChange($event, product.id)"
-              style="background: #4caf50"
+              @change="onChangeStatus($event, product.id)"
+              style="background: #4caf50; color: #fff"
             >
               <option value="1">Замовлений</option>
               <option value="2" selected>Завершений</option>
@@ -139,7 +139,7 @@ export default {
     },
   },
   methods: {
-    async onChange(event, order_id) {
+    async onChangeStatus(event, order_id) {
       await axios.put("/api/admin/solditems/" + order_id, {
         status: event.target.value,
       });
@@ -179,10 +179,6 @@ body {
 }
 .submit_btn i {
   padding-right: 10px;
-}
-
-select {
-  color: #fff !important;
 }
 
 option {
