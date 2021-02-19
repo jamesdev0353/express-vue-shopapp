@@ -34,7 +34,8 @@
               </div>
               <div class="col my-auto col-md-3 col-6 text-center">
                 <p class="parameter">Статус замовлення</p>
-                <p class="value text-success">Оплачено</p>
+                <p class="value" style="color: rgb(226, 155, 0)" v-if="item.status == 1">В обробці</p>
+                <p class="value text-success" v-else>Завершено</p>
               </div>
             </div>
             <hr />
