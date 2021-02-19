@@ -13,27 +13,47 @@
         placeholder="Пошук товарів..."
         v-model="search"
         autofocus
+        @change="change()"
       />
     </div>
-    <div class="category-1" v-for="item of items" :key="item">
-      <h4 class="title" v-if="item.products.length != 0">
-        <b>{{ item.name }}</b>
-      </h4>
-      <div class="container" v-if="item.products.length != 0">
-        <div class="row mt-4 row-products">
-          <column
-            class="col-lg-3 col-md-4 col-sm-6 col-6 product"
-            v-for="product of item.products"
-            :key="product"
-          >
-            <router-link class="text-dark" :to="'/products/' + product.id">
-              <img :src="product.img" class="image img-prod" />
-              <p class="mt-2 products">
-                <b>{{ product.name }}</b>
-              </p>
-              <p class="mt-1 products">{{ product.price }} грн</p>
-            </router-link>
-          </column>
+    <div class="container" v-if="display">
+      <div class="row mt-4 row-products">
+        <column
+          class="col-lg-3 col-md-4 col-sm-6 col-6 product"
+          v-for="product in filterList"
+          :key="product"
+        >
+          <router-link class="text-dark" :to="'/products/' + product.id">
+            <img :src="product.img" class="image img-prod" />
+            <p class="mt-2 products">
+              <b>{{ product.name }}</b>
+            </p>
+            <p class="mt-1 products">{{ product.price }} грн</p>
+          </router-link>
+        </column>
+      </div>
+    </div>
+    <div v-if="display == false">
+      <div class="category-1" v-for="item of items" :key="item">
+        <h4 class="title" v-if="item.products.length != 0">
+          <b>{{ item.name }}</b>
+        </h4>
+        <div class="container" v-if="item.products.length != 0">
+          <div class="row mt-4 row-products">
+            <column
+              class="col-lg-3 col-md-4 col-sm-6 col-6 product"
+              v-for="product of item.products"
+              :key="product"
+            >
+              <router-link class="text-dark" :to="'/products/' + product.id">
+                <img :src="product.img" class="image img-prod" />
+                <p class="mt-2 products">
+                  <b>{{ product.name }}</b>
+                </p>
+                <p class="mt-1 products">{{ product.price }} грн</p>
+              </router-link>
+            </column>
+          </div>
         </div>
       </div>
     </div>
@@ -47,12 +67,35 @@ export default {
     return {
       all_items: null,
       items: null,
+      search: "",
+      all_products: [],
+      display: false,
     };
   },
   mounted() {
     axios.get("/api/products").then((response) => {
       this.items = response.data;
     });
+
+    axios.get("/api/products/all").then((response) => {
+      this.all_products = response.data;
+    });
+  },
+  computed: {
+    filterList() {
+      return this.all_products.filter((post) => {
+        return (
+          post.name.toLowerCase().includes(this.search.toLowerCase()) ||
+          post.brand.toLowerCase().includes(this.search.toLowerCase()) ||
+          post.description.toLowerCase().includes(this.search.toLowerCase())
+        );
+      });
+    },
+  },
+  methods: {
+    change() {
+      this.display = true;
+    },
   },
 };
 </script>
