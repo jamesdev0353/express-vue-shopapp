@@ -4,14 +4,14 @@ const db = require("../config/db");
 
 router.get("/", async (req, res) => {
   let [categories] = await db.query(
-    `SELECT id, name FROM categories WHERE level = 0`
+    `SELECT id, name FROM categories WHERE level = 0 and deleted = 0`
   );
 
   let arr = [];
 
   for (element of categories) {
     let [products] = await db.query(
-      `SELECT * FROM products WHERE subcategory_id IN (SELECT id FROM categories WHERE parent_id = ${element.id}) ORDER BY RAND() LIMIT 4`
+      `SELECT * FROM products WHERE subcategory_id IN (SELECT id FROM categories WHERE parent_id = ${element.id} and deleted = 0) ORDER BY RAND() LIMIT 4`
     );
     arr.push({ name: element.name, products: products });
   }
