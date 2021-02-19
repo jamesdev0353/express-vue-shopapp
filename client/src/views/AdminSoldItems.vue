@@ -2,9 +2,20 @@
   <div class="container-fluid" style="min-height: 100vh">
     <br />
     <section id="charting-demo">
-      <h1>Статистика</h1>
-      <demo-chart :chart-data="datacollection"></demo-chart>
+      <h1>Статистика продаж</h1>
+      <demo-chart :chart-data="datacollection1"></demo-chart>
     </section>
+
+    <section id="charting-demo">
+      <h1>Статистика категорій по продажам</h1>
+      <pie-chart :chart-data="datacollection"></pie-chart>
+    </section>
+
+    <section id="charting-demo">
+      <h1>Статистика категорій по кількості продаж</h1>
+      <pie-chart :chart-data="datacollection2"></pie-chart>
+    </section>
+
     <br />
     <div class="row">
       <div class="mx-auto col-4">
@@ -103,19 +114,27 @@
 </template>
 
 <script>
-import DemoChart from "../components/DemoChart.vue";
 import axios from "axios";
+import PieChart from "../components/PieChart.vue";
+import DemoChart from "../components/DemoChart.vue";
+
 export default {
-  components: { DemoChart },
+  components: { DemoChart, PieChart },
   data() {
     return {
       product_subtotal: 0,
       products: [],
       search: "",
-      price: null,
-      name: null,
+      income: null,
+      count: null,
       date: null,
       datacollection: null,
+      incomeCat: null,
+      datacollection1: null,
+      datacollection2: null,
+      orderCout: null,
+      name1: null,
+      orderCount: null,
     };
   },
 
@@ -134,6 +153,8 @@ export default {
     }
 
     this.fillData();
+    this.fillData1();
+    this.fillData2();
   },
 
   computed: {
@@ -169,27 +190,118 @@ export default {
 
     fillData() {
       axios
-        .get("/api/admin/solditems")
+        .get("/api/admin/ordersChart/categories")
         .then((response) => {
           let results = response.data;
-          let priceresult = results.map((a) => a.price);
+          let incomeresult = results.map((a) => a.income);
           let nameresult = results.map((a) => a.name);
-          let dateresult = results.map((a) => a.date);
-          this.price = priceresult;
-          this.date = dateresult;
+          this.income = incomeresult;
           this.name = nameresult;
           this.datacollection = {
+            labels: this.name,
+            datasets: [
+              {
+                label: "Дохід",
+                data: this.income,
+                //backgroundColor: Array.from({ length: len }, () =>
+                //this.randomCol()),
+
+                backgroundColor: [
+                  "#f9ca24",
+                  "#f0932b",
+                  "#eb4d4b",
+                  "#6ab04c",
+                  "#7ed6df",
+                  "#e056fd",
+                  "#686de0",
+                  "#30336b",
+                  "#95afc0",
+                  "#22a6b3",
+                  "#be2edd",
+                  "#4834d4",
+                  "#130f40",
+                  "#535c68",
+                ],
+              },
+            ],
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    randomCol() {
+      let r = Math.floor(Math.random() * 200);
+      let g = Math.floor(Math.random() * 200);
+      let b = Math.floor(Math.random() * 200);
+      var color = "rgb(" + r + ", " + g + ", " + b + ")";
+      return color;
+    },
+
+    fillData1() {
+      axios
+        .get("/api/admin/ordersChart")
+        .then((response) => {
+          let results = response.data;
+          let incomeresult = results.map((a) => a.income);
+          let countresult = results.map((a) => a.orderCount);
+          let dateresult = results.map((a) => a.date);
+          this.income = incomeresult;
+          this.date = dateresult;
+          this.count = countresult;
+          this.datacollection1 = {
             labels: this.date,
             datasets: [
               {
-                label: "Ціна",
+                label: "Дохід",
                 backgroundColor: "#f87979",
-                data: this.price,
+                data: this.income,
               },
               {
-                label: "Назва товару",
+                label: "Кількість товарів",
                 backgroundColor: "#5bf8bf",
-                data: this.name,
+                data: this.count,
+              },
+            ],
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    fillData2() {
+      axios
+        .get("/api/admin/ordersChart/categories")
+        .then((response) => {
+          let results = response.data;
+          let countresult = results.map((a) => a.orderCount);
+          let dateresult = results.map((a) => a.name);
+          this.name = dateresult;
+          this.orderCount = countresult;
+          this.datacollection2 = {
+            labels: this.name,
+            datasets: [
+              {
+                label: "Кількість",
+                backgroundColor: [
+                  "#f9ca24",
+                  "#f0932b",
+                  "#eb4d4b",
+                  "#6ab04c",
+                  "#7ed6df",
+                  "#e056fd",
+                  "#686de0",
+                  "#30336b",
+                  "#95afc0",
+                  "#22a6b3",
+                  "#be2edd",
+                  "#4834d4",
+                  "#130f40",
+                  "#535c68",
+                ],
+                data: this.orderCount,
               },
             ],
           };
