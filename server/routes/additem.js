@@ -42,7 +42,7 @@ router.post("/:cat", async (req, res) => {
     }
   }
 
-  res.redirect(req.header("Referer"));
+  res.redirect(`/admin/categories/`+ req.params.cat);
 });
 
 module.exports = router;
