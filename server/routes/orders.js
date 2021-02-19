@@ -14,7 +14,7 @@ router.get("/:status", async (req, res) => {
   let [result] = await db.query(
     `SELECT products.*, products.count as max_count, orders.* FROM products
     INNER JOIN orders ON products.id = orders.product_id
-    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND ${status_check} GROUP BY user_id, product_id`
+    INNER JOIN users ON users.id = orders.user_id WHERE users.id = "${req.user_id}" AND ${status_check} GROUP BY user_id, product_id ORDER BY orders.id DESC`
   );
 
   res.json(result);
