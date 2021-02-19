@@ -1,7 +1,9 @@
 const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
+
 const moment = require("moment");
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 // Get cart or purchased products for current user
 router.get("/:status", async (req, res) => {
@@ -32,8 +34,38 @@ router.get("/:status", async (req, res) => {
 
 // Purchase products for current user
 router.post("/", async (req, res) => {
+  let [products] = await db.query(
+    `SELECT products.name AS name, products.price AS price, orders.count AS count FROM products INNER JOIN orders ON products.id = orders.product_id WHERE orders.user_id = "${req.user_id}" AND orders.status = 0`
+  );
+
+  let items = [];
+
+  for (product of products) {
+    items.push({
+      price_data: {
+        currency: "UAH",
+        product_data: {
+          name: product.name,
+        },
+        unit_amount: product.price * 100,
+      },
+      quantity: product.count,
+    });
+  }
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: items,
+    mode: "payment",
+    success_url:
+      "http://localhost:5000/api/orders/success/{CHECKOUT_SESSION_ID}",
+    cancel_url: "http://localhost:5000/cart",
+    metadata: {
+      user_id: req.user_id,
+    },
+  });
+
   const order = {
-    status: 1,
     date: moment().format("DD.MM.YYYY"),
     payment_method: req.body.payment_method,
     delivery_method: req.body.delivery_method,
@@ -43,18 +75,31 @@ router.post("/", async (req, res) => {
   };
 
   await db.query(
+    `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
+    order
+  );
+
+  res.json({ id: session.id });
+});
+
+// Payment success
+router.get("/success/:payment_token", async (req, res) => {
+  const session = await stripe.checkout.sessions.retrieve(
+    req.params.payment_token
+  );
+
+  await db.query(
     `UPDATE products
-    INNER JOIN ((SELECT product_id, count FROM orders WHERE user_id = ${req.user_id} AND status = 0)) 
+    INNER JOIN ((SELECT product_id, count FROM orders WHERE user_id = ${session.metadata.user_id} AND status = 0))
     AS product ON products.id = product.product_id
     SET products.count = products.count - product.count`
   );
 
   await db.query(
-    `UPDATE orders SET ? WHERE user_id = ${req.user_id} AND status = 0`,
-    order
+    `UPDATE orders SET status =  1 WHERE user_id = ${session.metadata.user_id} AND status = 0`
   );
 
-  res.send("OK");
+  res.redirect("/success");
 });
 
 // Add to cart for current user

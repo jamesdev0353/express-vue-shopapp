@@ -225,6 +225,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -251,6 +252,7 @@ export default {
       max_count: 10,
       apiKey: "1248264db38907916e355ff139ab2def",
       url: "https://api.novaposhta.ua/v2.0/json/",
+      stripe: null,
     };
   },
   methods: {
@@ -356,7 +358,7 @@ export default {
           });
       }
 
-      await axios.post(
+      let checkout = await axios.post(
         "/api/orders",
         {
           payment_method: this.key_payment,
@@ -371,8 +373,11 @@ export default {
           },
         }
       );
-      window.open("https://checkout.stripe.dev/preview", "_blank");
-      window.location.href = "/success";
+
+      this.stripe.redirectToCheckout({ sessionId: checkout.data.id });
+
+      // window.open("https://checkout.stripe.dev/preview", "_blank");
+      // window.location.href = "/success";
       //this.$router.push({ name: "Success" });
     },
     changeCount(event, id) {
@@ -399,6 +404,14 @@ export default {
     if (localStorage.getItem("token") == null) {
       this.$router.push({ name: "Main" });
     }
+
+    if (window.Stripe === undefined) {
+      alert("Stripe V3 library not loaded!");
+    } else {
+      const stripe = window.Stripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+      this.stripe = stripe;
+    }
+
     axios
       .post(this.url, {
         apiKey: this.apiKey,
@@ -469,8 +482,9 @@ export default {
 <style scoped>
 .img-prod {
   height: 120px;
-  width: auto;
+  object-fit: contain;
 }
+
 .button {
   width: 70%;
   margin: auto;
