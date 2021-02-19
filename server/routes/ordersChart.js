@@ -9,4 +9,12 @@ router.get("/", async (req, res) => {
   res.json(result);
 });
 
+router.get("/categories", async (req, res) => {
+  let [result] = await db.query(
+ 'SELECT SUM(orders.count) as orderCount, categories.name, SUM(products.price*orders.count) as income from orders inner join products ON products.id = orders.product_id inner join categories on products.subcategory_id = categories.id where status>0 GROUP BY categories.name'
+  );
+  res.json(result)
+});
+
 module.exports = router;
+
