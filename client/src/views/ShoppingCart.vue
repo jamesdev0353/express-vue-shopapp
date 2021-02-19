@@ -375,10 +375,6 @@ export default {
       );
 
       this.stripe.redirectToCheckout({ sessionId: checkout.data.id });
-
-      // window.open("https://checkout.stripe.dev/preview", "_blank");
-      // window.location.href = "/success";
-      //this.$router.push({ name: "Success" });
     },
     changeCount(event, id) {
       this.countDict[id] = event;
