@@ -140,7 +140,7 @@ export default {
   async created() {
     if (localStorage.getItem("token") != null) {
       this.displayLogin = false;
-    }
+    
     axios
       .get("/api/users", {
         headers: {
@@ -153,6 +153,7 @@ export default {
           this.admin = true;
         }
       });
+    }
   },
   methods: {
     removeLocalStorage() {
