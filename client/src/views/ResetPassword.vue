@@ -3,11 +3,7 @@
   <div class="container wrappper mt-5">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Скидання пароля</h2>
-      <form
-        method="POST"
-        :action="'/api/resetPassword/' + $route.params.token"
-        novalidate
-      >
+      <form @submit.prevent="changePassword()">
         <!--@submit.prevent="userRegister" -->
         <div v-if="regMessage" class="alert alert-success" role="alert">
           Ви успішно скинули пароль!
@@ -62,7 +58,7 @@
           Назад
         </button>
         <button :disabled="disabledBtn" type="submit" class="btn btn-primary">
-          Змініти пароль
+          Підтвердити
         </button>
       </form>
     </div>
@@ -70,6 +66,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {
   email,
   required,
@@ -131,6 +128,24 @@ export default {
       this.reset();
     },
 
+    changePassword() {
+      var _this = this;
+      axios
+        .post("/api/resetPassword/" + this.$route.params.token, {
+          password: this.formReg.password,
+        })
+        .then((response) => {
+          if (response.status == 200) {
+          this.$router.push({ name: "ResetPasswordComplete" });
+          }
+        })
+        .catch(function (error) {
+          if (error.response) {
+            _this.message = error.response.data.message;
+          }
+        });
+    },
+
     reset() {
       this.regMessage = true;
       setTimeout(() => {
@@ -168,12 +183,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 form {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
+}
+.container {
+  min-height: 100vh;
 }
 .error {
   background-color: #fdd;

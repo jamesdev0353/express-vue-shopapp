@@ -14,7 +14,7 @@ router.post("/:token", async (req, res) => {
     `UPDATE users SET password = "${hashpass}" WHERE id = "${user.id}"`
   );
 
-  res.json({ message: "Пароль успішно змінено" });
+  res.status(200).json({ message: "Пароль успішно змінено" });
 });
 
 module.exports = router;

@@ -8,11 +8,14 @@ import UserOrders from "../views/UserOrders.vue";
 import Success from "../views/Success.vue";
 import LoginForm from "../views/LoginForm";
 import Registration from "../views/RegistrationForm";
+import EmailSend from "../views/EmailSend";
+import RegistrationSuccess from "../views/RegistrationSuccess";
 import ProductDetails from "../views/ProductDetails.vue";
 import ShoppingCart from "../views/ShoppingCart";
 import Subcategories from "../views/Subcategories";
 import ForgetPassword from "../views/ForgetPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
+import ResetPasswordComplete from "../views/ResetPasswordComplete.vue";
 import AdminTable from "../views/AdminTable.vue";
 import AdminEditItem from "../views/AdminEditItem.vue";
 
@@ -76,6 +79,16 @@ const routes = [
     component: Registration,
   },
   {
+    path: "/email-send",
+    name: "EmailSend",
+    component: EmailSend,
+  },
+  {
+    path: "/registration-success/:token",
+    name: "RegistrationSuccess",
+    component: RegistrationSuccess,
+  },
+  {
     path: "/resetPassword",
     name: "ResetPassword",
     component: ResetPassword,
@@ -84,6 +97,11 @@ const routes = [
     path: "/resetPassword/:token",
     name: "ResetPassword",
     component: ResetPassword,
+  },
+  {
+    path: "/reset-password-complete",
+    name: "ResetPasswordComplete",
+    component: ResetPasswordComplete,
   },
   {
     path: "/forgetPassword",

@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
   );
 
   if (result.length > 0) {
-    res.json({ message: "Користувач з такою поштою вже існує" });
+    res.status(409).json({ message: "Користувач з такою поштою вже існує" });
   } else {
     let hashpass = await bcrypt.hash(req.body.password, 10);
     let emailToken = jwt.sign({ email: req.body.email }, process.env.SECRET);
@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
     transporter.sendMail({
       to: req.body.email,
       subject: "Підтвердження електронної пошти",
-      html: `Доброго дня, ${req.body.name} ${req.body.surname}. Для підтвердження аккаунту <a href="http://localhost:5000/api/registration/${emailToken}">натисніть сюди</a>`,
+      html: `Доброго дня, ${req.body.name} ${req.body.surname}. Для підтвердження аккаунту <a href="http://localhost:5000/registration-success/${emailToken}">натисніть сюди</a>`,
     });
 
     let user = {
@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 
     await db.query("INSERT INTO users set ?", user);
 
-    res.json({
+    res.status(200).json({
       message: "Ми відправили лист з підтвердженням Вам на пошту",
       email: req.body.email,
     });

@@ -34,12 +34,12 @@ router.post("/", async (req, res) => {
       html: `Доброго дня, ${results[0].name} ${results[0].surname}. Для скидання пароля <a href="http://localhost:5000/resetPassword/${emailToken}">натисність сюди</a>`,
     });
 
-    res.json({
+    res.status(200).json({
       message: "Лист з підтвердженням був надісланий Вам на пошту",
       email: results[0].email,
     });
   } else {
-    res.json({
+    res.status(404).json({
       message: "Користувач з такою електронною поштою не знайдений",
     });
   }

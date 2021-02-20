@@ -3,12 +3,7 @@
     <div class="container">
       <div class="col-sm-4 mx-auto">
         <h2 class="reg-title">Реєстрація</h2>
-        <form
-          method="POST"
-          action="/api/registration"
-          novalidate
-          style="height: "
-        >
+        <form @submit.prevent="registerUser()">
           <div v-if="regMessage" class="alert alert-success" role="alert">
             Ви успішно зареєструвались!
           </div>
@@ -58,16 +53,16 @@
           <div class="form-group">
             <label for="phone">Телефон</label>
 
-            <input
-              @blur="$v.formReg.phone.$touch()"
+             <the-mask mask="+38(0##)###-##-##" @blur="$v.formReg.phone.$touch()"
               :class="status($v.formReg.phone)"
               v-model.trim="formReg.phone"
-              v-mask="'(###)-###-####'"
               type="text"
               class="form-control"
               id="phone"
-              name="phone"
-            />
+              masked="true"
+              name="phone">
+              </the-mask>
+            
 
             <div class="invalid-feedback" v-if="!$v.formReg.phone.required">
               {{ reqText }}
@@ -136,6 +131,10 @@
             </div>
           </div>
 
+          <div class="invalid-feedback message mb-3">
+            {{ message }}
+          </div>
+
           <button
             type="button"
             class="btn btn-light mr-2"
@@ -153,6 +152,8 @@
 </template>
 
 <script>
+import {TheMask} from 'vue-the-mask'
+import axios from 'axios'
 import {
   email,
   required,
@@ -179,8 +180,11 @@ export default {
         password: "",
         passwordConfirm: "",
       },
+      message: null
     };
   },
+
+  components: {TheMask},
 
   mounted() {
     if (localStorage.getItem("token") != null) {
@@ -215,6 +219,29 @@ export default {
       console.log("Пароль: " + this.formReg.password);
       console.groupEnd();
       this.reset();
+    },
+
+    registerUser()
+    {
+      var _this = this;
+      axios
+        .post("/api/registration", {
+          name: this.formReg.name,
+          surname: this.formReg.surname,
+          email: this.formReg.email,
+          phone: this.formReg.phone,
+          password: this.formReg.password,
+        })
+        .then((response) => {
+          if (response.status == 200) {
+          this.$router.push({ name: "EmailSend" });
+          }
+        })
+        .catch(function (error) {
+          if (error.response) {
+            _this.message = error.response.data.message;
+          }
+        });
     },
 
     reset() {
@@ -264,6 +291,9 @@ form {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
+}
+.message {
+  display: block !important;
 }
 .error {
   background-color: #fdd;

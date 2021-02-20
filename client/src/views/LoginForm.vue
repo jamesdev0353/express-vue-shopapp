@@ -126,8 +126,7 @@ export default {
         .then((response) => {
           console.log(response.data.token);
           localStorage.token = response.data.token;
-          this.$router.push({ name: "Main" });
-          this.$router.go();
+          location.href = "/";
         })
         .catch(function (error) {
           if (error.response) {

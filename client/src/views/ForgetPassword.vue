@@ -3,7 +3,7 @@
   <div class="container wrapper mt-5">
     <div class="col-sm-4 mx-auto">
       <h2 class="reg-title">Ваш Email</h2>
-      <form method="POST" action="/api/forgetPassword" novalidate>
+      <form @submit.prevent="sendEmail()">
         <!-- @submit.prevent="userRegister" -->
         <div class="form-group">
           <label for="email">Email</label>
@@ -26,6 +26,10 @@
           </div>
         </div>
 
+        <div class="invalid-feedback message mb-3">
+          {{ message }}
+        </div>
+
         <button
           type="button"
           class="btn btn-light mr-2"
@@ -43,7 +47,7 @@
 
 <script>
 import { email, required } from "vuelidate/lib/validators";
-
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -53,6 +57,7 @@ export default {
       formReg: {
         email: "",
       },
+      message: null
     };
   },
 
@@ -93,6 +98,23 @@ export default {
       }
       this.$v.$reset();
     },
+    sendEmail(){
+      var _this = this;
+      axios
+        .post("/api/forgetPassword", {
+          email: this.formReg.email,
+        })
+        .then((response) => {
+          if (response.status == 200) {
+          this.$router.push({ name: "EmailSend" });
+          }
+        })
+        .catch(function (error) {
+          if (error.response) {
+            _this.message = error.response.data.message;
+          }
+        });
+    }
   },
   validations: {
     formReg: {
@@ -111,6 +133,9 @@ form {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 10px 45px -31px rgba(0, 0, 0, 0.75);
+}
+.message {
+  display: block !important;
 }
 .error {
   background-color: #fdd;
