@@ -10,11 +10,7 @@
         <div class="col col-lg-4 col-12 mt-5">
           <h6 class="mt-5 ml-1" v-html="message"></h6>
           <h3 class="mt-1 ml-2">{{ product.price }} грн</h3>
-          <button
-            @click="addToCart()"
-            class="button"
-            :disabled="disabled"
-          >
+          <button @click="addToCart()" class="button" :disabled="disabled">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -57,7 +53,7 @@ export default {
       product: [],
       message: '<span style="color: green">В наявності<span>',
       disabled: false,
-      allow_buy: true
+      allow_buy: true,
     };
   },
 
@@ -70,7 +66,7 @@ export default {
 
       if (this.product.count == 0) {
         this.disabled = true;
-        this.allow_buy = false
+        this.allow_buy = false;
         this.message = '<span style="color: red">Немає в наявності<span>';
       } else if (this.product.count < 10) {
         this.message =
@@ -86,19 +82,18 @@ export default {
   },
   methods: {
     async addToCart() {
-      if (this.allow_buy)
-      {
-      await axios.post(
-        "/api/orders/" + this.$route.params.product_id,
-        {},
-        {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        }
-      );
-      location.href = "/cart";
-      //this.$router.push({ name: "Cart" });
+      if (this.allow_buy) {
+        await axios.post(
+          "/api/orders/" + this.$route.params.product_id,
+          {},
+          {
+            headers: {
+              token: localStorage.getItem("token"),
+            },
+          }
+        );
+        location.href = "/cart";
+        //this.$router.push({ name: "Cart" });
       }
     },
   },

@@ -394,9 +394,17 @@ export default {
         }
       }
 
-      axios.put("api/orders/" + id, {
-        count: event,
-      });
+      axios.put(
+        "api/orders/" + id,
+        {
+          count: event,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
     },
   },
   mounted() {
@@ -464,6 +472,15 @@ export default {
           this.fullPrice += this.cartItems[i].price * this.cartItems[i].count;
         }
         console.log(this.cartItems);
+      });
+    axios
+      .get("/api/users", {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        this.userInfo = response.data;
       });
   },
 };

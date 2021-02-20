@@ -3,6 +3,7 @@ const router = Router();
 const db = require("../config/db");
 
 const moment = require("moment");
+const { compareSync } = require("bcrypt");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 // Get cart or purchased products for current user
@@ -138,7 +139,10 @@ router.post("/:product_id", async (req, res) => {
 
   if (result.length > 0) {
     await db.query(
-      `UPDATE orders SET count = count + 1 WHERE product_id = ${req.params.product_id} AND user_id = ${req.user_id} AND status = 0`
+      `UPDATE orders SET count = count + 1 
+      WHERE product_id = ${req.params.product_id} 
+      AND user_id = ${req.user_id} 
+      AND count < (SELECT count FROM products WHERE id = ${req.params.product_id}) AND status = 0`
     );
   } else {
     await db.query(`INSERT INTO orders SET ?`, order);
@@ -155,7 +159,7 @@ router.put("/:order_id", async (req, res) => {
 
   if (result[0].count > 0 && req.body.count > 0) {
     await db.query(
-      `UPDATE orders SET count = "${req.body.count}" WHERE id = "${req.params.order_id}"`
+      `UPDATE orders SET count = "${req.body.count}" WHERE id = ${req.params.order_id} AND user_id = ${req.user_id} AND status = 0`
     );
 
     res.send("OK");
