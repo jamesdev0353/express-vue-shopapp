@@ -24,7 +24,7 @@
               width="16"
               height="16"
               fill="white"
-              class="bi bi-facebook facebook"
+              class="bi bi-facebook"
               viewBox="0 0 16 16"
             >
               <path
@@ -70,9 +70,5 @@ p {
   color: white;
   margin-top: 0;
   margin-bottom: 0;
-}
-
-.facebook {
-  margin-left: 5px;
 }
 </style>
