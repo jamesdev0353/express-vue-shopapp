@@ -6,6 +6,9 @@ import App from "./App.vue";
 import router from "./router";
 import Vuelidate from "vuelidate";
 import VueApexCharts from 'vue-apexcharts'
+import VueTheMask from 'vue-the-mask'
+
+Vue.use(VueTheMask)
 Vue.use(VueApexCharts)
 
 Vue.component('apexchart', VueApexCharts)

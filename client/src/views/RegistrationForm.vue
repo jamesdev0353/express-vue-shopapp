@@ -62,18 +62,15 @@
               @blur="$v.formReg.phone.$touch()"
               :class="status($v.formReg.phone)"
               v-model.trim="formReg.phone"
+              v-mask="'(###)-###-####'"
               type="text"
               class="form-control"
               id="phone"
               name="phone"
-              maxlength="13"
             />
 
             <div class="invalid-feedback" v-if="!$v.formReg.phone.required">
               {{ reqText }}
-            </div>
-            <div class="invalid-feedback" v-if="!$v.formReg.phone.minLength">
-              Будь ласка введіть ваш телефон
             </div>
           </div>
 
