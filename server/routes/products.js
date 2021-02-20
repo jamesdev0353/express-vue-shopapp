@@ -1,3 +1,4 @@
+const { compareSync } = require("bcrypt");
 const { Router } = require("express");
 const router = Router();
 const db = require("../config/db");
@@ -56,9 +57,15 @@ router.get("/:product_id", async (req, res) => {
 
 // Search filter
 router.post("/:subcat", async (req, res) => {
-  let [products] = await db.query(
-    `SELECT products.* FROM products INNER JOIN specs ON specs.product_id = products.id WHERE specs.name IN (${req.body.names}) AND specs.value IN (${req.body.values}) AND products.subcategory_id = ${req.params.subcat} AND deleted = 0 GROUP BY id`
-  );
+  let [products] = await db.query(`SELECT products.* FROM products 
+  INNER JOIN specs ON specs.product_id = products.id 
+  WHERE specs.name IN (${db.escape(
+    req.body.names
+  )}) AND specs.value IN (${db.escape(req.body.values)}) 
+  AND products.subcategory_id = ${
+    req.params.subcat
+  } AND deleted = 0 GROUP BY id`);
+
   res.json(products);
 });
 

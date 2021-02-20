@@ -53,16 +53,18 @@
           <div class="form-group">
             <label for="phone">Телефон</label>
 
-             <the-mask mask="+38(0##)###-##-##" @blur="$v.formReg.phone.$touch()"
+            <the-mask
+              mask="+38(0##)###-##-##"
+              @blur="$v.formReg.phone.$touch()"
               :class="status($v.formReg.phone)"
               v-model.trim="formReg.phone"
               type="text"
               class="form-control"
               id="phone"
               masked="true"
-              name="phone">
-              </the-mask>
-            
+              name="phone"
+            >
+            </the-mask>
 
             <div class="invalid-feedback" v-if="!$v.formReg.phone.required">
               {{ reqText }}
@@ -152,8 +154,8 @@
 </template>
 
 <script>
-import {TheMask} from 'vue-the-mask'
-import axios from 'axios'
+import { TheMask } from "vue-the-mask";
+import axios from "axios";
 import {
   email,
   required,
@@ -180,11 +182,11 @@ export default {
         password: "",
         passwordConfirm: "",
       },
-      message: null
+      message: null,
     };
   },
 
-  components: {TheMask},
+  components: { TheMask },
 
   mounted() {
     if (localStorage.getItem("token") != null) {
@@ -221,8 +223,7 @@ export default {
       this.reset();
     },
 
-    registerUser()
-    {
+    registerUser() {
       var _this = this;
       axios
         .post("/api/registration", {
@@ -234,7 +235,7 @@ export default {
         })
         .then((response) => {
           if (response.status == 200) {
-          this.$router.push({ name: "EmailSent" });
+            this.$router.push({ name: "EmailSent" });
           }
         })
         .catch(function (error) {

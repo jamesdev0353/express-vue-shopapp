@@ -141,15 +141,15 @@ export default {
     },
     async newFilter(name, value, event) {
       if (event.target.checked) {
-        this.checked.names.push('"' + name + '"');
-        this.checked.values.push('"' + value + '"');
+        this.checked.names.push(name);
+        this.checked.values.push(value);
       } else {
         this.checked.names.splice(
-          this.checked.names.findIndex((e) => e === '"' + name + '"'),
+          this.checked.names.findIndex((e) => e === name),
           1
         );
         this.checked.values.splice(
-          this.checked.values.findIndex((e) => e === '"' + value + '"'),
+          this.checked.values.findIndex((e) => e === value),
           1
         );
       }
@@ -166,8 +166,8 @@ export default {
         let res = await axios.post(
           "/api/products/" + this.$route.params.subcategory_id,
           {
-            names: this.checked.names.join(),
-            values: this.checked.values.join(),
+            names: this.checked.names,
+            values: this.checked.values,
           }
         );
 
