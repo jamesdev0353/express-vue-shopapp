@@ -8,6 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Get user id by token to req.user_id
 app.use(require("./middleware/user_id"));
+// const auth = require("./middleware/auth");
 
 // Routes
 app.use("/api/categories", require("./routes/categories"));
