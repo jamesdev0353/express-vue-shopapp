@@ -8,7 +8,7 @@ import UserOrders from "../views/UserOrders.vue";
 import Success from "../views/Success.vue";
 import LoginForm from "../views/LoginForm";
 import Registration from "../views/RegistrationForm";
-import EmailSend from "../views/EmailSend";
+import EmailSent from "../views/EmailSent";
 import RegistrationSuccess from "../views/RegistrationSuccess";
 import ProductDetails from "../views/ProductDetails.vue";
 import ShoppingCart from "../views/ShoppingCart";
@@ -79,9 +79,9 @@ const routes = [
     component: Registration,
   },
   {
-    path: "/email-send",
-    name: "EmailSend",
-    component: EmailSend,
+    path: "/email-sent",
+    name: "EmailSent",
+    component: EmailSent,
   },
   {
     path: "/registration-success/:token",

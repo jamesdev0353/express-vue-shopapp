@@ -165,7 +165,7 @@ export default {
 </script>
 
 <style>
-@media (max-width: 767px) {
+@media (max-width: 992px) {
   a {
     margin-top: 10px;
   }
@@ -174,6 +174,9 @@ export default {
   .profile-button {
     margin-left: 0 !important;
     align-self: center;
+  }
+  .navbar {
+    text-align: center;
   }
 }
 
