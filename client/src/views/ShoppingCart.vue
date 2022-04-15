@@ -250,7 +250,7 @@ export default {
       currentValue: 0,
       countDict: {},
       max_count: 10,
-      apiKey: "1248264db38907916e355ff139ab2def",
+      apiKey: "eeb5719e02c8054ea25076e99f41937f",
       url: "https://api.novaposhta.ua/v2.0/json/",
       stripe: null,
     };
